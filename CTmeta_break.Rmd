@@ -1,0 +1,199 @@
+---
+title: "Breaking CTmeta"
+author: "Judith Neve"
+date: "25/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# N (S*1 matrix)
+
+## N as a vector
+
+## N as a S*2 matrix
+
+## N as a vector that is too long
+
+## N as a (S-1)*1 matrix
+
+## N as a (S+1)*1 matrix
+
+
+
+# DeltaT (S*1 matrix)
+
+## DeltaT as a vector
+
+## DeltaT as a S*2 matrix
+
+## DeltaT as a (S-1)*1 matrix
+
+## DeltaT as a (S+1)*1 matrix
+
+## DeltaT as a vector that is too long
+
+
+
+# DeltaTstar (scalar)
+
+## DeltaTstar as a vector
+
+
+
+
+# Phi (stacked matrix of (S\*q)\*q or array of q\*q\*S)
+
+## Phi as an array
+
+## Phi as an array with an extra matrix
+
+## Phi as an array with different size matrices but the right number of elements
+
+## Phi as an array with matrices with an extra row
+
+## Phi as an array with matrices with an extra column
+
+## Phi as a matrix with an extra row
+
+## Phi as an array with matrices with one less row
+
+## Phi as a matrix with an extra column
+
+## Phi as an array with one less matrix but the right number of elements
+
+
+
+
+# SigmaVAR (stacked matrix of (S\*q)\*q or array of q\*q\*S)
+
+## SigmaVAR as an array
+
+## SigmaVAR as an array with an extra matrix
+
+## SigmaVAR as an array with different size matrices but the right number of elements
+
+## SigmaVAR as an array with matrices with an extra row
+
+## SigmaVAR as an array with matrices with one less row
+
+## SigmaVAR as an array with matrices with an extra column
+
+## SigmaVAR as a matrix with an extra row
+
+## SigmaVAR as a matrix with an extra column
+
+## SigmaVAR as an array with one less matrix but the right number of elements
+
+
+
+
+# Gamma (stacked matrix of (S\*q)\*q or array of q\*q\*S; optional, cannot have both SigmaVAR and Gamma)
+
+## Both SigmaVAR and Gamma
+
+## Both SigmaVAR (broken) and Gamma
+
+## Both SigmaVAR (not as should be but running) and Gamma
+
+## Gamma as an array
+
+## Gamma as an array with an extra matrix
+
+## Gamma as an array with different size matrices but the right number of elements
+
+## Gamma as an array with matrices with an extra row
+
+## Gamma as an array with matrices with one less row
+
+## Gamma as an array with matrices with an extra column
+
+## Gamma as a matrix with an extra row
+
+## Gamma as a matrix with an extra column
+
+## Gamma as an array with one less matrix but the right number of elements
+
+
+
+
+# Moderators (TRUE/FALSE or 0/1; optional)
+
+## Moderators = 2
+
+## Moderators = c(0, 1)
+
+## Moderators = c(1, 0)
+
+
+
+
+# Mod (S*m matrix; optional)
+
+## Moderators = 0, Mod specified
+
+## Moderators not specified, Mod specified
+
+## Moderators as a vector
+
+## Moderators a matrix with an extra row
+
+## Moderators a matrix with one less row
+
+## Moderators a matrix with an extra column
+
+## 2 moderators
+
+## 2 moderators as an array
+
+
+
+
+# FEorRE (1/2; optional)
+
+## FEorRE = 3
+
+
+
+
+# BetweenLevel (S-vector or S*1 matrix; optional)
+
+## FEorRE = 1
+
+## FEorRE = 2, BetweenLevel = NULL
+
+## BetweenLevel an S*2 matrix
+
+## BetweenLevel an (S+1)*1 matrix
+
+## BetweenLevel as (S-1)*1 matrix
+
+
+
+# Label ((q\*q\*S)-vector; optional)
+
+## Label a matrix with the right number of elements
+
+## Label an array with the right number of elements
+
+## Label a longer vector
+
+## Label a shorter vector
+
+
+
+# alpha (optional)
+
+## negative alpha
+
+## alpha = 1
+
+## alpha > 1
+
+
+
+# PrintPlot (TRUE/FALSE or 0/1; optional)
+
+## PrintPlot = 2
