@@ -7,13 +7,66 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(CTmeta)
 ```
+
+Setting up an example that works well.
+
+```{r example setup}
+# q=2 variables and S=3 primary studies
+
+N <- matrix(c(643, 651, 473))
+DeltaT <- matrix(c(2, 3, 1))
+DeltaTStar <- 1
+
+Phi <- myPhi
+SigmaVAR <- mySigmaVAR
+Gamma <- myGamma
+
+Moderators <- 0
+Mod <- matrix(c(64,65,47))
+```
+
+```{r running ctmeta}
+CTma <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+
+CTma.mod <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod)
+```
+
 
 # N (S*1 matrix)
 
 ## N as a vector
 
 ## N as a S*2 matrix
+
+```{r}
+# making N a S*2 matrix
+N.break <- matrix(c(N, 5, 5, 5), ncol = 2)
+N.break
+
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
 
 ## N as a vector that is too long
 
@@ -28,6 +81,24 @@ knitr::opts_chunk$set(echo = TRUE)
 ## DeltaT as a vector
 
 ## DeltaT as a S*2 matrix
+
+```{r}
+# making DeltaT a S*2 matrix
+DeltaT.broken <- matrix(c(N, 5, 5, 5), ncol = 2)
+DeltaT.broken
+
+CTma.broken <- CTmeta(N,
+               DeltaT.broken,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
 
 ## DeltaT as a (S-1)*1 matrix
 
@@ -48,7 +119,50 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Phi as an array
 
+```{r}
+Phi1 <- Phi[1:2,]
+Phi2 <- Phi[3:4,]
+Phi3 <- Phi[5:6,]
+Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(2, 2, 3))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# works well with the array too
+```
+
+To do:
+- add an example with Phi as an array
+
 ## Phi as an array with an extra matrix
+
+```{r}
+Phi1 <- Phi[1:2,]
+Phi2 <- Phi[3:4,]
+Phi3 <- Phi[5:6,]
+Phi.broken <- array(c(Phi1, Phi2, Phi3, rep(5, 6)), dim = c(2, 2, 4))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# extra matrix in array does not make it break, but a warning should be included
+```
+
+To do:
+- add a warning if the array has too many panels
+
 
 ## Phi as an array with different size matrices but the right number of elements
 
@@ -58,9 +172,44 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Phi as a matrix with an extra row
 
+```{r}
+Phi.broken <- rbind(myPhi, rep(6,2))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+CTma.break
+summary(CTma.break) == summary(CTma)
+# extra row does not make it break, but a warning should be included
+```
+
+To do:
+- add a warning if the matrix has too many rows
+
+
 ## Phi as an array with matrices with one less row
 
 ## Phi as a matrix with an extra column
+
+```{r}
+Phi.broken <- cbind(Phi, rep(6,6))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+# breaks, as expected
+## Error in SigmaVAR[(teller + 1):(teller + q), 1:q] : 
+##  subscript out of bounds
+```
+
+To do:
+- nothing?
 
 ## Phi as an array with one less matrix but the right number of elements
 
@@ -71,7 +220,50 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## SigmaVAR as an array
 
+```{r}
+SigmaVAR1 <- SigmaVAR[1:2,]
+SigmaVAR2 <- SigmaVAR[3:4,]
+SigmaVAR3 <- SigmaVAR[5:6,]
+SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(2, 2, 3))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# works well with the array too
+```
+
+To do:
+- add an example with SigmaVAR as an array
+
 ## SigmaVAR as an array with an extra matrix
+
+```{r}
+SigmaVAR1 <- SigmaVAR[1:2,]
+SigmaVAR2 <- SigmaVAR[3:4,]
+SigmaVAR3 <- SigmaVAR[5:6,]
+SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3, rep(5, 6)), dim = c(2, 2, 4))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# extra matrix in array does not make it break, but a warning should be included
+```
+
+To do:
+- add a warning if the array has too many panels
+
 
 ## SigmaVAR as an array with different size matrices but the right number of elements
 
@@ -134,9 +326,47 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Moderators = 0, Mod specified
 
+```{r}
+CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+               Moderators = 0,
+               Mod = Mod)
+CTma.broken
+
+summary(CTma.break) == summary(CTma.mod)
+# Mod gets ignored
+```
+
+To do:
+- add a warning
+
 ## Moderators not specified, Mod specified
 
+```{r}
+CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+               Mod = Mod)
+CTma.broken
+
+summary(CTma.break) == summary(CTma.mod)
+# Mod gets ignored
+```
+
+To do:
+- add a warning OR have Moderators = 1 as a default if Mod is specified and Moderators isn't
+
 ## Moderators as a vector
+
+```{r}
+Mod.broken <- c(64,65,47)
+CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.broken) # fixed effects model
+# breaks, as expected
+## Error in if (dim(Mod)[1] != S) { : argument is of length zero
+```
+
+To do:
+- nothing?
+
 
 ## Moderators a matrix with an extra row
 
@@ -168,7 +398,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## BetweenLevel an (S+1)*1 matrix
 
-## BetweenLevel as (S-1)*1 matrix
+## BetweenLevel an (S-1)*1 matrix
 
 
 
