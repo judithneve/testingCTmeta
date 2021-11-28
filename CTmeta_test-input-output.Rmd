@@ -10,6 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 library(CTmeta)
 ```
 
+This document tests what can be used as input and output for the function CTmeta. Each argument is examined in turn, and at the end some additional checks are done to verify plots can be made for different configurations of the model.
+
+Where the function runs, the output is compared to the expected output.
+
+After every attempt to "break" the function, a diagnostic is written as a comment in the code chunk, and the code chunk is followed by a "to do" list to indicate what needs to be specified/improved/changed in the function documentation or the function itself.
+
 Setting up an example that works well.
 
 ```{r example setup}
@@ -48,9 +54,61 @@ CTma.mod <- CTmeta(N,
 
 ## N with NAs
 
+```{r}
+# including an NA
+N.break <- N
+N.break[2] <- NA
+N.break
+
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+# Error in eigen(CovMx_Phi) : valeurs infinies ou manquantes dans 'x'
+```
+
+To do:
+- write an error message for NAs in N
+
 ## N with non-numbers
 
+```{r}
+# including a non-numeric value
+N.break <- N
+N.break[2] <- "text"
+N.break
+
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+# Error in N - q : non-numeric argument to binary operator
+```
+
+To do:
+- nothing, the error seems pretty easy to infer from
+
 ## N as a vector
+
+```{r}
+# making N a vector
+N.break <- as.vector(N)
+N.break
+
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+summary(CTma.broken) == summary(CTma)
+# no difference
+```
+
+To do:
+- specify N can be a vector of length S
 
 ## N as a S*2 matrix
 
@@ -74,9 +132,63 @@ To do:
 
 ## N as a vector that is too long
 
+```{r}
+# making N a (S+1)-length vector
+N.break <- c(as.vector(N), 6)
+N.break
+
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
+
 ## N as a (S-1)*1 matrix
 
+```{r}
+# making a (S-1)*1 matrix
+N.break <- N[-3,]
+N.break
+
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
+
 ## N as a (S+1)*1 matrix
+
+```{r}
+# making a (S+1)*1 matrix
+N.break <- rbind(N, 1)
+N.break
+
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
 
 
 
