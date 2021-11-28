@@ -188,9 +188,9 @@ Phi
 
 Note: The lagged effects matrix (Phi) varies with the time-interval DeltaT.  For instance, if Stress and Anxiety are measured every hour, Phi reflects the lagged relationship between initial Stress and Anxiety levels and Stress and Anxiety levels after one hour. This relationship is stronger than (different from) a scenario in which Stress and Anxiety are measured daily (24 hours).
 
-As with regular meta-analysis, one can choose between a fixed-effects and random-effects model and moderators can be moderators as well.
+As with regular meta-analysis, one can choose between a fixed-effects and random-effects model and moderators can also be included.
 Notably, the default is a fixed-effects model, but if one wants to generalize the results beyond the included studies, then one should use a random-effects model ('FEorRE = 2').
-In case one expects that the lagged effects matrices stacked in Phi are different / incomparable due to some study characteristics, then one should include these in the model. If, for example, some studies investigated the Stress-Anxiety relationship among students, while other studies did in a business context, one can include a moderator by including a dummy variable for this. Note that when the effect for this moderator is significant, then there is indeed a significant difference in the Stress-Anxiety relationship for these two subgroups.
+In case the lagged effects matrices stacked in Phi are expected to be different / incomparable due to some study characteristics, then these should be included in the model. If, for example, some studies investigated the Stress-Anxiety relationship among students while other studies did this in a business context, a moderator can be included by adding a dummy variable for context. Note that when the effect for this moderator is significant, then there is a significant difference in the Stress-Anxiety relationship between the two subgroups.
 
 Next, some code for performing different types of CTmeta-analyses, where only the output for the last CTmeta-analysis (a random-effects model with moderators) is shown.
 
@@ -229,9 +229,9 @@ summary(CTma, digits = 4)
 CTma$summaryMetaAnalysis
 ```
 
-This results, among other things, in an overall 2*2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, one can make a Phi-plot of the resulting overall Phi, as is demonstrated in Section 1.1.
+This results, among other things, in an overall 2*2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, a Phi-plot of the resulting overall Phi can be made. This is demonstrated in Section 1.1.
 
-One of the main interests in lagged relationships is which of the variables is 'causal dominant', that is, has the highest predictive power. In this example, is current Stress a stronger predictor for Anxiety on the next time-interval or is current Anxiety a stronger predictor for Stress on the next time-interval? This is of course also the case for the overall Phi. To evaluate the dominance of (overall) lagged effects one can use an AIC-type criterion called the GORICA (Altinisik, Nederhof, Hoijtink, Oldehinkel, Kuiper, conditionally accepted). This method is included in the restriktor package and is demonstrated in Section 1.2.
+One of the main interests in lagged relationships is which of the variables is 'causal dominant', that is, has the highest predictive power. In this example, is current Stress a stronger predictor for Anxiety on the next time-interval or is current Anxiety a stronger predictor for Stress on the next time-interval? This is of course also the case for the overall Phi. To evaluate the dominance of (overall) lagged effects an AIC-type criterion called the GORICA can be used (Altinisik, Nederhof, Hoijtink, Oldehinkel, Kuiper, conditionally accepted). This method is included in the restriktor package and is demonstrated in Section 1.2.
 
 In the example above, the lagged effects matrices (stacked in Phi) were obtained from each primary study. It also possible that some or all studies report a (lagged) correlation matrix. Section 1.3 demonstrates how (lagged) correlation matrices can be used in CTmeta.
 
@@ -246,7 +246,7 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, PrintPlot = TRUE)
 
 
 # Option 2: A customized Phi-plot can be made using the function 'PhiPlot' (see below) or by using the interactive web app from my website (\url{https://www.uu.nl/staff/RMKuiper/Websites\%20\%2F\%20Shiny\%20apps}).
-# Alternatively, one can use the function 'ggPhiPlot' instead of 'PhiPlot'.
+# Alternatively, the function 'ggPhiPlot' can be used instead of 'PhiPlot'.
 
 # Extract the (q times q) overall Phi matrix
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
@@ -310,7 +310,7 @@ DeltaT <- matrix(c(2, 3, 1))
 DeltaTStar <- 1
 
 # Use the function 'TransPhi_Corr' to calculate the corresponding standardized lagged effects matrix per primary study.
-# Note that one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT, but CTmeta can as well.
+# Note that one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT, but CTmeta can do this as well.
 # In this example, I deliberately make the time-intervals unequal, 
 # - such that the example is in line with the input (i.e., DeltaT <- matrix(c(2, 3, 1)))
 # - such the resulting overall Phi should equal the Phi that underlies this lagged correlation matrix. 
