@@ -461,3 +461,35 @@ To do:
 # PrintPlot (TRUE/FALSE or 0/1; optional)
 
 ## PrintPlot = 2
+
+## PrintPlot for FE with moderator
+
+## PrintPlot for FE without moderator
+
+## PrintPlot for RE with moderator
+
+## PrintPlot for RE without moderator
+
+
+
+# Funnel plots
+
+## FE model with moderator
+
+## FE model without moderator
+
+## RE model with moderator
+
+## RE model without moderator
+
+
+
+# GORICA
+
+## FE model with moderator
+
+## FE model without moderator
+
+## RE model with moderator
+
+## RE model without moderator
