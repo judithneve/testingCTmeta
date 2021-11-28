@@ -142,13 +142,13 @@ In this simple example, the functionality of CTmeta is demonstrated using three 
 
 Setting up the input arguments for the CTmeta function:
 
-- N: Save the sample size of each study in a Sx1 matrix. 
+- N: Save the sample size of each study in a S*1 matrix. 
 
 ```{r}
 N <- matrix(c(643, 651, 473))
 ```
 
-- DeltaT: Save the time-interval used in each study in a Sx1 matrix.
+- DeltaT: Save the time-interval used in each study in a S*1 matrix.
 
 ```{r}
 DeltaT <- matrix(c(2, 3, 1))
@@ -188,7 +188,7 @@ Phi
 
 Note: The lagged effects matrix (Phi) varies with the time-interval DeltaT.  For instance, if Stress and Anxiety are measured every hour, Phi reflects the lagged relationship between initial Stress and Anxiety levels and Stress and Anxiety levels after one hour. This relationship is stronger than (different from) a scenario in which Stress and Anxiety are measured daily (24 hours).
 
-As with regular meta-analysis, one can choose between a fixed-effects and random-effects model and one can include moderators as well.
+As with regular meta-analysis, one can choose between a fixed-effects and random-effects model and moderators can be moderators as well.
 Notably, the default is a fixed-effects model, but if one wants to generalize the results beyond the included studies, then one should use a random-effects model ('FEorRE = 2').
 In case one expects that the lagged effects matrices stacked in Phi are different / incomparable due to some study characteristics, then one should include these in the model. If, for example, some studies investigated the Stress-Anxiety relationship among students, while other studies did in a business context, one can include a moderator by including a dummy variable for this. Note that when the effect for this moderator is significant, then there is indeed a significant difference in the Stress-Anxiety relationship for these two subgroups.
 
@@ -212,8 +212,6 @@ Mod <- matrix(c(64,65,47)) # 1 moderator
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod)
 ```
 
-
-
 ```{r}
 ## Random effects model ##
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE = 2) 
@@ -231,7 +229,7 @@ summary(CTma, digits = 4)
 CTma$summaryMetaAnalysis
 ```
 
-This results, among other things, in an overall 2x2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, one can make a Phi-plot of the resulting overall Phi, as is demonstrated in Section 1.1.
+This results, among other things, in an overall 2*2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, one can make a Phi-plot of the resulting overall Phi, as is demonstrated in Section 1.1.
 
 One of the main interests in lagged relationships is which of the variables is 'causal dominant', that is, has the highest predictive power. In this example, is current Stress a stronger predictor for Anxiety on the next time-interval or is current Anxiety a stronger predictor for Stress on the next time-interval? This is of course also the case for the overall Phi. To evaluate the dominance of (overall) lagged effects one can use an AIC-type criterion called the GORICA (Altinisik, Nederhof, Hoijtink, Oldehinkel, Kuiper, conditionally accepted). This method is included in the restriktor package and is demonstrated in Section 1.2.
 
@@ -334,7 +332,7 @@ SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3)
 # Run CTmeta:
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 
-# The overall q-times-q (here, 2x2) lagged effects matrix Phi
+# The overall q-times-q (here, 2*2) lagged effects matrix Phi
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 out_CTmeta$Overall_standPhi
 ```
@@ -345,7 +343,7 @@ out_CTmeta$Overall_standPhi
 ### 2.1 Plots
 
 This example focuses on the time-interval dependency of (cross-)lagged relationships for one study -- and can thus also be used for the overall (cross-)lagged relationships resulting from CTmeta.
-Let us assume we investigate the (cross-)lagged relationship between Stress and Anxiety (i.e., between q=2 variables), represented by a 2x2 discrete-time lagged effects matrix Phi and a 2x2 discrete-time residual covariance matrix SigmaVAR (called Psi in Kuiper and Hamaker). 
+Let us assume we investigate the (cross-)lagged relationship between Stress and Anxiety (i.e., between q=2 variables), represented by a 2\*2 discrete-time lagged effects matrix Phi and a 2*2 discrete-time residual covariance matrix SigmaVAR (called Psi in Kuiper and Hamaker). 
 
 Note that both the lagged effects matrix Phi and the residual covariance matrix SigmaVAR vary with the time-interval DeltaT. If Stress and Anxiety were measured every hour, Phi would reflect the lagged relationship between current Stress and Anxiety levels and the Stress and Anxiety levels over one hour. Likewise, the residual covariance matrix SigmaVAR is the one that belongs to the every-hour lagged relationship.
 The lagged relationship varies with the chosen time-interval and for a long enough time-interval the lagged relationship is damped out, that is, the cross-lagged effects are zero (and the autoregressive effects are one). Then, the residual covariance matrix equals the stationary covariance matrix (Gamma) which equals the (contemporaneous) covariance matrix of the contemporaneous variables.
@@ -426,7 +424,7 @@ SigmaVARPlot(DeltaT, Phi, SigmaVAR, Stand = 1)
 ```
 
 
-One can also have the continuous-time matrices: the lagged effects matrix Drift and the residual covariance matrix Sigma (also calles diffusion matrix). Based on those matrices, one can also make a Phi- and SigmaVAR-plot:
+One can also have the continuous-time matrices: the lagged effects matrix Drift and the residual covariance matrix Sigma (also calles diffusion matrix). Based on those matrices, Phi- and SigmaVAR-plots can be made:
 
 ```{r, echo=T, results='hide'}
 # I now calculate the continuous-time equivalent of Phi, that is, the underlying drift matrix
@@ -454,6 +452,7 @@ As a comparison, when the plot shows the variation of a drug concentration in bl
 Such a measure might be interesting when comparing lagged effects matrices using different formulations (e.g., in the drugs example, capsule vs tablet of same dose), but may also reflect which variable has overall more predictive strength -- further research is needed to obtain more insight in the relevance of this measure.
 
 Code to calculate the area under the curve for each of the elements in Phi:
+
 ```{r}
 Area(DeltaT, Phi)
 
@@ -461,19 +460,20 @@ Area(DeltaT, Phi)
 Area(DeltaT, Phi, t_min = 1, t_max = 2)
 
 # Notes: 
-# One can also use a fitted object of the classes "varest" and "ctsemFit".
-# One can also use the Drift matrix.
+# A fitted object of the classes "varest" and "ctsemFit" can also be used.
+# The Drift matrix can also be used.
 ```
 
 
 #### 2.1.2 Maximum or minimum of curves in Phi-plot
-To calculate for each element in Phi what the optimum is, thus either its maximum or minumum, one can use the following function:
+To calculate for each element in Phi what the optimum is, thus either its maximum or minumum, the following function can be used:
+
 ```{r}
 MaxDeltaT(DeltaT, Phi)
 
 # Notes: 
-# One can also use a fitted object of the classes "varest" and "ctsemFit".
-# One can also use the Drift matrix.
+# A fitted object of the classes "varest" and "ctsemFit" can also be used.
+# The Drift matrix can also be used.
 ```
 
 
@@ -495,8 +495,8 @@ DeltaT <- 1
 CTMparam(DeltaT, Phi, SigmaVAR)
 
 # Notes: 
-# One can also use a fitted object of the class "varest".
-# One can also use the Gamma matrix instead of SigmaVAR.
+# A fitted object of the class "varest" can also be used.
+# The Gamma matrix can be used instead of SigmaVAR.
 ```
 
 ```{r, echo=T, results='hide'}
@@ -511,8 +511,8 @@ DeltaT <- 1
 VARparam(DeltaT, Drift, Sigma)
 
 # Notes: 
-# One can also use a fitted object of the class "ctsemFit".
-# One can also use the Gamma matrix instead of Sigma.
+# A fitted object of the class "ctsemFit" can also be used.
+# The Gamma matrix can be used instead of SigmaVAR.
 ```
 
 
@@ -520,6 +520,7 @@ VARparam(DeltaT, Drift, Sigma)
 
 For both the DT and CT model, it holds that there are three types of matrices:
 1) the lagged effects matrix (Phi or Drift), 2) the residuals covariance matrix (SigmaVAR or Sigma), and 3) the stationary covariance matrix (Gamma - this is the same for both models, which makes sense since it is the covariance matrix of the contemporaneous variables). These three types of matrices are related: when you know two of them, the other one can be calculated. Next, the code for two functions that can calculate Gamma from the DT and CT models, respectively:
+
 ```{r}
 # Using DT matrices
 Gamma.fromVAR(Phi, SigmaVAR)
@@ -532,15 +533,16 @@ Gamma.fromCTM(Drift, Sigma)
 #### 2.2.3 Checks 
 
 When you have the CT matrices, you can also do checks on these matrices. For example, the covariance matrices should be positive definite. These checks can be done via:
+
 ```{r}
 ChecksCTM(Drift, Sigma)
 
-# Note: One can also use a fitted object of class "ctsemFit"
+# Note: a fitted object of class "ctsemFit" can also be used.
 ```
 
 
 #### 2.2.4 Standardization
-One can also obtain the standardized estimates from the unstandardized ones. It is also possible to obtain the multivariate (elliptical) confidence intervals (CIs) for the lagged effects estimates. Note that most software render the univariate ones, thus not taking into account the covariances between the estimates.
+The standardized estimates can be obtained from the unstandardized ones. It is also possible to obtain the multivariate (elliptical) confidence intervals (CIs) for the lagged effects estimates. Note that most software render the univariate ones, thus not taking into account the covariances between the estimates.
 The code to obtain this is given next:
 
 ```{r}
@@ -555,8 +557,8 @@ N <- 643
 StandPhi(N, Phi, SigmaVAR)
 
 # Notes: 
-# One can also use a fitted object of the classes "varest" and "ctsemFit".
-# One can also use the Gamma matrix instead of Sigma.
+# A fitted object of the classes "varest" and "ctsemFit" can also be used.
+# The Gamma matrix can also be used instead of Sigma.
 ```
 
 
@@ -583,8 +585,8 @@ N <- 643
 StandTransPhi(DeltaTStar, DeltaT, N, Phi, SigmaVAR)
 
 # Notes: 
-# One can also use a fitted object of the classes "varest" and "ctsemFit".
-# One can also use the Gamma matrix instead of Sigma.
+# A fitted object of the classes "varest" and "ctsemFit" can also be used.
+# The Gamma matrix can be used instead of Sigma.
 ```
 
 
@@ -622,7 +624,7 @@ DiagDeltaT(Phi, SigmaVAR = SigmaVAR)
 # Notes:
 # - The function 'SigmaVARPlot' can help to see whether there is a DeltaT for 
 # which SigmaVAr(DeltaT) is diagonal.
-# One can then alter the starting value of DeltaT ('xstart_DeltaT') if needed.
+# The starting value of DeltaT ('xstart_DeltaT') can be altered if needed.
 # - A 'varest' object can be used as well.
 ``` 
 
@@ -642,7 +644,7 @@ CTM <- CTMparam(DeltaT, Phi, SigmaVAR)
 CTM$Sigma 
 
 # Notes: 
-# One can also use a fitted object of the class "varest".
-# One can also use the Gamma matrix instead of SigmaVAR.
+# A fitted object of the class "varest" can also be used.
+# The Gamma matrix can be used instead of SigmaVAR.
 ```
 
