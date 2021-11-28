@@ -46,6 +46,10 @@ CTma.mod <- CTmeta(N,
 
 # N (S*1 matrix)
 
+## N with NAs
+
+## N with non-numbers
+
 ## N as a vector
 
 ## N as a S*2 matrix
@@ -77,6 +81,10 @@ To do:
 
 
 # DeltaT (S*1 matrix)
+
+## DeltaT with NAs
+
+## DeltaT with non-numbers
 
 ## DeltaT as a vector
 
@@ -110,12 +118,18 @@ To do:
 
 # DeltaTstar (scalar)
 
+## DeltaTstar not specified
+
 ## DeltaTstar as a vector
 
 
 
 
 # Phi (stacked matrix of (S\*q)\*q or array of q\*q\*S)
+
+## Phi with NAs
+
+## Phi with non-numbers
 
 ## Phi as an array
 
@@ -218,6 +232,10 @@ To do:
 
 # SigmaVAR (stacked matrix of (S\*q)\*q or array of q\*q\*S)
 
+## SigmaVAR with NAs
+
+## SigmaVAR with non-numbers
+
 ## SigmaVAR as an array
 
 ```{r}
@@ -284,6 +302,10 @@ To do:
 
 # Gamma (stacked matrix of (S\*q)\*q or array of q\*q\*S; optional, cannot have both SigmaVAR and Gamma)
 
+## Gamma with NAs, SigmaVAR not specified
+
+## Gamma with non-numbers, SigmaVAR not specified
+
 ## Both SigmaVAR and Gamma
 
 ## Both SigmaVAR (broken) and Gamma
@@ -323,6 +345,10 @@ To do:
 
 
 # Mod (S*m matrix; optional)
+
+## Mod with NAs
+
+## Mod with non-numbers
 
 ## Moderators = 0, Mod specified
 
@@ -390,7 +416,11 @@ To do:
 
 # BetweenLevel (S-vector or S*1 matrix; optional)
 
-## FEorRE = 1
+## BetweenLevel with NAs
+
+## BetweenLevel with non-numbers
+
+## FEorRE = 1, BetweenLevel specified
 
 ## FEorRE = 2, BetweenLevel = NULL
 
@@ -403,6 +433,10 @@ To do:
 
 
 # Label ((q\*q\*S)-vector; optional)
+
+## Label with NAs
+
+## Label with non-numbers
 
 ## Label a matrix with the right number of elements
 
