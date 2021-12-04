@@ -1,0 +1,36 @@
+---
+title: "Dividing R functions"
+author: "Judith Neve"
+date: "25/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(CTmeta)
+library(ChiBarSq.DiffTest)
+library(goric)
+```
+
+# Installing the packages
+
+```{r}
+functions.to.check <- c(ls("package:CTmeta"), ls("package:ChiBarSq.DiffTest"), "restriktor::goric")
+```
+
+# Division of work
+
+```{r}
+Judith <- functions.to.check[c(1:13, 28)]
+Alex <- functions.to.check[c(14:27)]
+Judith
+Alex
+```
+
+# Done
+
+```{r}
+Judith <- Judith[Judith != "CTmeta"]
+Judith
+```
+
