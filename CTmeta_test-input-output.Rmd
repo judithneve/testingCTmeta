@@ -1549,6 +1549,24 @@ To do:
 
 # BetweenLevel (S-vector or S*1 matrix; optional)
 
+## BetweenLevel for FE
+
+```{r}
+CTma.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 1,
+                  BetweenLevel = BetweenLevel)
+CTma.broken
+summary(CTma.broken) == summary(CTma)
+# TRUE
+```
+
+To do:
+- add a warning saying BetweenLevel gets ignored, "did you mean FEorRE = 2?"
+
 ## BetweenLevel all identical
 
 ```{r}
@@ -1932,11 +1950,111 @@ To do:
 
 ## FE model with moderator
 
+```{r}
+CTma.FE.mod <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod)
+
+funnel(CTma.FE.mod$summaryMetaAnalysis, label = 'out')
+forest(CTma.FE.mod$summaryMetaAnalysis)
+```
+
+To do:
+- nothing, both work
+
 ## FE model without moderator
 
-## RE model with moderator
+```{r}
+CTma.FE.nomod <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
 
-## RE model without moderator
+funnel(CTma.FE.nomod$summaryMetaAnalysis, label = 'out')
+forest(CTma.FE.nomod$summaryMetaAnalysis)
+```
+
+To do:
+- nothing, both work
+
+## RE model with moderator and no BetweenLevel
+
+```{r}
+CTma.RE.mod <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               Moderators = 1,
+               Mod = Mod)
+
+funnel(CTma.RE.mod$summaryMetaAnalysis, label = 'out')
+forest(CTma.RE.mod$summaryMetaAnalysis)
+```
+
+To do:
+- nothing, both work
+
+## RE model without moderator and no BetweenLevel
+
+```{r}
+CTma.RE.nomod <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2)
+
+funnel(CTma.RE.nomod$summaryMetaAnalysis, label = 'out')
+forest(CTma.RE.nomod$summaryMetaAnalysis)
+```
+
+To do:
+- nothing, both work
+
+## RE model with moderator and BetweenLevel
+
+```{r}
+CTma.RE.mod.BL <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               Moderators = 1,
+               Mod = Mod,
+               BetweenLevel = BetweenLevel)
+
+funnel(CTma.RE.mod.BL$summaryMetaAnalysis, label = 'out')
+forest(CTma.RE.mod.BL$summaryMetaAnalysis)
+```
+
+To do:
+- nothing, both work
+
+## RE model with no moderator and BetweenLevel
+
+```{r}
+CTma.RE.nomod.BL <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Mod = Mod,
+               BetweenLevel = BetweenLevel)
+
+funnel(CTma.RE.nomod.BL$summaryMetaAnalysis, label = 'out')
+forest(CTma.RE.nomod.BL$summaryMetaAnalysis)
+```
+
+To do:
+- nothing, both work
 
 
 
@@ -1944,8 +2062,31 @@ To do:
 
 ## FE model with moderator
 
+```{r}
+library(restriktor)
+
+H1 <- "abs(overallPhi12) < abs(overallPhi21)"
+
+goric(CTma.FE.mod, H1, type = "gorica", comparison = "complement")
+```
+
 ## FE model without moderator
+
+```{r}
+goric(CTma.FE.nomod, H1, type = "gorica", comparison = "complement")
+```
 
 ## RE model with moderator
 
+```{r}
+goric(CTma.RE.mod, H1, type = "gorica", comparison = "complement")
+```
+
 ## RE model without moderator
+
+```{r}
+goric(CTma.RE.nomod, H1, type = "gorica", comparison = "complement")
+```
+
+To do:
+- nothing, these all work
