@@ -196,9 +196,61 @@ To do:
 
 ## DeltaT with NAs
 
+```{r}
+# including an NA
+DeltaT.break <- DeltaT
+DeltaT.break[2] <- NA
+DeltaT.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+# Error in eigen(CovMx_Phi) : valeurs infinies ou manquantes dans 'x'
+```
+
+To do:
+- write an error message for NAs in DeltaT
+
 ## DeltaT with non-numbers
 
+```{r}
+# including a non-numeric value
+DeltaT.break <- DeltaT
+DeltaT.break[2] <- "text"
+DeltaT.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+# Error in DeltaTStar/DeltaT : non-numeric argument to binary operator
+```
+
+To do:
+- nothing, the error is pretty clear
+
 ## DeltaT as a vector
+
+```{r}
+# making N a vector
+DeltaT.break <- as.vector(DeltaT)
+DeltaT.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+summary(CTma.broken) == summary(CTma)
+# no difference
+```
+
+To do:
+- specify DeltaT can be a vector of length S
 
 ## DeltaT as a S*2 matrix
 
@@ -222,9 +274,63 @@ To do:
 
 ## DeltaT as a (S-1)*1 matrix
 
+```{r}
+# making a (S-1)*1 matrix
+DeltaT.break <- DeltaT[-3,]
+DeltaT.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
+
 ## DeltaT as a (S+1)*1 matrix
 
+```{r}
+# making a (S+1)*1 matrix
+DeltaT.break <- rbind(DeltaT, 5)
+DeltaT.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
+
 ## DeltaT as a vector that is too long
+
+```{r}
+# making a (S+1)*1 matrix
+DeltaT.break <- c(DeltaT, 5)
+DeltaT.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+```
+
+To do:
+- rephrase the message
+- make it an actual error?
 
 
 
@@ -232,7 +338,50 @@ To do:
 
 ## DeltaTstar not specified
 
-## DeltaTstar as a vector
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               # DeltaTStar,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# "The argument DeltaTStar should be a scalar, that is, one number, that is, a vector with one element. If you want to inspect multiple DeltaTStar values, you should do the analysis for each value seperately. Notably, currently, DeltaTStar = 0.25" 12 times with variations in "notably, currently, ..."
+```
+
+To do:
+- rephrase the output
+- make it an error, or make it run and actually have usable output
+
+## DeltaTstar as a vector with different values
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar = DeltaT,
+               Phi,
+               SigmaVAR)
+CTma.broken
+# "The argument DeltaTStar should be a scalar, that is, one number, that is, a vector with one element. If you want to inspect multiple DeltaTStar values, you should do the analysis for each value seperately. Notably, currently, DeltaTStar = 2" 3 times with variations in "notably, currently, ..."
+```
+
+To do:
+- make this an actual error
+- rephrase the output
+
+## DeltaTstar as a vector with identical values
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar = rep(1, 3),
+               Phi,
+               SigmaVAR)
+CTma.broken
+# "The argument DeltaTStar should be a scalar, that is, one number, that is, a vector with one element. If you want to inspect multiple DeltaTStar values, you should do the analysis for each value seperately. Notably, currently, DeltaTStar = 1" 3 times
+```
+
+To do:
+- make this an error & rephrase
 
 
 
@@ -241,7 +390,41 @@ To do:
 
 ## Phi with NAs
 
+```{r}
+# including an NA
+Phi.break <- Phi
+Phi.break[2,1] <- NA
+Phi.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi.break,
+               SigmaVAR)
+# Error in eigen(Phi[, , s]) : valeurs infinies ou manquantes dans 'x'
+```
+
+To do:
+- nothing, the error speaks for itself
+
 ## Phi with non-numbers
+
+```{r}
+# including a non-numeric value
+Phi.break <- Phi
+Phi.break[2,1] <- "text"
+Phi.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi.break,
+               SigmaVAR)
+# Error in tcrossprod(x, y) : requires numeric/complex matrix/vector arguments
+```
+
+To do:
+- write an error message
 
 ## Phi as an array
 
@@ -292,9 +475,75 @@ To do:
 
 ## Phi as an array with different size matrices but the right number of elements
 
+```{r}
+Phi1 <- Phi[1,]
+Phi2 <- Phi[2:4,]
+Phi3 <- Phi[5:6,]
+Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(2, 2, 3))
+Phi.broken
+
+# actually, arrays always have identically sized matrices. This does not need to be tested as the values end up falling where they're supposed to.
+```
+
 ## Phi as an array with matrices with an extra row
 
+```{r}
+Phi1 <- rbind(Phi[1:2,], c(5, 5))
+Phi2 <- rbind(Phi[3:4,], c(5, 5))
+Phi3 <- rbind(Phi[5:6,], c(5, 5))
+Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(3, 2, 3))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+# Error in eigen(Phi[, , s]) : la matrice n'est pas carrée dans 'eigen'
+```
+
+To do:
+- nothing, the error is fairly clear
+
 ## Phi as an array with matrices with an extra column
+
+```{r}
+Phi1 <- cbind(Phi[1:2,], c(5, 5, 5))
+Phi2 <- cbind(Phi[3:4,], c(5, 5, 5))
+Phi3 <- cbind(Phi[5:6,], c(5, 5, 5))
+Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(2, 3, 3))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+# Error in SigmaVAR[(teller + 1):(teller + q), 1:q] : subscript out of bounds
+```
+
+To do:
+- write an error message for this
+
+## Phi as an array with square matrices that are too large
+
+```{r}
+Phi1 <- rbind(cbind(Phi[1:2,], c(5, 5)), c(3, 3, 3))
+Phi2 <- rbind(cbind(Phi[3:4,], c(5, 5)), c(3, 3, 3))
+Phi3 <- rbind(cbind(Phi[5:6,], c(5, 5)), c(3, 3, 3))
+Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(3, 3, 3))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+# Error in SigmaVAR[(teller + 1):(teller + q), 1:q] : subscript out of bounds
+```
+
+To do:
+- write an error message for this
 
 ## Phi as a matrix with an extra row
 
@@ -318,6 +567,24 @@ To do:
 
 ## Phi as an array with matrices with one less row
 
+```{r}
+Phi1 <- Phi[1,]
+Phi2 <- Phi[3,]
+Phi3 <- Phi[5,]
+Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(1, 2, 3))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+# Error in Phi[1:q, 1:q, s] : subscript out of bounds
+```
+
+To do:
+- nothing, the error is fairly clear
+
 ## Phi as a matrix with an extra column
 
 ```{r}
@@ -339,6 +606,23 @@ To do:
 
 ## Phi as an array with one less matrix but the right number of elements
 
+```{r}
+Phi1 <- Phi[1:3,]
+Phi2 <- Phi[4:6,]
+Phi.broken <- array(c(Phi1, Phi2), dim = c(3, 2, 2))
+Phi.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi.broken,
+                     SigmaVAR)
+# Error in Phi[1:q, 1:q, s] : subscript out of bounds
+```
+
+To do:
+- write an error for this OR make it so that it works
+
 
 
 
@@ -346,7 +630,41 @@ To do:
 
 ## SigmaVAR with NAs
 
+```{r}
+# including an NA
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[2,1] <- NA
+SigmaVAR.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR.break)
+# Error in solve.default(Sxy) : Lapack routine dgesv: system is exactly singular: U[1,1] = 0
+```
+
+To do:
+- write an error message
+
 ## SigmaVAR with non-numbers
+
+```{r}
+# including a non-numeric value
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[2,1] <- "text"
+SigmaVAR.break
+
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR.break)
+# Error in solve(diag(q * q) - PhiKronPhi) %*% vecS : requires numeric/complex matrix/vector arguments
+```
+
+To do:
+- write an error message
 
 ## SigmaVAR as an array
 
@@ -397,17 +715,144 @@ To do:
 
 ## SigmaVAR as an array with different size matrices but the right number of elements
 
+As seen for Phi, an array cannot have different size matrices.
+
+
 ## SigmaVAR as an array with matrices with an extra row
+
+```{r}
+SigmaVAR1 <- rbind(SigmaVAR[1:2,], c(5, 5))
+SigmaVAR2 <- rbind(SigmaVAR[3:4,], c(5, 5))
+SigmaVAR3 <- rbind(SigmaVAR[5:6,], c(5, 5))
+SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(3, 2, 3))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+# The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 3 times 2
+```
+
+To do:
+- nothing, the error message is fairly clear (maybe rephrase it a bit so it is more straight to the point)
 
 ## SigmaVAR as an array with matrices with one less row
 
+```{r}
+SigmaVAR1 <- SigmaVAR[1,]
+SigmaVAR2 <- SigmaVAR[3,]
+SigmaVAR3 <- SigmaVAR[5,]
+SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(1, 2, 3))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+# Error in SigmaVAR[1:q, 1:q, s] : subscript out of bounds
+```
+
+To do:
+- nothing, the error seems pretty clear
+
 ## SigmaVAR as an array with matrices with an extra column
+
+```{r}
+SigmaVAR1 <- cbind(SigmaVAR[1:2,], c(5, 5))
+SigmaVAR2 <- cbind(SigmaVAR[3:4,], c(5, 5))
+SigmaVAR3 <- cbind(SigmaVAR[5:6,], c(5, 5))
+SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(2, 3, 3))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+# The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 2 times 3
+```
+
+To do:
+- clarify the error message
 
 ## SigmaVAR as a matrix with an extra row
 
+```{r}
+SigmaVAR.broken <- rbind(SigmaVAR, c(5, 5))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+CTma.break
+summary(CTma.break) == summary(CTma)
+# this runs ignoring the last row
+```
+
+To do:
+- include a warning saying the last row of SigmaVAR is ignored
+
 ## SigmaVAR as a matrix with an extra column
 
+```{r}
+SigmaVAR.broken <- cbind(SigmaVAR, rep(5, 6))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+CTma.break
+summary(CTma.break) == summary(CTma)
+# this runs ignoring the last column
+```
+
+To do:
+- include a warning saying the last column of SigmaVAR is ignored
+
+## SigmaVAR as a matrix with an extra column and an extra row
+
+```{r}
+SigmaVAR.broken <- rbind(cbind(SigmaVAR, rep(5, 6)), c(6, 6, 6))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+CTma.break
+summary(CTma.break) == summary(CTma)
+# this runs ignoring the last column
+```
+
+To do:
+- include a warning saying the last row and the last column of SigmaVAR are ignored
+
 ## SigmaVAR as an array with one less matrix but the right number of elements
+
+```{r}
+SigmaVAR1 <- SigmaVAR[1:3,]
+SigmaVAR2 <- SigmaVAR[4:6,]
+SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2), dim = c(3, 2, 2))
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.broken)
+# Error in SigmaVAR[1:q, 1:q, s] : subscript out of bounds
+```
+
+To do:
+- nothing, this seems pretty clear
 
 
 
@@ -416,31 +861,320 @@ To do:
 
 ## Gamma with NAs, SigmaVAR not specified
 
+```{r}
+Gamma.broken <- Gamma
+Gamma.broken[2,1] <- NA
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               Gamma = Gamma.broken)
+# Error in eigen(CovMx_Phi) : valeurs infinies ou manquantes dans 'x'
+```
+
+To do:
+- write an error message for NAs
+
 ## Gamma with non-numbers, SigmaVAR not specified
+
+```{r}
+Gamma.broken <- Gamma
+Gamma.broken[2,1] <- "text"
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               Gamma = Gamma.broken)
+# Error in Ph %*% Gam : requires numeric/complex matrix/vector arguments
+```
+
+To do:
+- nothing, this is pretty clear
 
 ## Both SigmaVAR and Gamma
 
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Gamma)
+
+summary(CTma.break)
+summary(CTma.break) == summary(CTma)
+# same output
+```
+
+Does this depend on Gamma at all?
+
+## Both SigmaVAR and Gamma (broken)
+
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Gamma.broken)
+# Error in Phi_DeltaT %*% Gamma : requires numeric/complex matrix/vector arguments
+```
+
+So this probably depends on Gamma more than on SigmaVAR.
+
 ## Both SigmaVAR (broken) and Gamma
+
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR.broken,
+               Gamma)
+# "The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 3 times 2"
+```
+
+So if both are specified, both need to be working. What happens if Gamma is a different matrix and SigmaVAR is identical (and vice-versa)?
 
 ## Both SigmaVAR (not as should be but running) and Gamma
 
+```{r}
+SigmaVAR.broken <- SigmaVAR
+SigmaVAR.broken[2,1] <- 10000
+SigmaVAR.broken
+
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR.broken,
+               Gamma)
+
+summary(CTma.break)
+summary(CTma.break) == summary(CTma)
+```
+
+The results don't change when SigmaVAR is different, so maybe this relies on Gamma more.
+
+## Both SigmaVAR and Gamma (not as should be but running)
+
+```{r}
+Gamma.broken <- Gamma
+Gamma.broken[2,1] <- 1.5
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Gamma.broken)
+
+# Error in FUN(newX[, i], ...) : invalid 'type' (complex) of argument
+```
+
+So it seems like this relies on Gamma more.
+
+To do:
+- ask Rebecca
+- write a warning for when both are specified saying SigmaVAR will be ignored
+
 ## Gamma as an array
+
+```{r}
+Gamma1 <- Gamma[1:2,]
+Gamma2 <- Gamma[3:4,]
+Gamma3 <- Gamma[5:6,]
+Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(2, 2, 3))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     Gamma = Gamma.broken)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# works well with the array too
+```
+
+To do:
+- nothing
 
 ## Gamma as an array with an extra matrix
 
+```{r}
+Gamma1 <- Gamma[1:2,]
+Gamma2 <- Gamma[3:4,]
+Gamma3 <- Gamma[5:6,]
+Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3, rep(5, 6)), dim = c(2, 2, 4))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     Gamma = Gamma.broken)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# same result
+```
+
+To do:
+- write a warning saying the last panel gets ignored
+
 ## Gamma as an array with different size matrices but the right number of elements
+
+As seen before, this sort of array does not exist.
 
 ## Gamma as an array with matrices with an extra row
 
+```{r}
+Gamma1 <- rbind(Gamma[1:2,], c(5, 5))
+Gamma2 <- rbind(Gamma[3:4,], c(5, 5))
+Gamma3 <- rbind(Gamma[5:6,], c(5, 5))
+Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(3, 2, 3))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     Gamma = Gamma.broken)
+
+# Error in Phi_DeltaT %*% Gamma : non-conformable arguments
+```
+
+To do:
+- nothing, this seems fairly clear
+
 ## Gamma as an array with matrices with one less row
+
+```{r}
+Gamma1 <- Gamma[1,]
+Gamma2 <- Gamma[3,]
+Gamma3 <- Gamma[5,]
+Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(1, 2, 3))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     Gamma = Gamma.broken)
+
+# Error in Gamma[1:q, 1:q, s] : subscript out of bounds
+```
+
+To do:
+- nothing, the error seems pretty clear
 
 ## Gamma as an array with matrices with an extra column
 
+```{r}
+Gamma1 <- cbind(Gamma[1:2,], c(5, 5))
+Gamma2 <- cbind(Gamma[3:4,], c(5, 5))
+Gamma3 <- cbind(Gamma[5:6,], c(5, 5))
+Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(2, 3, 3))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     Gamma = Gamma.broken)
+
+# Error in Phi_DeltaT %*% Gamma : non-conformable arguments
+```
+
+To do:
+- nothing, the error seems pretty clear
+
 ## Gamma as a matrix with an extra row
+
+```{r}
+Gamma.broken <- rbind(Gamma, c(5, 5))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               Gamma = Gamma.broken)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# same result
+```
+
+To do:
+- write a warning saying the last row is ignored
 
 ## Gamma as a matrix with an extra column
 
+```{r}
+Gamma.broken <- cbind(Gamma, rep(5, 6))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               Gamma = Gamma.broken)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# same result
+```
+
+To do:
+- write a warning saying the last column is ignored
+
+## Gamma as a matrix with one extra row and one extra column
+
+```{r}
+Gamma.broken <- rbind(cbind(Gamma, rep(5, 6)), c(6, 6, 6))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               Gamma = Gamma.broken)
+
+CTma.break
+summary(CTma.break) == summary(CTma)
+# same result
+```
+
+To do:
+- write a warning saying the extra values are ignored
+
 ## Gamma as an array with one less matrix but the right number of elements
+
+```{r}
+Gamma1 <- Gamma[1:3,]
+Gamma2 <- Gamma[4:6,]
+Gamma.broken <- array(c(Gamma1, Gamma2), dim = c(3, 2, 2))
+Gamma.broken
+
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     Gamma = Gamma.broken)
+
+# Error in Gamma[1:q, 1:q, s] : subscript out of bounds
+```
+
+To do:
+- nothing, the error seems pretty clear
 
 
 
