@@ -31,6 +31,8 @@ Gamma <- myGamma
 
 Moderators <- 0
 Mod <- matrix(c(64,65,47))
+
+BetweenLevel <- c(1, 1, 2)
 ```
 
 ```{r running ctmeta}
@@ -47,6 +49,14 @@ CTma.mod <- CTmeta(N,
                SigmaVAR,
                Moderators = 1,
                Mod = Mod)
+
+CTma.RE <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel)
 ```
 
 
@@ -1183,9 +1193,103 @@ To do:
 
 ## Moderators = 2
 
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 2,
+               Mod = Mod)
+
+CTma.mod.break
+# "The argument Moderators should be logical, that is, have the value T(RUE) or F(ALSE); or 1 or 0; not 2"
+```
+
+To do:
+- make this an actual error message
+- rephrase
+
 ## Moderators = c(0, 1)
 
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = c(0, 1),
+               Mod = Mod)
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+# different models
+summary(CTma.mod.break) == summary(CTma)
+```
+
+To do:
+- include a warning saying this is a vector and only the first value is used
+
 ## Moderators = c(1, 0)
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = c(1, 0),
+               Mod = Mod)
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+# same output
+```
+
+To do:
+- include a warning saying this is a vector and only the first value is used
+
+## Moderators = c(1, 2)
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = c(1, 2),
+               Mod = Mod)
+
+# Warning in if (!is.logical(Moderators) & Moderators != FALSE & Moderators !=  : the condition has length > 1 and only the first element will be used
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+```
+
+To do:
+- nothing, there already is a warning
+
+## Moderators = c(0, 2)
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = c(0, 2),
+               Mod = Mod)
+
+# Warning in if (!is.logical(Moderators) & Moderators != FALSE & Moderators !=  : the condition has length > 1 and only the first element will be used
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+summary(CTma.mod.break) == summary(CTma)
+```
+
+To do:
+- nothing, there already is a warning
+
 
 
 
@@ -1194,7 +1298,50 @@ To do:
 
 ## Mod with NAs
 
+```{r}
+Mod.break <- Mod
+Mod.break[2,1] <- NA
+Mod.break
+
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.break)
+# "Warning: Rows with NAs omitted from model fitting.
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+summary(CTma.mod.break) == summary(CTma)
+```
+
+To do:
+- nothing, the relevant warning is already in place
+
 ## Mod with non-numbers
+
+```{r}
+Mod.break <- Mod
+Mod.break[2,1] <- "text"
+Mod.break
+
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.break)
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+summary(CTma.mod.break) == summary(CTma)
+```
+
+To do:
+- what happened here? Look into the function
 
 ## Moderators = 0, Mod specified
 
@@ -1242,13 +1389,113 @@ To do:
 
 ## Moderators a matrix with an extra row
 
+```{r}
+Mod.break <- rbind(Mod, 1)
+Mod.break
+
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.break)
+
+CTma.mod.break
+# The argument Mod should be a S times m matrix, with m the number of moderators to be included in the model.\n                   Thus, the number of rows of Mod should equal S = 3 not 4.
+```
+
+To do:
+- make this an actual error
+- rephrase
+
 ## Moderators a matrix with one less row
 
-## Moderators a matrix with an extra column
+```{r}
+Mod.break <- as.matrix(Mod[1:2,])
+Mod.break
+
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.break)
+
+CTma.mod.break
+# The argument Mod should be a S times m matrix, with m the number of moderators to be included in the model.\n                   Thus, the number of rows of Mod should equal S = 3 not 2.
+```
+
+To do:
+- make this an actual error
+- rephrase
+
+## Moderators a matrix with an extra column with all identical moderators
+
+```{r}
+Mod.break <- cbind(Mod, rep(1, 3))
+Mod.break
+
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.break)
+# Warning: Redundant predictors dropped from the model.
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+```
+
+To do:
+- specify what "redundant" means
+
+## Moderators a matrix with an extra column with different values
+
+```{r}
+Mod.break <- cbind(Mod, c(1, 2, 3))
+Mod.break
+
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.break)
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.mod)
+```
+
+To do:
+- nothing: this actually fit a model with a second moderator (I think)
 
 ## 2 moderators
 
+This was done in just the previous chunk.
+
 ## 2 moderators as an array
+
+```{r}
+Mod.break <- array(c(Mod, c(1, 2, 3)), dim = c(3, 1, 2))
+Mod.break
+
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod.break)
+# Error in model.frame.default(object, data, xlev = xlev) : les longueurs des variables diffèrent (trouvé pour 'Mod.')
+```
+
+To do:
+- write an error to say to combine these into a matrix
 
 
 
@@ -1257,28 +1504,250 @@ To do:
 
 ## FEorRE = 3
 
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 3,
+                  BetweenLevel = BetweenLevel)
+
+CTma.RE.broken
+# "The argument FEorRE should be 1 or 2; not 3"
+```
+
+To do:
+- make this an actual error
+
+## FEorRE = 2, BetweenLevel not specified
+
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2)
+
+CTma.RE.broken
+summary(CTma.RE.broken) == summary(CTma.RE)
+# FALSE
+summary(CTma.RE.broken) == summary(CTma)
+# FALSE
+# this is its own model then: save it for future comparisons
+
+CTma.RE.noBL <- CTma.RE.broken 
+```
+
+To do:
+- ask Rebecca if this is meant to work
+- if it is, include an example in the documentation
+
 
 
 
 # BetweenLevel (S-vector or S*1 matrix; optional)
 
+## BetweenLevel all identical
+
+```{r}
+BetweenLevel.broken <- rep(1, 3)
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+# Warning: Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0.
+
+CTma.RE.broken
+summary(CTma.RE.broken) == summary(CTma.RE)
+# FALSE
+summary(CTma.RE.broken) == summary(CTma)
+# FALSE
+summary(CTma.RE.broken) == summary(CTma.RE.noBL)
+# TRUE
+```
+
+To do:
+- specify that RE with no BetweenLevel is equivalent to BetweenLevel = c(1, 1, 1)
+
+## BetweenLevel all identical and != 1
+
+```{r}
+BetweenLevel.broken <- rep(0, 3)
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+# Warning: Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0.
+
+CTma.RE.broken
+summary(CTma.RE.broken) == summary(CTma.RE)
+# FALSE
+summary(CTma.RE.broken) == summary(CTma)
+# FALSE
+summary(CTma.RE.broken) == summary(CTma.RE.noBL)
+# FALSE
+```
+
+To do:
+- figure out why this is the case
+
 ## BetweenLevel with NAs
+
+```{r}
+BetweenLevel.broken <- BetweenLevel
+BetweenLevel.broken[2] <- NA
+BetweenLevel.broken
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+# Error in rma.mv(yi = vecVecStandPhi, V = CovMx, mods = ~overallPhi - 1, : No NAs allowed in variables specified in the 'random' argument.
+```
+
+To do:
+- write an error message
 
 ## BetweenLevel with non-numbers
 
+```{r}
+BetweenLevel.broken <- c("a", "a", "bee")
+BetweenLevel.broken
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+
+CTma.RE.broken
+summary(CTma.RE.broken) == summary(CTma.RE)
+# TRUE
+```
+
+To do:
+- specify in the documentation this can be a factor
+
 ## FEorRE = 1, BetweenLevel specified
 
-## FEorRE = 2, BetweenLevel = NULL
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 1,
+                  BetweenLevel = BetweenLevel)
+
+CTma.RE.broken
+summary(CTma.RE.broken) == summary(CTma.RE)
+# FALSE
+summary(CTma.RE.broken) == summary(CTma)
+# TRUE
+```
+
+To do:
+- include a warning to say BetweenLevel gets ignored
 
 ## BetweenLevel an S*2 matrix
 
+```{r}
+BetweenLevel.broken <- cbind(BetweenLevel, c(1, 2, 3))
+BetweenLevel.broken
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+
+CTma.RE.broken
+# "The argument BetweenLevel should be a S vector or S x 1 matrix.\n                   Thus, the number of elements in BetweenLevel should equal S = 3 not 6."
+```
+
+To do:
+- make this an actual error
+- rephrase
+
 ## BetweenLevel an (S+1)*1 matrix
 
+```{r}
+BetweenLevel.broken <- rbind(as.matrix(BetweenLevel), 3)
+BetweenLevel.broken
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+
+CTma.RE.broken
+# "The argument BetweenLevel should be a S vector or S x 1 matrix.\n                   Thus, the number of elements in BetweenLevel should equal S = 3 not 4."
+```
+
+To do:
+- make this an actual error
+- rephrase
+
 ## BetweenLevel an (S-1)*1 matrix
+
+```{r}
+BetweenLevel.broken <- BetweenLevel[2:3]
+BetweenLevel.broken
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+
+CTma.RE.broken
+# "The argument BetweenLevel should be a S vector or S x 1 matrix.\n                   Thus, the number of elements in BetweenLevel should equal S = 3 not 2."
+```
+
+To do:
+- make this an actual error
+- rephrase
 
 
 
 # Label ((q\*q\*S)-vector; optional)
+
+## Specifying Label
+
+```{r}
+CTma.lab <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = rep("test", 2*2*3))
+# Error in q * q : non-numeric argument to binary operator
+```
+
+To do:
+- figure out how to use Label
 
 ## Label with NAs
 
@@ -1296,7 +1765,59 @@ To do:
 
 # alpha (optional)
 
+## alpha != 0.05
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               alpha = 0.1)
+
+CTma.broken$LB_elliptical_CI
+CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
+# TRUE
+```
+
+To do:
+- figure out where alpha comes into play
+
 ## negative alpha
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               alpha = -0.05)
+
+CTma.broken$LB_elliptical_CI
+CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
+# TRUE
+```
+
+To do:
+- ????
+
+## negative alpha != -0.05
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               alpha = -0.1)
+
+CTma.broken$LB_elliptical_CI
+CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
+# TRUE
+```
+
+To do:
+- ????
 
 ## alpha = 1
 
@@ -1308,13 +1829,102 @@ To do:
 
 ## PrintPlot = 2
 
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               PrintPlot = 2)
+CTma.broken
+# "The argument 'PrintPlot' should be T(RUE) or F(ALSE); or 1 or 0; not 2"
+```
+
+To do:
+- make this an actual error
+
 ## PrintPlot for FE with moderator
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod,
+               PrintPlot = TRUE)
+# Warning in log(Eigen_ParamVAR) : NaNs produced Error: $ operator is invalid for atomic vectors
+```
+
+To do:
+- why is this going wrong?
 
 ## PrintPlot for FE without moderator
 
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               PrintPlot = TRUE)
+# this works
+```
+
+To do:
+- nothing
+
 ## PrintPlot for RE with moderator
 
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               Moderators = 1,
+               Mod = Mod,
+               PrintPlot = TRUE)
+# Warning in log(Eigen_ParamVAR) : NaNs produced Error: $ operator is invalid for atomic vectors
+```
+
+To do:
+- why is this going wrong?
+
 ## PrintPlot for RE without moderator
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               PrintPlot = TRUE)
+# this works
+```
+
+To do:
+- nothing
+
+## PrintPlot for RE without moderator, specified BetweenLevel
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               BetweenLevel = BetweenLevel,
+               PrintPlot = TRUE)
+# this works
+```
+
+To do:
+- nothing
 
 
 
