@@ -230,11 +230,11 @@ summary(CTma, digits = 4)
 CTma$summaryMetaAnalysis
 ```
 
-This results, among other things, in an overall 2*2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, a Phi-plot of the resulting overall Phi can be made. This is demonstrated in Section 1.1.
+This results, among other things, in an overall 2\*2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, a Phi-plot of the resulting overall Phi can be made. This is demonstrated in Section 1.1.
 
-One of the main interests in lagged relationships is which of the variables is 'causal dominant', that is, has the highest predictive power. In this example, is current Stress a stronger predictor for Anxiety on the next time-interval or is current Anxiety a stronger predictor for Stress on the next time-interval? This is of course also the case for the overall Phi. To evaluate the dominance of (overall) lagged effects an AIC-type criterion called the GORICA can be used (Altinisik, Nederhof, Hoijtink, Oldehinkel, Kuiper, conditionally accepted). This method is included in the restriktor package and is demonstrated in Section 1.2.
+A major point of interest with regards to lagged relationships is to determine 'causal dominant' variable, that is, the variable with the highest predictive power. In this example, we are interested in the asking the question: Is current Stress a stronger predictor for Anxiety on the next time-interval or is current Anxiety a stronger predictor for Stress on the next time-interval? To evaluate the dominance of (overall) lagged effects an AIC-type criterion called the GORICA can be used (Altinisik, Nederhof, Hoijtink, Oldehinkel, Kuiper, conditionally accepted). This method is included in the restriktor package and is demonstrated in Section 1.2.
 
-In the example above, the lagged effects matrices (stacked in Phi) were obtained from each primary study. It also possible that some or all studies report a (lagged) correlation matrix. Section 1.3 demonstrates how (lagged) correlation matrices can be used in CTmeta.
+Finally, in the example above, the lagged effects matrices (stacked in Phi) were obtained from each primary study. It is also possible that some or all studies report a (lagged) correlation matrix. Section 1.3 demonstrates how (lagged) correlation matrices can be used in CTmeta.
 
 
 ### 1.1: Phi-plot of resulting overall Phi
