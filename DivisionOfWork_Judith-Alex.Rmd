@@ -32,5 +32,6 @@ Alex
 ```{r}
 Judith <- Judith[Judith != "CTmeta"]
 Judith
+# no need to actually look at coef.CTmeta, this just makes coef() work
 ```
 

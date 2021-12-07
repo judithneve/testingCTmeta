@@ -2090,3 +2090,38 @@ goric(CTma.RE.nomod, H1, type = "gorica", comparison = "complement")
 
 To do:
 - nothing, these all work
+
+# Only specifying some arguments
+
+## Only N
+
+## Only DeltaT
+
+## Only DeltaTStar
+
+## Only Phi
+
+## Only SigmaVAR
+
+## Not N
+
+## Not DeltaT
+
+## Not Phi
+
+## Not SigmaVAR
+
+## Not DeltaT or DeltaTStar
+
+## Not N and DeltaT
+
+## Not N and Phi
+
+## Not N and SigmaVAR
+
+## Not DeltaT and Phi
+
+## Not DeltaT and SigmaVAR
+
+## Not Phi and SigmaVAR
+
