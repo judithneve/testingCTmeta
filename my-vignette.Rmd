@@ -142,7 +142,7 @@ In this simple example, the functionality of CTmeta is demonstrated using three 
 
 Setting up the input arguments for the CTmeta function:
 
-- N: Save the sample size of each study in a Sx1 matrix. 
+- N: Save the sample size of each study in a S\*1 matrix. 
 
 ```{r}
 N <- matrix(c(643, 651, 473))
