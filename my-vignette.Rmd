@@ -247,9 +247,11 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, PrintPlot = TRUE)
 
 
 # Option 2: A customized Phi-plot can be made using the function 'PhiPlot' (see below) or by using the interactive web app from my website (\url{https://www.uu.nl/staff/RMKuiper/Websites\%20\%2F\%20Shiny\%20apps}).
-# Alternatively, the function 'ggPhiPlot' can be used instead of 'PhiPlot'.
 
-# Extract the (q times q) overall Phi matrix
+
+# Option 3: Utilize the PhiPlot() function. 
+
+# First, extract the (q times q) overall Phi matrix
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 # resulting overall Phi:
 overallPhi <- out_CTmeta$Overall_standPhi
@@ -257,11 +259,9 @@ overallPhi <- out_CTmeta$Overall_standPhi
 # Make Phi-plot:
 Title <- as.list(expression(Phi(Delta[t])~plot), 
                  "How do the overall lagged parameters vary as a function of the time-interval")
-#
 PhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
-```
 
-```{r}
+# Alternatively, the function 'ggPhiPlot' can be used instead of 'PhiPlot'.
 phi_plot <- ggPhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 print(phi_plot$PhiPlot)
 ```
