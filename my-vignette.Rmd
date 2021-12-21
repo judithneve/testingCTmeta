@@ -550,8 +550,9 @@ ChecksCTM(Drift, Sigma)
 
 
 #### 2.2.4 Standardization
-The standardized estimates can be obtained from the unstandardized ones. It is also possible to obtain the multivariate (elliptical) confidence intervals (CIs) for the lagged effects estimates. Note that most software render the univariate ones, thus not taking into account the covariances between the estimates.
-The code to obtain this is given next:
+Utilizing the StandPhi() function, standardized laggard effects estimates may be obtained from their unstandardized counterparts. Using this function, it is also possible to obtain the multivariate (elliptical) confidence intervals (CIs) for the lagged effects estimates. Please note, most software renders univariate confidence intervals, thus, not taking into account covariance between estimates.
+
+The following code demonstrates how to obtain standardized laggard effects estimates from unstandardized laggard effects estimates.
 
 ```{r}
 ## Obtain only standardized lagged effects ##
