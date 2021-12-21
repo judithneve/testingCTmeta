@@ -36,13 +36,13 @@ However, since its creation, many more functions have been added; including func
 
 More specifically, functionalities include:
 
-- Rendering plots that illustrate how the VAR(1) model lagged parameters (Phi) and residual covariance matrix vary as a function of the time interval (DeltaT). See the functions 'PhiPlot' and 'SigmaVARPlot', respectively.
+- Rendering plots that illustrate how the VAR(1) model lagged parameters (Phi) and residual covariance matrix (SigmaVAR) vary as a function of the time interval (DeltaT). See the functions 'PhiPlot' and 'SigmaVARPlot', respectively.
 
-- Determining the time-interval DeltaT for which each element of Phi(DeltaT) reaches its minimum or maximum. See the function 'MaxDeltaT'.
+- Determining the time-interval (DeltaT) for which each element of Phi(DeltaT) reaches its minimum or maximum. See the function 'MaxDeltaT'.
 
 - Rendering the time interval for which the VAR(1) model residual covariance matrix is a diagonal matrix. See the function 'DiagDeltaT'.
 
-- Rendering the standardized lagged effects from the unstandardized ones; or from the cross-correlations and their covariance matrix. See the functions 'StandPhi' and 'TransPhi_Corr', respectively. 
+- Rendering standardized lagged effects from their unstandardized counterparts; or from cross-correlations and their covariance matrix. See the functions 'StandPhi' and 'TransPhi_Corr', respectively. 
 These functions also render the univariate (i.e., simultaneous) and multivariate (i.e., elliptical) confidence intervals of the (un)standardized lagged effects.
 
 - Transforming (un)standardized VAR(1) model lagged parameters and the residual covariance matrix to reflect scenarios in which another time-interval is used. See the function 'StandTransPhi'.
