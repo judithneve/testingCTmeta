@@ -390,7 +390,7 @@ PhiPlot(DeltaT, out_VAR, Stand = 1)
 
 
 ## Example 3: Change plot options ##
-# Note: use Phi or Drift from Example 1
+# Note: use Phi from Example 1
 q <- dim(Phi)[1]
 WhichElements <- matrix(1, ncol = q, nrow = q) # Now, all elements are 1
 diag(WhichElements) <- 0 # Now, the autoregressive parameters are excluded by setting the diagonals to 0.
