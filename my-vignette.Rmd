@@ -446,7 +446,7 @@ SigmaVAR <- diag(2) # for ease
 PhiPlot(DeltaT, Phi, Stand = 1, SigmaVAR = SigmaVAR)
 
 # SigmaVAR-plot: unstandardized Drift&Sigma / Phi&SigmaVAR #
-Sigma <- diag(2) # for ease. Note: this is not the CT-equivalent of SigmaVAR.
+Sigma <- diag(2) # for ease. Note: this is the diffusion matrix and is not the CT-equivalent of SigmaVAR, . 
 SigmaVARPlot(DeltaT, Drift = Drift, Sigma = Sigma, Min = 0, Max = 10, Step = 0.01)
 ```
 
