@@ -351,9 +351,9 @@ out_CTmeta$Overall_standPhi
 This example focuses on the time-interval dependency of (cross-)lagged relationships for one study -- and can thus, also be used for the overall (cross-)lagged relationships resulting from CTmeta.
 Let us assume we investigate the (cross-)lagged relationship between Stress and Anxiety (i.e., between q=2 variables), represented by a 2\*2 discrete-time lagged effects matrix Phi and a 2*2 discrete-time residual covariance matrix SigmaVAR (called Psi in Kuiper and Hamaker). 
 
-Note that both the lagged effects matrix Phi and the residual covariance matrix SigmaVAR vary with the time-interval DeltaT. If Stress and Anxiety were measured every hour, Phi would reflect the lagged relationship between current Stress and Anxiety levels and the Stress and Anxiety levels over one hour. Likewise, the residual covariance matrix SigmaVAR is the one that belongs to the every-hour lagged relationship.
-Thus, it follows that for a long enough time-interval, the lagged relationship is damped out, that is, the cross-lagged effects are zero (and the autoregressive effects are one). Then, the residual covariance matrix equals the stationary covariance matrix (Gamma) which equals the (contemporaneous) covariance matrix of the contemporaneous variables.
-To visualize this,there are functions that plot the elements of these matrices for a range of time-intervals:
+Note: Both the lagged effects matrix (Phi) and the residual covariance matrix (SigmaVAR) vary with the time-interval (DeltaT). For example, if Stress and Anxiety were measured every hour, Phi would reflect the lagged relationship between current Stress and Anxiety levels and the Stress and Anxiety levels over one hour. Likewise, the residual covariance matrix (SigmaVAR) would reflect the scenario in which the measurements of Stress and Anxiety were taken every hour.
+Thus, it follows that for a long enough time-interval, the lagged relationship is damped out, that is, the cross-lagged effects are zero (and the autoregressive effects are one). Consequently, the residual covariance matrix equals the stationary covariance matrix (Gamma) which equals the (contemporaneous) covariance matrix of the contemporaneous variables.
+To visualize this, there are functions that plot the elements of these matrices for a range of time-intervals:
 
 ```{r}
 ### Make Phi-plot ###
