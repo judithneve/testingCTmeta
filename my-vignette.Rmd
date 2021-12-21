@@ -430,10 +430,10 @@ SigmaVARPlot(DeltaT, Phi, SigmaVAR, Stand = 1)
 ```
 
 
-One can also have the continuous-time matrices: the lagged effects matrix Drift and the residual covariance matrix Sigma (also calles diffusion matrix). Based on those matrices, Phi- and SigmaVAR-plots can be made:
+One can also have the continuous-time matrices: the lagged effects matrix Drift and the residual covariance matrix Sigma (also called diffusion matrix). Based on those matrices, Phi- and SigmaVAR-plots can be made:
 
 ```{r, echo=T, results='hide'}
-# I now calculate the continuous-time equivalent of Phi, that is, the underlying drift matrix
+# Calculate the continuous-time equivalent of Phi, that is, the underlying drift matrix
 if (!require("expm")) install.packages("expm") # Use expm package for function logm()
 library(expm)
 Drift <- logm(Phi)/DeltaT
@@ -446,7 +446,7 @@ SigmaVAR <- diag(2) # for ease
 PhiPlot(DeltaT, Phi, Stand = 1, SigmaVAR = SigmaVAR)
 
 # SigmaVAR-plot: unstandardized Drift&Sigma / Phi&SigmaVAR #
-Sigma <- diag(2) # for ease. Note that this is not the CT-equivalent of SigmaVAR.
+Sigma <- diag(2) # for ease. Note: this is not the CT-equivalent of SigmaVAR.
 SigmaVARPlot(DeltaT, Drift = Drift, Sigma = Sigma, Min = 0, Max = 10, Step = 0.01)
 ```
 
