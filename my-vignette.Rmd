@@ -346,7 +346,7 @@ SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3)
 # Run CTmeta:
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 
-# Finally, calculate the overall q-times-q (here, 2*2) lagged effects matrix overall-Phi
+# Finally, retrieve the overall q-times-q (here, 2*2) lagged effects matrix overall-Phi
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 out_CTmeta$Overall_standPhi
 ```
