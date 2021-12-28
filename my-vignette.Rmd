@@ -301,9 +301,10 @@ goric(est, VCOV = VCOV, H1, type = "gorica", comparison = "complement")
 ### 1.3: A (lagged) correlation matrix as input
 
 ```{r, eval=F}
-## What if primary studies report a (lagged) correlation matrix ##
+## What if primary studies report a (lagged) correlation matrix rather than reporting the lagged effects ##
 
-# Supose all S=3 primary studies reported the following lagged correlation matrix:
+# Suppose all S=3 primary studies reported the following lagged correlation matrix:
+# Also, recall there are q=2 variables of interest. 
 q <- 2
 corr_YXYX <- matrix(c(1.00, 0.40, 0.63, 0.34,
                       0.40, 1.00, 0.31, 0.63,
