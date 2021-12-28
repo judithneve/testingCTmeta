@@ -311,39 +311,45 @@ corr_YXYX <- matrix(c(1.00, 0.40, 0.63, 0.34,
                       0.63, 0.31, 1.00, 0.41,
                       0.34, 0.63, 0.41, 1.00), byrow = T, ncol = 2*q)
 
-# In the example below, the same N and DeltaT(Star) values are used:
+# In this example, the same N and DeltaT(Star) values are used:
 N <- matrix(c(643, 651, 473))
 DeltaT <- matrix(c(2, 3, 1))
 DeltaTStar <- 1
 
-# Use the function 'TransPhi_Corr' to calculate the corresponding standardized lagged effects matrix per primary study.
-# Note that one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT, but CTmeta can do this as well.
-# In this example, I deliberately make the time-intervals unequal, 
-# - such that the example is in line with the input (i.e., DeltaT <- matrix(c(2, 3, 1)))
-# - such the resulting overall Phi should equal the Phi that underlies this lagged correlation matrix. 
+# First, use the function 'TransPhi_Corr' to calculate the corresponding standardized lagged effects matrix for each primary study.
+
+# first study 
 out_1 <- TransPhi_Corr(DeltaTStar = DeltaT[1], DeltaT = 1, N = N[1], corr_YXYX) 
 Phi_1 <- out_1$standPhi_DeltaTStar 
 SigmaVAR_1 <- out_1$standSigmaVAR_DeltaTStar
+
+# second study 
 out_2 <- TransPhi_Corr(DeltaTStar = DeltaT[2], DeltaT = 1, N = N[2], corr_YXYX) 
 Phi_2 <- out_2$standPhi_DeltaTStar 
 SigmaVAR_2 <- out_2$standSigmaVAR_DeltaTStar
+
+# third study
 out_3 <- TransPhi_Corr(DeltaTStar = DeltaT[3], DeltaT = 1, N = N[3], corr_YXYX) 
 Phi_3 <- out_3$standPhi_DeltaTStar 
 SigmaVAR_3 <- out_3$standSigmaVAR_DeltaTStar
 
-# Make Phi
+# Note: one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT, but CTmeta can do this as well.
+
+# In this example, the time-intervals are deliberately unequal, 
+# - such that the example is in line with the input (i.e., DeltaT <- matrix(c(2, 3, 1)))
+# - such the resulting overall Phi should equal the Phi that underlies this lagged correlation matrix. 
+
+# Next, make Phi (the stacked lagged effects matrix)
 Phi <- rbind(Phi_1, Phi_2, Phi_3) # This, returns a stacked matrix of size S q times q.
 SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3)
-# For more details, see ?TransPhi_Corr
 
 # Run CTmeta:
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 
-# The overall q-times-q (here, 2*2) lagged effects matrix Phi
+# Finally, calculate the overall q-times-q (here, 2*2) lagged effects matrix overall-Phi
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 out_CTmeta$Overall_standPhi
 ```
-
 
 ## Example 2: Time-interval dependency
 
