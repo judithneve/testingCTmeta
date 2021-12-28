@@ -335,12 +335,12 @@ SigmaVAR_3 <- out_3$standSigmaVAR_DeltaTStar
 
 # Note: one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT, but CTmeta can do this as well.
 
-# In this example, the time-intervals are deliberately unequal, 
-# - such that the example is in line with the input (i.e., DeltaT <- matrix(c(2, 3, 1)))
-# - such the resulting overall Phi should equal the Phi that underlies this lagged correlation matrix. 
+# In this example, the time-intervals are deliberately unequal such that, 
+# - the example is in line with the input (i.e., DeltaT <- matrix(c(2, 3, 1)))
+# - the resulting overall Phi should equal the Phi that underlies this lagged correlation matrix. 
 
-# Next, make Phi (the stacked lagged effects matrix)
-Phi <- rbind(Phi_1, Phi_2, Phi_3) # This, returns a stacked matrix of size S q times q.
+# Next, make Phi
+Phi <- rbind(Phi_1, Phi_2, Phi_3)  # This, returns a stacked matrix of size (S\*q) \* q
 SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3)
 
 # Run CTmeta:
