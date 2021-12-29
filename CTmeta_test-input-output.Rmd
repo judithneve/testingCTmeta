@@ -81,6 +81,8 @@ CTma.broken <- CTmeta(N.break,
 To do:
 - write an error message for NAs in N
 
+29/12 update: done
+
 ## N with non-numbers
 
 ```{r}
@@ -118,7 +120,7 @@ summary(CTma.broken) == summary(CTma)
 ```
 
 To do:
-- specify N can be a vector of length S
+- specify N can be a vector of length S (DOCUMENTATION CHANGE)
 
 ## N as a S*2 matrix
 
@@ -140,6 +142,8 @@ To do:
 - rephrase the message
 - make it an actual error?
 
+Update 29/12: done.
+
 ## N as a vector that is too long
 
 ```{r}
@@ -159,6 +163,8 @@ CTma.broken
 To do:
 - rephrase the message
 - make it an actual error?
+
+Update 29/12: done (same modification as for the previous chunk).
 
 ## N as a (S-1)*1 matrix
 
@@ -180,6 +186,8 @@ To do:
 - rephrase the message
 - make it an actual error?
 
+Update 29/12: done (same modification as for the previous chunk).
+
 ## N as a (S+1)*1 matrix
 
 ```{r}
@@ -199,6 +207,22 @@ CTma.broken
 To do:
 - rephrase the message
 - make it an actual error?
+
+Update 29/12: done (same modification as for the previous chunk).
+
+## Update 29/12
+
+### The CTmeta.R function has been changed to:
+
+1. Check the presence of NAs in N
+
+2. Not have any output when the output is the same thing as the error message
+
+3. Rephrase the error message + clean up the next line sign from it and have it actually be the next line.
+
+### Still to do:
+
+1. Change the documentation to specify N can be a vector of length S (see section "N as a vector").
 
 
 
@@ -222,6 +246,8 @@ CTma.broken <- CTmeta(N,
 
 To do:
 - write an error message for NAs in DeltaT
+
+Update 29/12: done.
 
 ## DeltaT with non-numbers
 
@@ -260,7 +286,7 @@ summary(CTma.broken) == summary(CTma)
 ```
 
 To do:
-- specify DeltaT can be a vector of length S
+- specify DeltaT can be a vector of length S (DOCUMENTATION CHANGE)
 
 ## DeltaT as a S*2 matrix
 
@@ -282,6 +308,8 @@ To do:
 - rephrase the message
 - make it an actual error?
 
+Update 29/12: this was done by fixing the error message checked for in the N section.
+
 ## DeltaT as a (S-1)*1 matrix
 
 ```{r}
@@ -301,6 +329,8 @@ CTma.broken
 To do:
 - rephrase the message
 - make it an actual error?
+
+Update 29/12: this was done by fixing the error message checked for in the N section.
 
 ## DeltaT as a (S+1)*1 matrix
 
@@ -322,6 +352,8 @@ To do:
 - rephrase the message
 - make it an actual error?
 
+Update 29/12: this was done by fixing the error message checked for in the N section.
+
 ## DeltaT as a vector that is too long
 
 ```{r}
@@ -341,6 +373,18 @@ CTma.broken
 To do:
 - rephrase the message
 - make it an actual error?
+
+Update 29/12: this was done by fixing the error message checked for in the N section.
+
+## Update 29/12
+
+### The CTmeta.R function has been changed to:
+
+1. No changes were made: all necessary changes were covered by changes made when adapting for N.
+
+### Still to do:
+
+1. Change the documentation to specify DeltaT can be a vector of length S (see section "DeltaT as a vector").
 
 
 
@@ -362,6 +406,10 @@ To do:
 - rephrase the output
 - make it an error, or make it run and actually have usable output
 
+Update 29/12: the error message was modified to exclude the "Notably, currently, ..." part. This is because the error here is simply because of the length of the argument. If it is not a scalar, the error message just gets repeated pointlessly.
+
+An error message for the case DeltaTStar is missing was also included.
+
 ## DeltaTstar as a vector with different values
 
 ```{r}
@@ -378,6 +426,8 @@ To do:
 - make this an actual error
 - rephrase the output
 
+Update 29/12: this was dealt with using the output in the previous chunk.
+
 ## DeltaTstar as a vector with identical values
 
 ```{r}
@@ -392,6 +442,20 @@ CTma.broken
 
 To do:
 - make this an error & rephrase
+
+Update 29/12: this was dealt with using the output in the first chunk of this section.
+
+## Update 29/12
+
+### The CTmeta.R function has been changed to:
+
+1. Return an error message when DeltaTStar is not specified
+
+2. Have a clearer and shorter error message when DeltaTStar is not a scalar (no longer including "Notably, currently, ...")
+
+### Still to do:
+
+1. Change the documentation to specify DeltaTStar must be specified.
 
 
 
@@ -436,6 +500,8 @@ CTma.broken <- CTmeta(N,
 To do:
 - write an error message
 
+Update 29/12: done.
+
 ## Phi as an array
 
 ```{r}
@@ -457,7 +523,7 @@ summary(CTma.break) == summary(CTma)
 ```
 
 To do:
-- add an example with Phi as an array
+- add an example with Phi as an array (DOCUMENTATION CHANGE)
 
 ## Phi as an array with an extra matrix
 
@@ -481,6 +547,8 @@ summary(CTma.break) == summary(CTma)
 
 To do:
 - add a warning if the array has too many panels
+
+Update 29/12: done.
 
 
 ## Phi as an array with different size matrices but the right number of elements
@@ -535,6 +603,8 @@ CTma.break <- CTmeta(N,
 To do:
 - write an error message for this
 
+Update 29/12: unsure how to do this - is this necessary, i.e. an error/mistake that's likely to happen?
+
 ## Phi as an array with square matrices that are too large
 
 ```{r}
@@ -555,6 +625,8 @@ CTma.break <- CTmeta(N,
 To do:
 - write an error message for this
 
+Update 29/12: same problem as above.
+
 ## Phi as a matrix with an extra row
 
 ```{r}
@@ -573,6 +645,8 @@ summary(CTma.break) == summary(CTma)
 
 To do:
 - add a warning if the matrix has too many rows
+
+Update 29/12: done.
 
 
 ## Phi as an array with matrices with one less row
@@ -612,7 +686,7 @@ CTma.break <- CTmeta(N,
 ```
 
 To do:
-- nothing?
+- fix this in the same way I fix the too many columns problem for arrays
 
 ## Phi as an array with one less matrix but the right number of elements
 
@@ -632,6 +706,27 @@ CTma.break <- CTmeta(N,
 
 To do:
 - write an error for this OR make it so that it works
+
+Update 29/12: made this into an error.
+
+## Update 29/12
+
+### The CTmeta.R function has been changed to:
+
+1. Return an error message when Phi contains non-numerical values
+
+2. Include a warning when Phi is an array with too many panels
+
+3. Return an error when Phi does not have enough panels.
+
+### Still to do:
+
+1. Change the documentation to include an example of Phi as an array
+
+2. Return an error when Phi is an array in which the matrices have too many columns
+--> unsure how to do this; is this an error that is likely to be needed?
+
+STOPPED HERE -----------------------------------------------------------------------------------------
 
 
 
