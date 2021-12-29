@@ -135,4 +135,8 @@ To do:
 - why is there no documentation for coef.CTmeta?
 - how does coef.CTmeta differ from coef?
 
+Answer:
 
+This is exactly what is expected: coef.CTmeta is a background function so that coef works.
+
+Nothing more to do.

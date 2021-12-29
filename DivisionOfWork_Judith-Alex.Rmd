@@ -31,7 +31,12 @@ Alex
 
 ```{r}
 Judith <- Judith[Judith != "CTmeta"]
-Judith
+Judith <- Judith[Judith != "coef.CTmeta"]
 # no need to actually look at coef.CTmeta, this just makes coef() work
+Judith <- Judith[Judith != "myData"]
+Judith <- Judith[Judith != "myDrift"]
+Judith <- Judith[Judith != "myGamma"]
+# no need to look at these, they are example datasets
+Judith
 ```
 
