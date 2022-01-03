@@ -1353,6 +1353,8 @@ To do:
 - make this an actual error message
 - rephrase
 
+Update 03/01: done.
+
 ## Moderators = c(0, 1)
 
 ```{r}
@@ -1373,6 +1375,8 @@ summary(CTma.mod.break) == summary(CTma)
 To do:
 - include a warning saying this is a vector and only the first value is used
 
+Update 03/01: done.
+
 ## Moderators = c(1, 0)
 
 ```{r}
@@ -1391,6 +1395,8 @@ summary(CTma.mod.break) == summary(CTma.mod)
 
 To do:
 - include a warning saying this is a vector and only the first value is used
+
+Update 03/01: done.
 
 ## Moderators = c(1, 2)
 
@@ -1432,6 +1438,18 @@ summary(CTma.mod.break) == summary(CTma)
 
 To do:
 - nothing, there already is a warning
+
+## Update 03/01
+
+### Done:
+
+1. Included warnings for arguments of length > 1
+
+2. Made it into an actual error message
+
+### Still to do:
+
+1. Nothing.
 
 
 
