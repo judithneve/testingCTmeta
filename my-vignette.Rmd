@@ -198,7 +198,7 @@ Next, the following code will demonstrate the use of CTmeta for different types 
 ```{r, echo=T, results='hide'}
 ### Example without moderators ###
 
-## Fixed effects model ##
+## Fixed effects model (default) ##
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 
 ## Random effects model ##
@@ -239,20 +239,20 @@ Finally, in the example above, the lagged effects matrices (stacked in Phi) were
 
 ### 1.1: Phi-plot of resulting overall Phi
 
- Make customized Phi-plot of resulting overall Phi
+ Make customized Phi-plot of resulting overall Phi:
 
 ```{r}
-# Option 1: Using the plot option in the function:
+# Option 1: Utilize the plot option in the 'CTmeta' function. 
 
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, PrintPlot = TRUE) 
 ```
 
 ```{r}
-# Option 2: A customized Phi-plot can be made using the function 'PhiPlot' (see below) or by using the interactive web app from my website (\url{https://www.uu.nl/staff/RMKuiper/Websites\%20\%2F\%20Shiny\%20apps}).
+# Option 2: Use my interactive web application:  (\url{https://www.uu.nl/staff/RMKuiper/Websites\%20\%2F\%20Shiny\%20apps}).
 ```
 
 ```{r}
-# Option 3: Utilize the PhiPlot() function. 
+# Option 3: Utilize the 'PhiPlot' function. 
 
 # First, extract the (q times q) overall Phi matrix
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
@@ -266,7 +266,7 @@ PhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 ```
 
 ```{r}
-# Alternatively, the function 'ggPhiPlot' can be used instead of 'PhiPlot'.
+# Option 4: The function 'ggPhiPlot' can be used instead of 'PhiPlot'.
 phi_plot <- ggPhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 print(phi_plot$PhiPlot)
 ```
