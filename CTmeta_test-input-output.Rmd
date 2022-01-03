@@ -1010,6 +1010,8 @@ CTma.break <- CTmeta(N,
 To do:
 - write an error message for NAs
 
+Update 03/01: done.
+
 ## Gamma with non-numbers, SigmaVAR not specified
 
 ```{r}
@@ -1162,6 +1164,8 @@ summary(CTma.break) == summary(CTma)
 To do:
 - write a warning saying the last panel gets ignored
 
+Update 03/01: done.
+
 ## Gamma as an array with different size matrices but the right number of elements
 
 As seen before, this sort of array does not exist.
@@ -1249,6 +1253,8 @@ summary(CTma.break) == summary(CTma)
 To do:
 - write a warning saying the last row is ignored
 
+Update 03/01: done.
+
 ## Gamma as a matrix with an extra column
 
 ```{r}
@@ -1268,6 +1274,8 @@ summary(CTma.break) == summary(CTma)
 
 To do:
 - write a warning saying the last column is ignored
+
+Update 03/01: done.
 
 ## Gamma as a matrix with one extra row and one extra column
 
@@ -1289,6 +1297,8 @@ summary(CTma.break) == summary(CTma)
 To do:
 - write a warning saying the extra values are ignored
 
+Update 03/01: done.
+
 ## Gamma as an array with one less matrix but the right number of elements
 
 ```{r}
@@ -1308,6 +1318,16 @@ CTma.break <- CTmeta(N,
 
 To do:
 - nothing, the error seems pretty clear
+
+## Update 03/01
+
+### The CTmeta.R file has been modified to:
+
+1. Include warnings and error messages
+
+### Still to do:
+
+1. Figure out how to navigate both SigmaVAR and Gamma being specified
 
 
 
