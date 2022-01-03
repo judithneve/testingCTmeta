@@ -726,8 +726,6 @@ Update 29/12: made this into an error.
 2. Return an error when Phi is an array in which the matrices have too many columns
 --> unsure how to do this; is this an error that is likely to be needed?
 
-STOPPED HERE -----------------------------------------------------------------------------------------
-
 
 
 
@@ -752,6 +750,8 @@ CTma.broken <- CTmeta(N,
 To do:
 - write an error message
 
+Update 03/01: done.
+
 ## SigmaVAR with non-numbers
 
 ```{r}
@@ -770,6 +770,8 @@ CTma.broken <- CTmeta(N,
 
 To do:
 - write an error message
+
+Update 03/01: done.
 
 ## SigmaVAR as an array
 
@@ -792,7 +794,7 @@ summary(CTma.break) == summary(CTma)
 ```
 
 To do:
-- add an example with SigmaVAR as an array
+- add an example with SigmaVAR as an array (DOCUMENTATION CHANGE)
 
 ## SigmaVAR as an array with an extra matrix
 
@@ -816,6 +818,8 @@ summary(CTma.break) == summary(CTma)
 
 To do:
 - add a warning if the array has too many panels
+
+Update 03/01: done.
 
 
 ## SigmaVAR as an array with different size matrices but the right number of elements
@@ -842,6 +846,8 @@ CTma.break <- CTmeta(N,
 
 To do:
 - nothing, the error message is fairly clear (maybe rephrase it a bit so it is more straight to the point)
+
+Update 03/01: changed the error message to clarify the dimensions. This will also need to be changed in Check_SigmaVAR.R
 
 ## SigmaVAR as an array with matrices with one less row
 
@@ -883,6 +889,8 @@ CTma.break <- CTmeta(N,
 To do:
 - clarify the error message
 
+Update 03/01: cannot find the error message - this should be changed in Check_SigmaVAR.R
+
 ## SigmaVAR as a matrix with an extra row
 
 ```{r}
@@ -901,6 +909,8 @@ summary(CTma.break) == summary(CTma)
 
 To do:
 - include a warning saying the last row of SigmaVAR is ignored
+
+Update 03/01: done.
 
 ## SigmaVAR as a matrix with an extra column
 
@@ -921,6 +931,8 @@ summary(CTma.break) == summary(CTma)
 To do:
 - include a warning saying the last column of SigmaVAR is ignored
 
+Update 03/01: done.
+
 ## SigmaVAR as a matrix with an extra column and an extra row
 
 ```{r}
@@ -940,6 +952,8 @@ summary(CTma.break) == summary(CTma)
 To do:
 - include a warning saying the last row and the last column of SigmaVAR are ignored
 
+Update 03/01: Done.
+
 ## SigmaVAR as an array with one less matrix but the right number of elements
 
 ```{r}
@@ -958,6 +972,20 @@ CTma.break <- CTmeta(N,
 
 To do:
 - nothing, this seems pretty clear
+
+## Update 03/01
+
+### The CTmeta.R file has been changed in the following ways:
+
+1. Gives an error message when SigmaVAR has NAs
+
+2. Gives an error message when SigmaVAR has non-numerical values
+
+### Still to do:
+
+1. Include an example in the documentation where SigmaVAR is an array
+
+2. Update the error messages in Check_SigmaVAR.R (see SigmaVAR as an array with matrices an extra row)
 
 
 
