@@ -209,7 +209,7 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2)
 Mod <- matrix(c(64,65,47)) # 1 moderator
 #Mod <- matrix(cbind(c(64,65,47), c(78,89,34)), ncol = q); colnames(Mod) <- c("Mod1", "Mod2") # two moderators, in each column 1
 
-## Fixed effects model ##
+## Fixed effects model (default) ##
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod)
 ```
 
@@ -219,14 +219,14 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE =
 ```
 
 ```{r}
-## Different types of output options are possible ##
+## Different output options are possible ##
 CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE = 2)
 CTma
 print(CTma)
 summary(CTma)
 print(CTma, digits = 4)
 summary(CTma, digits = 4)
-# In Rstudio, use 'CTma$' to see what output there is. For example:
+# In Rstudio, use 'CTma$' to see what output options are available. For example:
 CTma$summaryMetaAnalysis
 ```
 
