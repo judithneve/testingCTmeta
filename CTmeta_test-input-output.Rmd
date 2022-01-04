@@ -2091,6 +2091,8 @@ CTma.broken
 To do:
 - make this an actual error
 
+Update 04/01: done.
+
 ## PrintPlot for FE with moderator
 
 ```{r}
@@ -2173,6 +2175,10 @@ CTma.mod.break <- CTmeta(N,
 
 To do:
 - nothing
+
+## Update 04/01:
+
+1. Can't print plot for moderator model with moderators
 
 
 
@@ -2320,6 +2326,9 @@ goric(CTma.RE.nomod, H1, type = "gorica", comparison = "complement")
 
 To do:
 - nothing, these all work
+
+
+
 
 # Only specifying some arguments
 
