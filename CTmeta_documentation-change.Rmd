@@ -50,10 +50,11 @@ JN: throughout the document, change 's plurals to either just s or "word"s
 #   Mod = NULL,          # change the format of the dimensions
 #                        # specify what m is
 #   FEorRE = 1,          # can we change the name of the parameter?
-#                        # would also be much better to not use 1/2 as input
+#                        # FE and RE are also valid inputs
 #   BetweenLevel = NULL, # extra comma not needed in "It will only be used,"
 #                        # not "==" but "="
 #                        # how it works should be clearer
+                         # it can be a factor
 #   Label = NULL,        # should add a comma after "forest plot"
 #                        # "a q*" instead of "an q*"
 #                        # "It will only be used, in case the multivariate approach can be used (in case of the univariate approach, it will always use the labeling Study 1 to Study S)" should be "It will only be used when the multivariate approach can be used (in case of the univariate approach, it will always use the labeling Study 1 to Study S)"

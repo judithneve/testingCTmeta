@@ -2217,7 +2217,7 @@ CTma.mod.break <- CTmeta(N,
 ## FEorRE = 3
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2232,12 +2232,23 @@ CTma.RE.broken
 To do:
 - make this an actual error
 
-Update 03/01: done.
+Done:
+
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 3,
+                  BetweenLevel = BetweenLevel)
+```
+
 
 ## FEorRE = 2, BetweenLevel not specified
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2258,19 +2269,31 @@ To do:
 - ask Rebecca if this is meant to work
 - if it is, include an example in the documentation
 
-## Update 03/01:
+## Added "FE" and "RE" as possible inputs
 
-### Done:
+```{r}
+CTma.FE <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = "FE")
 
-1. Made sure the error is an error
+CTma.FE
+summary(CTma.FE) == summary(CTma)
 
-2. Included FE and RE as valid outputs
+CTma.RE.2 <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = "RE",
+                  BetweenLevel = BetweenLevel)
 
-### Still to do:
+CTma.RE.2
+summary(CTma.RE.2) == summary(CTma.RE)
+```
 
-1. Change documentation for FE/RE
-
-2. What happens when RE but no BetweenLevel?
 
 
 
@@ -2280,7 +2303,7 @@ To do:
 ## BetweenLevel for FE
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2295,14 +2318,27 @@ summary(CTma.broken) == summary(CTma)
 To do:
 - add a warning saying BetweenLevel gets ignored, "did you mean FEorRE = 2?"
 
-Update 04/01: done.
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 1,
+                  BetweenLevel = BetweenLevel)
+CTma.broken
+summary(CTma.broken) == summary(CTma)
+```
+
 
 ## BetweenLevel all identical
 
 ```{r}
 BetweenLevel.broken <- rep(1, 3)
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2317,20 +2353,20 @@ summary(CTma.RE.broken) == summary(CTma.RE)
 summary(CTma.RE.broken) == summary(CTma)
 # FALSE
 summary(CTma.RE.broken) == summary(CTma.RE.noBL)
-# TRUE
+# FALSE
+
+CTma.RE.id.BL <- CTma.RE.broken
 ```
 
 To do:
-- specify that RE with no BetweenLevel is equivalent to BetweenLevel = c(1, 1, 1)
-
-Update 04/01: actually, probably not needed.
+- figure out what BetweenLevel means
 
 ## BetweenLevel all identical and != 1
 
 ```{r}
 BetweenLevel.broken <- rep(0, 3)
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2346,12 +2382,12 @@ summary(CTma.RE.broken) == summary(CTma)
 # FALSE
 summary(CTma.RE.broken) == summary(CTma.RE.noBL)
 # FALSE
+summary(CTma.RE.broken) == summary(CTma.RE.id.BL)
+# TRUE
 ```
 
 To do:
-- figure out why this is the case
-
-Update 04/01: this is probably how it's meant to be. Ask more detail about what the values of BetweenLevel mean.
+- nothing
 
 ## BetweenLevel with NAs
 
@@ -2360,7 +2396,7 @@ BetweenLevel.broken <- BetweenLevel
 BetweenLevel.broken[2] <- NA
 BetweenLevel.broken
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2373,7 +2409,18 @@ CTma.RE.broken <- CTmeta(N,
 To do:
 - write an error message
 
-Update 04/01: done.
+Done:
+
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+```
+
 
 ## BetweenLevel with non-numbers
 
@@ -2381,7 +2428,7 @@ Update 04/01: done.
 BetweenLevel.broken <- c("a", "a", "bee")
 BetweenLevel.broken
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2400,7 +2447,7 @@ To do:
 ## FEorRE = 1, BetweenLevel specified
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2418,7 +2465,24 @@ summary(CTma.RE.broken) == summary(CTma)
 To do:
 - include a warning to say BetweenLevel gets ignored
 
-Update 04/01: this was actually already covered!
+Done:
+
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 1,
+                  BetweenLevel = BetweenLevel)
+
+CTma.RE.broken
+summary(CTma.RE.broken) == summary(CTma.RE)
+# FALSE
+summary(CTma.RE.broken) == summary(CTma)
+# TRUE
+```
+
 
 ## BetweenLevel an S*2 matrix
 
@@ -2426,7 +2490,7 @@ Update 04/01: this was actually already covered!
 BetweenLevel.broken <- cbind(BetweenLevel, c(1, 2, 3))
 BetweenLevel.broken
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2442,7 +2506,18 @@ To do:
 - make this an actual error
 - rephrase
 
-Update 04/01: done.
+Done:
+
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+```
+
 
 ## BetweenLevel an (S+1)*1 matrix
 
@@ -2450,7 +2525,7 @@ Update 04/01: done.
 BetweenLevel.broken <- rbind(as.matrix(BetweenLevel), 3)
 BetweenLevel.broken
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2466,7 +2541,18 @@ To do:
 - make this an actual error
 - rephrase
 
-Update 04/01: done.
+Done:
+
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+```
+
 
 ## BetweenLevel an (S-1)*1 matrix
 
@@ -2474,7 +2560,7 @@ Update 04/01: done.
 BetweenLevel.broken <- BetweenLevel[2:3]
 BetweenLevel.broken
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.broken <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2490,21 +2576,17 @@ To do:
 - make this an actual error
 - rephrase
 
-Update 04/01: done.
+Done:
 
-## Update 04/01
-
-### Changes made:
-
-1. Cleaned the errors
-
-2. Added a warning
-
-### Still to do:
-
-1. Figure out what the values of BetweenLevel mean - does it only matter that they are different, or does the actual number make a difference?
-
-2. Documentation: BetweenLevel can be a factor variable
+```{r}
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+```
 
 
 
@@ -2607,7 +2689,7 @@ To do:
 ## PrintPlot = 2
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -2618,14 +2700,27 @@ CTma.broken
 ```
 
 To do:
-- make this an actual error
+- turn this into a warning: the rest can still run
 
-Update 04/01: done.
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               PrintPlot = 2)
+
+CTma.broken
+summary(CTma.broken) == summary(CTma)
+```
+
 
 ## PrintPlot for FE with moderator
 
 ```{r}
-CTma.mod.break <- CTmeta(N,
+CTma.mod.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -2642,22 +2737,27 @@ To do:
 ## PrintPlot for FE without moderator
 
 ```{r}
-CTma.mod.break <- CTmeta(N,
+CTma.mod.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                PrintPlot = TRUE)
-# this works
+# this returns the plot twice
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma)
 ```
 
 To do:
-- nothing
+- make the plot only print once
+
+NOT DONE: what controls this?
 
 ## PrintPlot for RE with moderator
 
 ```{r}
-CTma.mod.break <- CTmeta(N,
+CTma.mod.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -2675,18 +2775,23 @@ To do:
 ## PrintPlot for RE without moderator
 
 ```{r}
-CTma.mod.break <- CTmeta(N,
+CTma.mod.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                FEorRE = 2,
                PrintPlot = TRUE)
-# this works
+# this returns the plot twice
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.RE.noBL)
 ```
 
 To do:
-- nothing
+- make the plot only print once
+
+NOT DONE: where is this controlled?
 
 ## PrintPlot for RE without moderator, specified BetweenLevel
 
@@ -2699,15 +2804,16 @@ CTma.mod.break <- CTmeta(N,
                FEorRE = 2,
                BetweenLevel = BetweenLevel,
                PrintPlot = TRUE)
-# this works
+# this returns the plot twice
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.RE)
 ```
 
 To do:
-- nothing
+- make the plot only print once
 
-## Update 04/01:
-
-1. Can't print plot for moderator model with moderators
+NOT DONE: where is this controlled?
 
 
 

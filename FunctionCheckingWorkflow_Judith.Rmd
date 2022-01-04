@@ -76,3 +76,13 @@ Actually comes up with a bunch of warnings - it is clear what the problem is fro
 4. Can moderators be factors?
 
 This would explain the output of the non-numerical moderator input
+
+5. Is a RE model with no BetweenLevel factor meant to work?
+
+6. What do the entries in BetweenLevel mean?
+
+i.e.: does it make a difference whether it's 0, 1, 2 or 1, 2, 3?
+
+7. When PhiPlot = TRUE, the plot prints twice
+
+8. When a model has moderators and PrintPlot = TRUE, the function breaks
