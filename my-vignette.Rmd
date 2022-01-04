@@ -498,16 +498,16 @@ MaxDeltaT(DeltaT, Phi)
 
 #### 2.2.1 Discrete-time <-> continuous-time
 
-There are two types of lagged effects models: the discrete-time (DT) and continuous-time (CT) models. Both are related (for more details see the references at the top). The following functions to transform one to the other:
+There are two types of lagged effects models: the discrete-time (DT) and continuous-time (CT) models. Both are related (for more details see the references at the top). The following functions transform parameter matrices from one type to the other:
 
 ```{r}
 ### From DT to CT ###
 
 ## Example 1 ##
-Phi <- myPhi[1:2, 1:2]
-SigmaVAR <- diag(2) # for ease
-DeltaT <- 1
-#
+DeltaT <- 1             # specify the time observed time interval
+Phi <- myPhi[1:2, 1:2]  # select a portion of Phi that corresponds to one study
+SigmaVAR <- diag(2)     # for ease
+           
 CTMparam(DeltaT, Phi, SigmaVAR)
 
 # Notes: 
@@ -518,7 +518,7 @@ CTMparam(DeltaT, Phi, SigmaVAR)
 ```{r, echo=T, results='hide'}
 ### From CT to DT ###
 
-# Create matrices from DT process - normally, you would have these matrices
+# Create matrices from DT process - although normally, you have these matrices.
 CTM <- CTMparam(DeltaT, Phi, SigmaVAR)
 Drift <- CTM$Drift
 Sigma <- CTM$Sigma
@@ -569,7 +569,7 @@ StandPhi(N = NULL, Phi, SigmaVAR)
 #StandPhi(Phi = Phi, SigmaVAR = SigmaVAR)
 
 ## Obtain standardized lagged effects and multivariate CIs ##
-# In that case, input for the sample size N is needed as well.
+# In that case, input specifying the sample size (N) is needed as well.
 N <- 643
 StandPhi(N, Phi, SigmaVAR)
 
