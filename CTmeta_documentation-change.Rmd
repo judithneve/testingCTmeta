@@ -35,6 +35,7 @@ JN: throughout the document, change 's plurals to either just s or "word"s
 
 # CTmeta(                # Continuous-time meta-analysis (CTmeta) on standardized lagged effects (Phi) taking into account the various time-intervals used in the primary studies. There is also an interactive web application on my website to perform CTmeta: https://www.uu.nl/staff/RMKuiper/Websites%20%2F%20Shiny%20apps. --- clear description
 #   N,                   # change the format in which the matrix dimensions are given.
+                         # specify N can be a vector of length S
 #   DeltaT,              # change the format in which the matrix dimensions are given.
 #   DeltaTStar,
 #   Phi,                 # "one can use the function 'TransPhi_Corr" to "the function 'TransPhi_Corr' can be used"

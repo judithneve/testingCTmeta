@@ -16,7 +16,7 @@ Where the function runs, the output is compared to the expected output.
 
 After every attempt to "break" the function, a diagnostic is written as a comment in the code chunk, and the code chunk is followed by a "to do" list to indicate what needs to be specified/improved/changed in the function documentation or the function itself.
 
-Setting up an example that works well.
+# Setting up an example that works well.
 
 ```{r example setup}
 # q=2 variables and S=3 primary studies
@@ -42,7 +42,21 @@ CTma <- CTmeta(N,
                Phi,
                SigmaVAR)
 
+CTma.rebecca <- CTmeta::CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+
 CTma.mod <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Moderators = 1,
+               Mod = Mod)
+
+CTma.mod.rebecca <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -57,7 +71,28 @@ CTma.RE <- CTmeta(N,
                   SigmaVAR,
                   FEorRE = 2,
                   BetweenLevel = BetweenLevel)
+
+CTma.RE.rebecca <- CTmeta::CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel)
 ```
+
+## Checking the examples match between the modified CTmeta.R and the original
+
+```{r}
+summary(CTma) == summary(CTma.rebecca)
+summary(CTma.mod) == summary(CTma.mod.rebecca)
+summary(CTma.RE) == summary(CTma.RE.rebecca)
+```
+
+These all match. We can keep going.
+
+
+
 
 
 # N (S*1 matrix)
@@ -70,7 +105,7 @@ N.break <- N
 N.break[2] <- NA
 N.break
 
-CTma.broken <- CTmeta(N.break,
+CTma.broken <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -81,7 +116,15 @@ CTma.broken <- CTmeta(N.break,
 To do:
 - write an error message for NAs in N
 
-29/12 update: done
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
 
 ## N with non-numbers
 
@@ -91,7 +134,7 @@ N.break <- N
 N.break[2] <- "text"
 N.break
 
-CTma.broken <- CTmeta(N.break,
+CTma.broken <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -101,6 +144,17 @@ CTma.broken <- CTmeta(N.break,
 
 To do:
 - nothing, the error seems pretty easy to infer from
+
+```{r}
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
+
+Still behaves the same, as required.
+
 
 ## N as a vector
 
@@ -129,7 +183,7 @@ To do:
 N.break <- matrix(c(N, 5, 5, 5), ncol = 2)
 N.break
 
-CTma.broken <- CTmeta(N.break,
+CTma.broken <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -142,7 +196,16 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: done.
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
+
 
 ## N as a vector that is too long
 
@@ -151,7 +214,7 @@ Update 29/12: done.
 N.break <- c(as.vector(N), 6)
 N.break
 
-CTma.broken <- CTmeta(N.break,
+CTma.broken <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -164,7 +227,16 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: done (same modification as for the previous chunk).
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
+
 
 ## N as a (S-1)*1 matrix
 
@@ -173,7 +245,7 @@ Update 29/12: done (same modification as for the previous chunk).
 N.break <- N[-3,]
 N.break
 
-CTma.broken <- CTmeta(N.break,
+CTma.broken <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -186,7 +258,16 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: done (same modification as for the previous chunk).
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
+
 
 ## N as a (S+1)*1 matrix
 
@@ -195,7 +276,7 @@ Update 29/12: done (same modification as for the previous chunk).
 N.break <- rbind(N, 1)
 N.break
 
-CTma.broken <- CTmeta(N.break,
+CTma.broken <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -208,21 +289,15 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: done (same modification as for the previous chunk).
+Done:
 
-## Update 29/12
-
-### The CTmeta.R function has been changed to:
-
-1. Check the presence of NAs in N
-
-2. Not have any output when the output is the same thing as the error message
-
-3. Rephrase the error message + clean up the next line sign from it and have it actually be the next line.
-
-### Still to do:
-
-1. Change the documentation to specify N can be a vector of length S (see section "N as a vector").
+```{r}
+CTma.broken <- CTmeta(N.break,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
 
 
 
