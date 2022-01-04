@@ -26,3 +26,5 @@ knitr::opts_chunk$set(echo = TRUE)
 Don't forget:
 
 1. Label
+
+2. alpha: it doesn't seem to change anything as to how the function is running

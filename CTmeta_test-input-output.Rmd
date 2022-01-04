@@ -2024,6 +2024,7 @@ CTma.broken <- CTmeta(N,
 
 CTma.broken$LB_elliptical_CI
 CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
+summary(CTma.broken) == summary(CTma)
 # TRUE
 ```
 
