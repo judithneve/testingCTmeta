@@ -51,6 +51,14 @@ Done.
 
 3. Check_SigmaVAR.R: need to reformat the error messages
 
+4. How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don't match?
+
+Notes:
+
+* it appears that neither can be broken - otherwise, we get errors.
+
+* if both are specified, it seems Gamma takes precendence
+
 ### Smaller notes:
 
 1. "The arguments SigmaVAR and Gamma are not found: Both SigmaVAR and Gamma are unknown; either one (or both) should be part of the input. In case of first matrix, specify 'SigmaVAR = SigmaVAR'."
@@ -60,3 +68,11 @@ What does this mean?
 2. How do we deal with Phi that has too many columns?
 
 Can't include an if statement for the case where it has more columns than q since q is defined from Phi.
+
+3. Warning if vector for "Moderators":
+
+Actually comes up with a bunch of warnings - it is clear what the problem is from them, but should this be reduced to just one?
+
+4. Can moderators be factors?
+
+This would explain the output of the non-numerical moderator input
