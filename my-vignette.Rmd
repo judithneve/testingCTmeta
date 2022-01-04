@@ -51,7 +51,7 @@ This function also renders the univariate (i.e., simultaneous) and multivariate 
 - Transforming VAR(1) model lagged parameters and the residual covariance matrix into their (un)standardized counterparts of the CT(1) model and vice versa. See the functions 'CTMparam' and 'VARparam', respectively.
 
 
-Examples demonstrating the use of all functions included in CTmeta are included below. 
+Please find examples demonstrating the application of functions contained in CTmeta. 
 
 
 ### More details
