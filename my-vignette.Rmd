@@ -160,13 +160,13 @@ DeltaT <- matrix(c(2, 3, 1))
 DeltaTStar <- 1
 ```
 
-- Phi: For each of the q variables, render a S\*q lagged effects matrix (in this example, two 3\*2 matrices are generated). Then stack the matrices and save in a (S\*q) \* q matrix.  This is the lagged effects matrix (Phi). This argument has an example matrix stored in the package:
+- Phi: For each of the q variables, render a S\*q lagged effects matrix (in this example, two 3\*2 matrices are generated). Then stack the matrices and save in a (S\*q) \* q matrix.  This is the lagged effects matrix (Phi). An example of Phi (myPhi) is available in this package:
 
 ```{r}
 Phi <- myPhi
 ```
 
-- SigmaVAR: For each of the q variables, generate the residual covariance matrix.  Stack the q matrices to form a residual covariance matrix (SigmaVAR) with (S\*q) \* q dimensions. This argument has an example matrix stored in the package:
+- SigmaVAR: For each of the q variables, generate the residual covariance matrix.  Stack the q matrices to form a residual covariance matrix (SigmaVAR) with (S\*q) \* q dimensions. This argument also has an example matrix stored in the package:
 
 ```{r}
 SigmaVAR <- mySigmaVAR
@@ -186,14 +186,14 @@ An example of a stacked matrix of size (3\*2)\*2 is presented below.
 Phi
 ```
 
-Note: The lagged effects matrix (Phi) varies with the time-interval DeltaT.  For instance, if Stress and Anxiety are measured every hour, Phi reflects the lagged relationship between initial Stress and Anxiety levels and Stress and Anxiety levels after one hour. This relationship is stronger than (different from) a scenario in which Stress and Anxiety are measured daily (24 hours).
+Note: The lagged effects matrix (Phi) varies as a function of the time interval (DeltaT), hence the notation Phi(DeltaT).  For instance, if Stress and Anxiety are measured every hour, Phi reflects the lagged relationship between initial Stress and Anxiety levels and Stress and Anxiety levels after one hour. This relationship is stronger than (different from) a scenario in which Stress and Anxiety are measured daily (24 hours).
 
 As with regular meta-analysis, one can choose between a fixed-effects and random-effects model and moderators can also be included.
 Notably, the default is a fixed-effects model, but if one wants to generalize the results beyond the included studies, then one should use a random-effects model ('FEorRE = 2').
 In case the lagged effects matrices stacked in Phi are expected to be different / incomparable due to some study characteristics, then these should be included in the model. If, for example, some studies investigated the Stress-Anxiety relationship among students while other studies did this in a business context, a moderator can be included by adding a dummy variable for context. Note that when the effect for this moderator is significant, then there is a significant difference in the Stress-Anxiety relationship between the two subgroups.
 
 
-Next, the following code will demonstrate the use of CTmeta for different types of meta-analyses.  Note, only the output for the last model (the random-effects model with moderators) is shown.  
+The following code will demonstrate the use of CTmeta for different types of meta-analyses.  Note, only the output for the last model (the random-effects model with moderators) is shown.  
 
 ```{r, echo=T, results='hide'}
 ### Example without moderators ###
@@ -230,7 +230,7 @@ summary(CTma, digits = 4)
 CTma$summaryMetaAnalysis
 ```
 
-This results, among other things, in an overall 2\*2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, a Phi-plot of the resulting overall Phi can be made. This is demonstrated in Section 1.1.
+This results, among other things, in a 2\*2 overall Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent on the chosen time-interval (DeltaTStar). To obtain insight into this, a Phi-plot of the resulting overall Phi can be made. This is demonstrated in Section 1.1.
 
 A major point of interest with regards to lagged relationships is to determine 'causal dominant' variable, that is, the variable with the highest predictive power. In this example, we are interested in the asking the question: Is current Stress a stronger predictor for Anxiety on the next time-interval or is current Anxiety a stronger predictor for Stress on the next time-interval? To evaluate the dominance of (overall) lagged effects an AIC-type criterion called the GORICA can be used (Altinisik, Nederhof, Hoijtink, Oldehinkel, Kuiper, conditionally accepted). This method is included in the restriktor package and is demonstrated in Section 1.2.
 
