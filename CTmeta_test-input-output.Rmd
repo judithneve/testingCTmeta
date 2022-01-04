@@ -2334,33 +2334,46 @@ To do:
 
 ## Only N
 
-## Only DeltaT
+```{r}
+CTma.broken <- CTmeta(N)
+# Error in CTmeta(N) : argument "DeltaT" is missing, with no default
+```
 
-## Only DeltaTStar
+### Then fixing that
 
-## Only Phi
+```{r}
+CTma.broken <- CTmeta(N, DeltaT)
+# argument "DeltaTStar" is missing, with no default
+```
 
-## Only SigmaVAR
+### Then fixing that
 
-## Not N
+```{r}
+CTma.broken <- CTmeta(N, DeltaT, DeltaTStar)
+# argument "Phi" is missing, with no default
+```
 
-## Not DeltaT
+### Then fixing that
 
-## Not Phi
+```{r}
+CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi)
 
-## Not SigmaVAR
+CTma.broken
+```
 
-## Not DeltaT or DeltaTStar
+### Then fixing that
 
-## Not N and DeltaT
+```{r}
+CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
+```
 
-## Not N and Phi
+```{r}
+CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, Gamma = Gamma)
+CTma.broken
+summary(CTma.broken) == summary(CTma)
+```
 
-## Not N and SigmaVAR
+### Conclusion:
 
-## Not DeltaT and Phi
-
-## Not DeltaT and SigmaVAR
-
-## Not Phi and SigmaVAR
+No need to worry about not specifying an argument that is needed. The errors are clear.
 

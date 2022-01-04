@@ -23,8 +23,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # CTmeta
 
-Don't forget:
+## Don't forget:
 
 1. Label
 
 2. alpha: it doesn't seem to change anything as to how the function is running
+
+## Smaller notes:
+
+1. "The arguments SigmaVAR and Gamma are not found: Both SigmaVAR and Gamma are unknown; either one (or both) should be part of the input. In case of first matrix, specify 'SigmaVAR = SigmaVAR'."
+
+What does this mean?
