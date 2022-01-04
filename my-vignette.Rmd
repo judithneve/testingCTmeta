@@ -51,7 +51,7 @@ This function also renders the univariate (i.e., simultaneous) and multivariate 
 - Transforming VAR(1) model lagged parameters and the residual covariance matrix into their (un)standardized counterparts of the CT(1) model and vice versa. See the functions 'CTMparam' and 'VARparam', respectively.
 
 
-Examples demonstrating the use of all functions included in CTmeta are included below. 
+Please find examples demonstrating the application of functions contained in CTmeta. 
 
 
 ### More details
@@ -160,13 +160,13 @@ DeltaT <- matrix(c(2, 3, 1))
 DeltaTStar <- 1
 ```
 
-- Phi: For each of the q variables, render a S\*q lagged effects matrix (in this example, two 3\*2 matrices are generated). Then stack the matrices and save in a (S\*q) \* q matrix.  This is the lagged effects matrix (Phi). This argument has an example matrix stored in the package:
+- Phi: For each of the q variables, render a S\*q lagged effects matrix (in this example, two 3\*2 matrices are generated). Then stack the matrices and save in a (S\*q) \* q matrix.  This is the lagged effects matrix (Phi). An example of Phi (myPhi) is available in this package:
 
 ```{r}
 Phi <- myPhi
 ```
 
-- SigmaVAR: For each of the q variables, generate the residual covariance matrix.  Stack the q matrices to form a residual covariance matrix (SigmaVAR) with (S\*q) \* q dimensions. This argument has an example matrix stored in the package:
+- SigmaVAR: For each of the q variables, generate the residual covariance matrix.  Stack the q matrices to form a residual covariance matrix (SigmaVAR) with (S\*q) \* q dimensions. This argument also has an example matrix stored in the package:
 
 ```{r}
 SigmaVAR <- mySigmaVAR
@@ -186,19 +186,19 @@ An example of a stacked matrix of size (3\*2)\*2 is presented below.
 Phi
 ```
 
-Note: The lagged effects matrix (Phi) varies with the time-interval DeltaT.  For instance, if Stress and Anxiety are measured every hour, Phi reflects the lagged relationship between initial Stress and Anxiety levels and Stress and Anxiety levels after one hour. This relationship is stronger than (different from) a scenario in which Stress and Anxiety are measured daily (24 hours).
+Note: The lagged effects matrix (Phi) varies as a function of the time interval (DeltaT), hence the notation Phi(DeltaT).  For instance, if Stress and Anxiety are measured every hour, Phi reflects the lagged relationship between initial Stress and Anxiety levels and Stress and Anxiety levels after one hour. This relationship is stronger than (different from) a scenario in which Stress and Anxiety are measured daily (24 hours).
 
 As with regular meta-analysis, one can choose between a fixed-effects and random-effects model and moderators can also be included.
 Notably, the default is a fixed-effects model, but if one wants to generalize the results beyond the included studies, then one should use a random-effects model ('FEorRE = 2').
 In case the lagged effects matrices stacked in Phi are expected to be different / incomparable due to some study characteristics, then these should be included in the model. If, for example, some studies investigated the Stress-Anxiety relationship among students while other studies did this in a business context, a moderator can be included by adding a dummy variable for context. Note that when the effect for this moderator is significant, then there is a significant difference in the Stress-Anxiety relationship between the two subgroups.
 
 
-Next, the following code will demonstrate the use of CTmeta for different types of meta-analyses.  Note, only the output for the last model (the random-effects model with moderators) is shown.  
+The following code will demonstrate the use of CTmeta for different types of meta-analyses.  Note, only the output for the last model (the random-effects model with moderators) is shown.  
 
 ```{r, echo=T, results='hide'}
 ### Example without moderators ###
 
-## Fixed effects model ##
+## Fixed effects model (default) ##
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 
 ## Random effects model ##
@@ -209,7 +209,7 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2)
 Mod <- matrix(c(64,65,47)) # 1 moderator
 #Mod <- matrix(cbind(c(64,65,47), c(78,89,34)), ncol = q); colnames(Mod) <- c("Mod1", "Mod2") # two moderators, in each column 1
 
-## Fixed effects model ##
+## Fixed effects model (default) ##
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod)
 ```
 
@@ -219,18 +219,18 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE =
 ```
 
 ```{r}
-## Different types of output options are possible ##
+## Different output options are possible ##
 CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE = 2)
 CTma
 print(CTma)
 summary(CTma)
 print(CTma, digits = 4)
 summary(CTma, digits = 4)
-# In Rstudio, use 'CTma$' to see what output there is. For example:
+# In Rstudio, use 'CTma$' to see what output options are available. For example:
 CTma$summaryMetaAnalysis
 ```
 
-This results, among other things, in an overall 2\*2 Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent in the chosen time-interval (DeltaTStar). To obtain insight into this, a Phi-plot of the resulting overall Phi can be made. This is demonstrated in Section 1.1.
+This results, among other things, in a 2\*2 overall Phi matrix (if q=2). Although the varying time-intervals are corrected for, this overall Phi matrix is also dependent on the chosen time-interval (DeltaTStar). To obtain insight into this, a Phi-plot of the resulting overall Phi can be made. This is demonstrated in Section 1.1.
 
 A major point of interest with regards to lagged relationships is to determine 'causal dominant' variable, that is, the variable with the highest predictive power. In this example, we are interested in the asking the question: Is current Stress a stronger predictor for Anxiety on the next time-interval or is current Anxiety a stronger predictor for Stress on the next time-interval? To evaluate the dominance of (overall) lagged effects an AIC-type criterion called the GORICA can be used (Altinisik, Nederhof, Hoijtink, Oldehinkel, Kuiper, conditionally accepted). This method is included in the restriktor package and is demonstrated in Section 1.2.
 
@@ -239,20 +239,20 @@ Finally, in the example above, the lagged effects matrices (stacked in Phi) were
 
 ### 1.1: Phi-plot of resulting overall Phi
 
- Make customized Phi-plot of resulting overall Phi
+ Make customized Phi-plot of resulting overall Phi:
 
 ```{r}
-# Option 1: Using the plot option in the function:
+# Option 1: Use the plot option in the 'CTmeta' function. 
 
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, PrintPlot = TRUE) 
 ```
 
 ```{r}
-# Option 2: A customized Phi-plot can be made using the function 'PhiPlot' (see below) or by using the interactive web app from my website (\url{https://www.uu.nl/staff/RMKuiper/Websites\%20\%2F\%20Shiny\%20apps}).
+# Option 2: Use my interactive web application:  (\url{https://www.uu.nl/staff/RMKuiper/Websites\%20\%2F\%20Shiny\%20apps}).
 ```
 
 ```{r}
-# Option 3: Utilize the PhiPlot() function. 
+# Option 3: Use the 'PhiPlot' function. 
 
 # First, extract the (q times q) overall Phi matrix
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
@@ -266,7 +266,7 @@ PhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 ```
 
 ```{r}
-# Alternatively, the function 'ggPhiPlot' can be used instead of 'PhiPlot'.
+# Option 4: The function 'ggPhiPlot' can be used instead of 'PhiPlot'.
 phi_plot <- ggPhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 print(phi_plot$PhiPlot)
 ```
@@ -311,7 +311,7 @@ corr_YXYX <- matrix(c(1.00, 0.40, 0.63, 0.34,
                       0.63, 0.31, 1.00, 0.41,
                       0.34, 0.63, 0.41, 1.00), byrow = T, ncol = 2*q)
 
-# In this example, the same N and DeltaT(Star) values are used:
+# In this example, the previous N and DeltaT(Star) values are used:
 N <- matrix(c(643, 651, 473))
 DeltaT <- matrix(c(2, 3, 1))
 DeltaTStar <- 1
@@ -333,15 +333,15 @@ out_3 <- TransPhi_Corr(DeltaTStar = DeltaT[3], DeltaT = 1, N = N[3], corr_YXYX)
 Phi_3 <- out_3$standPhi_DeltaTStar 
 SigmaVAR_3 <- out_3$standSigmaVAR_DeltaTStar
 
-# Note: one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT, but CTmeta can do this as well.
+# Note: one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT in the TransPhi_Corr function, but CTmeta can do this as well.
 
 # In this example, the time-intervals are deliberately unequal such that, 
 # - the example is in line with the input (i.e., DeltaT <- matrix(c(2, 3, 1)))
 # - the resulting overall Phi should equal the Phi that underlies this lagged correlation matrix. 
 
 # Next, make Phi
-Phi <- rbind(Phi_1, Phi_2, Phi_3)  # This, returns a stacked matrix of size (S\*q) \* q
-SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3)
+Phi <- rbind(Phi_1, Phi_2, Phi_3)                     # This returns a stacked matrix of size (S\*q) \* q
+SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3) 
 
 # Run CTmeta:
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
@@ -355,8 +355,7 @@ out_CTmeta$Overall_standPhi
 
 ### 2.1 Plots
 
-This example focuses on the time-interval dependency of (cross-)lagged relationships for one study -- and can thus, also be used for the overall (cross-)lagged relationships resulting from CTmeta.
-Let us assume we investigate the (cross-)lagged relationship between Stress and Anxiety (i.e., between q=2 variables), represented by a 2\*2 discrete-time lagged effects matrix Phi and a 2*2 discrete-time residual covariance matrix SigmaVAR (called Psi in Kuiper and Hamaker). 
+This example focuses on the time-interval dependency of (cross-)lagged relationships for one study.  However, in can also be used on the overall (cross-)lagged relationships resulting from CTmeta.  Let us investigate the (cross-)lagged relationship between Stress and Anxiety (i.e., between q=2 variables), represented by a 2\*2 discrete-time lagged effects matrix,Phi, and a 2*2 discrete-time residual covariance matrix, SigmaVAR (called Psi in Kuiper and Hamaker). 
 
 Note: Both the lagged effects matrix (Phi) and the residual covariance matrix (SigmaVAR) vary with the time-interval (DeltaT). For example, if Stress and Anxiety were measured every hour, Phi would reflect the lagged relationship between current Stress and Anxiety levels and the Stress and Anxiety levels over one hour. Likewise, the residual covariance matrix (SigmaVAR) would reflect the scenario in which the measurements of Stress and Anxiety were taken every hour.
 
@@ -370,8 +369,8 @@ To visualize this, there are functions that plot the elements of these matrices 
 ## Example 1 ##
 
 # Phi(DeltaT)
-DeltaT <- 1
-Phi <- myPhi[1:2,1:2] 
+DeltaT <- 1            # Specify time observed time interval (DeltaT)
+Phi <- myPhi[1:2,1:2]  # Select a portion of myPhi that corresponds to one primary study
 
 # Example 1.1: unstandardized Phi #
 PhiPlot(DeltaT, Phi)
@@ -401,14 +400,16 @@ PhiPlot(DeltaT, out_VAR, Stand = 1)
 ## Example 3: Change plot options ##
 # Note: use Phi from Example 1
 q <- dim(Phi)[1]
+
 WhichElements <- matrix(1, ncol = q, nrow = q) # Now, all elements are 1
-diag(WhichElements) <- 0 # Now, the autoregressive parameters are excluded by setting the diagonals to 0.
+diag(WhichElements) <- 0                       # Now, the autoregressive parameters are excluded by setting the diagonals to 0.
 Lab <- c("12", "21")
 Labels <- NULL
 for(i in 1:length(Lab)){
  e <- bquote(expression(Phi(Delta[t])[.(Lab[i])]))
  Labels <- c(Labels, eval(e))
 }
+
 Col <- c(1,2)
 Lty <- c(1,2)
 # Standardized Phi
@@ -422,10 +423,9 @@ PhiPlot(DeltaT = 1, Phi, Stand = 1, SigmaVAR = SigmaVAR, Min = 0, Max = 10, Step
 ```{r}
 ### Make Psi-plot/SigmaVAR-plot ###
 
-# Phi(DeltaT)
-DeltaT <- 1
-Phi <- myPhi[1:2,1:2] 
-SigmaVAR <- diag(2) # for ease
+DeltaT <- 1             # Specify the observed time interval (DeltaT)
+Phi <- myPhi[1:2,1:2]   # Select a portion of myPhi that corresponds to one primary study
+SigmaVAR <- diag(2)     # for ease
 
 # Example 1.1: unstandardized Phi&SigmaVAR #
 SigmaVARPlot(DeltaT, Phi, SigmaVAR)
@@ -438,8 +438,9 @@ SigmaVARPlot(DeltaT, Phi, SigmaVAR, Stand = 1)
 # Like in the Phi-plot, the plot can be customized (but there is no ggplot variant)
 ```
 
-
-One can also have the continuous-time matrices: the lagged effects matrix Drift and the residual covariance matrix Sigma (also called diffusion matrix). Based on those matrices, Phi- and SigmaVAR-plots can be made:
+One can also use the following continuous-time matrices to generate Phi- and SigmaVAR-plots: 
+- Drift: the underlying continuous time lagged effect matrix of the discrete-time lagged effects matrix 
+- Sigma: the residual covariance matrix of the first-order continuous-time (CT-VAR(1)) model (also called diffusion matrix). 
 
 ```{r, echo=T, results='hide'}
 # Calculate the continuous-time equivalent of Phi, that is, the underlying drift matrix
@@ -447,18 +448,19 @@ if (!require("expm")) install.packages("expm") # Use expm package for function l
 library(expm)
 Drift <- logm(Phi)/DeltaT
 
-# Phi-plot: unstandardized Drift/Phi #
+# Phi-plot: unstandardized Drift #
 PhiPlot(DeltaT, Drift = Drift, Min = 0, Max = 10, Step = 0.01)
 
 # Phi-plot: standardized Drift/Phi #
 SigmaVAR <- diag(2) # for ease
 PhiPlot(DeltaT, Phi, Stand = 1, SigmaVAR = SigmaVAR)
 
-# SigmaVAR-plot: unstandardized Drift&Sigma / Phi&SigmaVAR #
+# ** shouldn't we use Drift=Drift here ^ ** 
+
+# SigmaVAR-plot: unstandardized Drift & Sigma / Phi & SigmaVAR #
 Sigma <- diag(2) # for ease. Note: this is the diffusion matrix and is not the CT-equivalent of SigmaVAR, . 
 SigmaVARPlot(DeltaT, Drift = Drift, Sigma = Sigma, Min = 0, Max = 10, Step = 0.01)
 ```
-
 
 #### 2.1.1 Area under curves in Phi-plot
 
@@ -496,17 +498,16 @@ MaxDeltaT(DeltaT, Phi)
 
 #### 2.2.1 Discrete-time <-> continuous-time
 
-There are two types of lagged effects models: the discrete-time (DT) and continuous-time (CT) models. Both are related (for more details see the references at the top).
-There are functions to transform one to the other:
+There are two types of lagged effects models: the discrete-time (DT) and continuous-time (CT) models. Both are related (for more details see the references at the top). The following functions transform parameter matrices from one type to the other:
 
 ```{r}
 ### From DT to CT ###
 
 ## Example 1 ##
-Phi <- myPhi[1:2, 1:2]
-SigmaVAR <- diag(2) # for ease
-DeltaT <- 1
-#
+DeltaT <- 1             # specify the time observed time interval
+Phi <- myPhi[1:2, 1:2]  # select a portion of Phi that corresponds to one study
+SigmaVAR <- diag(2)     # for ease
+           
 CTMparam(DeltaT, Phi, SigmaVAR)
 
 # Notes: 
@@ -517,7 +518,7 @@ CTMparam(DeltaT, Phi, SigmaVAR)
 ```{r, echo=T, results='hide'}
 ### From CT to DT ###
 
-# Create matrices from DT process - normally, you would have these matrices
+# Create matrices from DT process - although normally, you have these matrices.
 CTM <- CTMparam(DeltaT, Phi, SigmaVAR)
 Drift <- CTM$Drift
 Sigma <- CTM$Sigma
@@ -568,7 +569,7 @@ StandPhi(N = NULL, Phi, SigmaVAR)
 #StandPhi(Phi = Phi, SigmaVAR = SigmaVAR)
 
 ## Obtain standardized lagged effects and multivariate CIs ##
-# In that case, input for the sample size N is needed as well.
+# In that case, input specifying the sample size (N) is needed as well.
 N <- 643
 StandPhi(N, Phi, SigmaVAR)
 
@@ -586,8 +587,8 @@ The function StandTransPhi() offers the possibility to transform time-interval d
 The following code demonstrates how the function StandTransPhi() may be used to transform time-interval dependent matrices. 
 
 ```{r, echo=T, results='hide'}
-DeltaTStar <- 1
-DeltaT <- 2
+DeltaTStar <- 1     # Specify desired  time-interval
+DeltaT <- 2         # Specify observed time-interval
 
 ## Obtain only (unstandardized) transformed lagged effects ##
 StandTransPhi(DeltaTStar, DeltaT, N = NULL, Phi)
@@ -600,7 +601,7 @@ StandTransPhi(DeltaTStar, DeltaT, N = NULL, Phi, SigmaVAR)
 #StandTransPhi(DeltaTStar, DeltaT, Phi = Phi, SigmaVAR = SigmaVAR)
 
 ## Obtain (un)standardized transformed lagged effects and multivariate CIs ##
-# In that case, input for the sample size N is needed as well.
+# In that case, input specifying the sample size (N) is needed as well.
 N <- 643
 StandTransPhi(DeltaTStar, DeltaT, N, Phi, SigmaVAR)
 
@@ -612,7 +613,7 @@ StandTransPhi(DeltaTStar, DeltaT, N, Phi, SigmaVAR)
 
 ## Example 3: Correlated residuals
 
-As elaborated in Kuiper and Hamaker (unpublished), even though the focus in lagged effects models is the strength and sign of the lagged relationships, the residuals are of interest as well. As demonstrated above, via the SigmaVAR-plot (Psi-plot), the residual covariance matrix of the discrete-time model varies with the chosen time-interval, like the lagged relationships (in Phi) do. As stated above, the code to procude such a SigmaVAR-plot is given by: 
+Even though the focus in lagged effects models is the strength and sign of the lagged relationships, the residuals are of interest as well (more details may be found in Kuiper and Hamaker (unpublished)). As demonstrated above, via the SigmaVAR-plot (Psi-plot), the residual covariance matrix of the discrete-time model varies with the chosen time-interval, like the lagged relationships (in Phi) do. Recall, the code to procude such a SigmaVAR-plot is given by: 
 
 ```{r}
 ### Make Psi-plot/SigmaVAR-plot ###
@@ -650,7 +651,7 @@ DiagDeltaT(Phi, SigmaVAR = SigmaVAR)
 
 Even though this function calculates the DeltaT for which SigmaVAR is diagonal, it may not be that useful. Kuiper and Hamaker show that correlated discrete-time residuals are supposed to be an indication for omitted common causes (or an effect at a shorter time-interval), but it actually is not. It also does not signal that lagged effects relationships are distorted, since omitted unique causes will not effect the residual correlations.
 It may be better to inspect continuous-time residuals, by looking at Sigma. Correlated continuous-time residuals signal one or more omitted relevant variables (so, common or unique omitted causes). The correlated continuous-time residuals then warn us that the found lagged effects do not reflect the causal relationships, but the predicting relationships. Unfortunately, it is not a measure for the extent of the distortion.
-As stated above, code to obtain Sigma from the discrete-time parameter matrices is given by:
+As demonstrated in the examples above, code to obtain Sigma from the discrete-time parameter matrices is given by:
 
 ```{r}
 ### From DT to CT ###
