@@ -49,8 +49,14 @@ Done.
 
 2. alpha: it doesn't seem to change anything as to how the function is running
 
+3. Check_SigmaVAR.R: need to reformat the error messages
+
 ### Smaller notes:
 
 1. "The arguments SigmaVAR and Gamma are not found: Both SigmaVAR and Gamma are unknown; either one (or both) should be part of the input. In case of first matrix, specify 'SigmaVAR = SigmaVAR'."
 
 What does this mean?
+
+2. How do we deal with Phi that has too many columns?
+
+Can't include an if statement for the case where it has more columns than q since q is defined from Phi.

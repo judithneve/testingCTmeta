@@ -40,8 +40,10 @@ JN: throughout the document, change 's plurals to either just s or "word"s
                          # specify DeltaT can be a vector of length S
 #   DeltaTStar,          # specify it must be specified
 #   Phi,                 # "one can use the function 'TransPhi_Corr" to "the function 'TransPhi_Corr' can be used"
+                         # include an example where Phi is an array
 #                        # change the format of the dimensions
 #   SigmaVAR = NULL,     # change the format of the dimensions (same problem as for Phi)
+                         # include an example where SigmaVAR is an array
 #   Gamma = NULL,        # change the format of the dimensions (same problem as for Phi and SigmaVAR)
 #                        # also: would it be okay to say "contemporary" instead of "contemporaneous"?
 #   Moderators = 0,
