@@ -1766,6 +1766,8 @@ summary(CTma.broken) == summary(CTma)
 To do:
 - add a warning saying BetweenLevel gets ignored, "did you mean FEorRE = 2?"
 
+Update 04/01: done.
+
 ## BetweenLevel all identical
 
 ```{r}
@@ -1791,6 +1793,8 @@ summary(CTma.RE.broken) == summary(CTma.RE.noBL)
 
 To do:
 - specify that RE with no BetweenLevel is equivalent to BetweenLevel = c(1, 1, 1)
+
+Update 04/01: actually, probably not needed.
 
 ## BetweenLevel all identical and != 1
 
@@ -1818,6 +1822,8 @@ summary(CTma.RE.broken) == summary(CTma.RE.noBL)
 To do:
 - figure out why this is the case
 
+Update 04/01: this is probably how it's meant to be. Ask more detail about what the values of BetweenLevel mean.
+
 ## BetweenLevel with NAs
 
 ```{r}
@@ -1837,6 +1843,8 @@ CTma.RE.broken <- CTmeta(N,
 
 To do:
 - write an error message
+
+Update 04/01: done.
 
 ## BetweenLevel with non-numbers
 
@@ -1858,7 +1866,7 @@ summary(CTma.RE.broken) == summary(CTma.RE)
 ```
 
 To do:
-- specify in the documentation this can be a factor
+- specify in the documentation this can be a factor (DOCUMENTATION CHANGE)
 
 ## FEorRE = 1, BetweenLevel specified
 
@@ -1880,6 +1888,8 @@ summary(CTma.RE.broken) == summary(CTma)
 
 To do:
 - include a warning to say BetweenLevel gets ignored
+
+Update 04/01: this was actually already covered!
 
 ## BetweenLevel an S*2 matrix
 
@@ -1903,6 +1913,8 @@ To do:
 - make this an actual error
 - rephrase
 
+Update 04/01: done.
+
 ## BetweenLevel an (S+1)*1 matrix
 
 ```{r}
@@ -1925,6 +1937,8 @@ To do:
 - make this an actual error
 - rephrase
 
+Update 04/01: done.
+
 ## BetweenLevel an (S-1)*1 matrix
 
 ```{r}
@@ -1946,6 +1960,22 @@ CTma.RE.broken
 To do:
 - make this an actual error
 - rephrase
+
+Update 04/01: done.
+
+## Update 04/01
+
+### Changes made:
+
+1. Cleaned the errors
+
+2. Added a warning
+
+### Still to do:
+
+1. Figure out what the values of BetweenLevel mean - does it only matter that they are different, or does the actual number make a difference?
+
+2. Documentation: BetweenLevel can be a factor variable
 
 
 

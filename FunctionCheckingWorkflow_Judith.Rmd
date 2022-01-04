@@ -1,0 +1,28 @@
+---
+title: "To-do list for function checking"
+author: "Judith Neve"
+date: "04/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Extensively check function
+
+2. Modify function as per checks
+
+3. Read through function: is there anything (especially regarding errors/warnings) that should still be changed?
+
+4. Discussion with Rebecca about unclear parts
+
+5. Go through the function check process again
+
+6. Modify documentation
+
+# CTmeta
+
+Don't forget:
+
+1. Label
