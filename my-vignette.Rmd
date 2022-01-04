@@ -613,7 +613,7 @@ StandTransPhi(DeltaTStar, DeltaT, N, Phi, SigmaVAR)
 
 ## Example 3: Correlated residuals
 
-Even though the focus in lagged effects models is the strength and sign of the lagged relationships, the residuals are of interest as well (more details may be found in Kuiper and Hamaker (unpublished)). As demonstrated above, via the SigmaVAR-plot (Psi-plot), the residual covariance matrix of the discrete-time model varies with the chosen time-interval, like the lagged relationships (in Phi) do. Recall, the code to procude such a SigmaVAR-plot is given by: 
+Even though the focus in lagged effects models is the strength and sign of the lagged relationships, the residuals may be of interest as well (more details may be found in Kuiper and Hamaker (unpublished)). As demonstrated above, via the SigmaVAR-plot (Psi-plot), the residual covariance matrix of the discrete-time model varies with the chosen time-interval, like the lagged relationships (in Phi) do. Recall, the code to procude such a SigmaVAR-plot is given by: 
 
 ```{r}
 ### Make Psi-plot/SigmaVAR-plot ###
@@ -649,9 +649,9 @@ DiagDeltaT(Phi, SigmaVAR = SigmaVAR)
 # - A 'varest' object can be used as well.
 ``` 
 
-Even though this function calculates the DeltaT for which SigmaVAR is diagonal, it may not be that useful. Kuiper and Hamaker show that correlated discrete-time residuals are supposed to be an indication for omitted common causes (or an effect at a shorter time-interval), but it actually is not. It also does not signal that lagged effects relationships are distorted, since omitted unique causes will not effect the residual correlations.
-It may be better to inspect continuous-time residuals, by looking at Sigma. Correlated continuous-time residuals signal one or more omitted relevant variables (so, common or unique omitted causes). The correlated continuous-time residuals then warn us that the found lagged effects do not reflect the causal relationships, but the predicting relationships. Unfortunately, it is not a measure for the extent of the distortion.
-As demonstrated in the examples above, code to obtain Sigma from the discrete-time parameter matrices is given by:
+Please note, even though this function calculates the DeltaT for which SigmaVAR is diagonal, it may not be that useful. Kuiper and Hamaker show that correlated discrete-time residuals are supposed to be an indication for omitted common causes (or an effect at a shorter time-interval), but it actually is not. It also does not signal that lagged effects relationships are distorted, since omitted unique causes will not effect the residual correlations.
+
+It may be better to inspect continuous-time residuals, by looking at Sigma. Correlated continuous-time residuals signal one or more omitted relevant variables (so, common or unique omitted causes). The correlated continuous-time residuals then warn us that the found lagged effects do not reflect the causal relationships, but the predicting relationships. Unfortunately, it is not a measure for the extent of the distortion.  As demonstrated in the examples above, code to obtain Sigma from the discrete-time parameter matrices is given by:
 
 ```{r}
 ### From DT to CT ###
