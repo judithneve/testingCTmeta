@@ -37,7 +37,8 @@ JN: throughout the document, change 's plurals to either just s or "word"s
 #   N,                   # change the format in which the matrix dimensions are given.
                          # specify N can be a vector of length S
 #   DeltaT,              # change the format in which the matrix dimensions are given.
-#   DeltaTStar,
+                         # specify DeltaT can be a vector of length S
+#   DeltaTStar,          # specify it must be specified
 #   Phi,                 # "one can use the function 'TransPhi_Corr" to "the function 'TransPhi_Corr' can be used"
 #                        # change the format of the dimensions
 #   SigmaVAR = NULL,     # change the format of the dimensions (same problem as for Phi)

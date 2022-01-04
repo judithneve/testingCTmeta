@@ -311,7 +311,7 @@ DeltaT.break <- DeltaT
 DeltaT.break[2] <- NA
 DeltaT.break
 
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
@@ -322,7 +322,16 @@ CTma.broken <- CTmeta(N,
 To do:
 - write an error message for NAs in DeltaT
 
-Update 29/12: done.
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
+
 
 ## DeltaT with non-numbers
 
@@ -332,7 +341,7 @@ DeltaT.break <- DeltaT
 DeltaT.break[2] <- "text"
 DeltaT.break
 
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
@@ -343,6 +352,14 @@ CTma.broken <- CTmeta(N,
 To do:
 - nothing, the error is pretty clear
 
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
+
 ## DeltaT as a vector
 
 ```{r}
@@ -350,7 +367,7 @@ To do:
 DeltaT.break <- as.vector(DeltaT)
 DeltaT.break
 
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
@@ -370,7 +387,7 @@ To do:
 DeltaT.broken <- matrix(c(N, 5, 5, 5), ncol = 2)
 DeltaT.broken
 
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT.broken,
                DeltaTStar,
                Phi,
@@ -383,7 +400,15 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: this was done by fixing the error message checked for in the N section.
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT.broken,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
 
 ## DeltaT as a (S-1)*1 matrix
 
@@ -392,7 +417,7 @@ Update 29/12: this was done by fixing the error message checked for in the N sec
 DeltaT.break <- DeltaT[-3,]
 DeltaT.break
 
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
@@ -405,7 +430,15 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: this was done by fixing the error message checked for in the N section.
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
 
 ## DeltaT as a (S+1)*1 matrix
 
@@ -414,7 +447,7 @@ Update 29/12: this was done by fixing the error message checked for in the N sec
 DeltaT.break <- rbind(DeltaT, 5)
 DeltaT.break
 
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
@@ -427,7 +460,15 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: this was done by fixing the error message checked for in the N section.
+Done:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
 
 ## DeltaT as a vector that is too long
 
@@ -436,7 +477,7 @@ Update 29/12: this was done by fixing the error message checked for in the N sec
 DeltaT.break <- c(DeltaT, 5)
 DeltaT.break
 
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
@@ -449,17 +490,15 @@ To do:
 - rephrase the message
 - make it an actual error?
 
-Update 29/12: this was done by fixing the error message checked for in the N section.
+Done:
 
-## Update 29/12
-
-### The CTmeta.R function has been changed to:
-
-1. No changes were made: all necessary changes were covered by changes made when adapting for N.
-
-### Still to do:
-
-1. Change the documentation to specify DeltaT can be a vector of length S (see section "DeltaT as a vector").
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT.break,
+               DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
 
 
 
@@ -468,7 +507,7 @@ Update 29/12: this was done by fixing the error message checked for in the N sec
 ## DeltaTstar not specified
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT,
                # DeltaTStar,
                Phi,
@@ -481,14 +520,20 @@ To do:
 - rephrase the output
 - make it an error, or make it run and actually have usable output
 
-Update 29/12: the error message was modified to exclude the "Notably, currently, ..." part. This is because the error here is simply because of the length of the argument. If it is not a scalar, the error message just gets repeated pointlessly.
+Done - the error message was modified to exclude the "Notably, currently, ..." part. This is because the error here is simply because of the length of the argument. If it is not a scalar, the error message just gets repeated pointlessly.:
 
-An error message for the case DeltaTStar is missing was also included.
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               # DeltaTStar,
+               Phi,
+               SigmaVAR)
+```
 
 ## DeltaTstar as a vector with different values
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar = DeltaT,
                Phi,
@@ -501,12 +546,20 @@ To do:
 - make this an actual error
 - rephrase the output
 
-Update 29/12: this was dealt with using the output in the previous chunk.
+Done - the error message was modified to exclude the "Notably, currently, ..." part. This is because the error here is simply because of the length of the argument. If it is not a scalar, the error message just gets repeated pointlessly.:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar = DeltaT,
+               Phi,
+               SigmaVAR)
+```
 
 ## DeltaTstar as a vector with identical values
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar = rep(1, 3),
                Phi,
@@ -518,19 +571,17 @@ CTma.broken
 To do:
 - make this an error & rephrase
 
-Update 29/12: this was dealt with using the output in the first chunk of this section.
+Done:
 
-## Update 29/12
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar = rep(1, 3),
+               Phi,
+               SigmaVAR)
+```
 
-### The CTmeta.R function has been changed to:
 
-1. Return an error message when DeltaTStar is not specified
-
-2. Have a clearer and shorter error message when DeltaTStar is not a scalar (no longer including "Notably, currently, ...")
-
-### Still to do:
-
-1. Change the documentation to specify DeltaTStar must be specified.
 
 
 
