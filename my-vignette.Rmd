@@ -587,8 +587,8 @@ The function StandTransPhi() offers the possibility to transform time-interval d
 The following code demonstrates how the function StandTransPhi() may be used to transform time-interval dependent matrices. 
 
 ```{r, echo=T, results='hide'}
-DeltaTStar <- 1
-DeltaT <- 2
+DeltaTStar <- 1     # Specify desired  time-interval
+DeltaT <- 2         # Specify observed time-interval
 
 ## Obtain only (unstandardized) transformed lagged effects ##
 StandTransPhi(DeltaTStar, DeltaT, N = NULL, Phi)
@@ -601,7 +601,7 @@ StandTransPhi(DeltaTStar, DeltaT, N = NULL, Phi, SigmaVAR)
 #StandTransPhi(DeltaTStar, DeltaT, Phi = Phi, SigmaVAR = SigmaVAR)
 
 ## Obtain (un)standardized transformed lagged effects and multivariate CIs ##
-# In that case, input for the sample size N is needed as well.
+# In that case, input specifying the sample size (N) is needed as well.
 N <- 643
 StandTransPhi(DeltaTStar, DeltaT, N, Phi, SigmaVAR)
 
