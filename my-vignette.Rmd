@@ -448,18 +448,19 @@ if (!require("expm")) install.packages("expm") # Use expm package for function l
 library(expm)
 Drift <- logm(Phi)/DeltaT
 
-# Phi-plot: unstandardized Drift/Phi #
+# Phi-plot: unstandardized Drift #
 PhiPlot(DeltaT, Drift = Drift, Min = 0, Max = 10, Step = 0.01)
 
 # Phi-plot: standardized Drift/Phi #
 SigmaVAR <- diag(2) # for ease
 PhiPlot(DeltaT, Phi, Stand = 1, SigmaVAR = SigmaVAR)
 
-# SigmaVAR-plot: unstandardized Drift&Sigma / Phi&SigmaVAR #
+# ** shouldn't we use Drift=Drift here ^ ** 
+
+# SigmaVAR-plot: unstandardized Drift & Sigma / Phi & SigmaVAR #
 Sigma <- diag(2) # for ease. Note: this is the diffusion matrix and is not the CT-equivalent of SigmaVAR, . 
 SigmaVARPlot(DeltaT, Drift = Drift, Sigma = Sigma, Min = 0, Max = 10, Step = 0.01)
 ```
-
 
 #### 2.1.1 Area under curves in Phi-plot
 
@@ -497,8 +498,7 @@ MaxDeltaT(DeltaT, Phi)
 
 #### 2.2.1 Discrete-time <-> continuous-time
 
-There are two types of lagged effects models: the discrete-time (DT) and continuous-time (CT) models. Both are related (for more details see the references at the top).
-There are functions to transform one to the other:
+There are two types of lagged effects models: the discrete-time (DT) and continuous-time (CT) models. Both are related (for more details see the references at the top). The following functions to transform one to the other:
 
 ```{r}
 ### From DT to CT ###
