@@ -175,7 +175,6 @@ out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 overallPhi <- out_CTmeta$Overall_standPhi
 Title <- as.list(expression(paste0(Phi(Delta[t]), " plot:"),
    "How do the overall lagged parameters vary as a function of the time-interval?"))
-## JN: change title, it shows wrong
 PhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 # or
 ggPhiPlot <- ggPhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
@@ -184,17 +183,14 @@ ggPhiPlot$PhiPlot
 
 ```{r goric}
 ## Evaluate dominance of (absolute values of) cross-lagged effects ##
-## JN: "Evaluating the dominance ..."
 
 if (!require("restriktor")) install.packages("restriktor") # Use restriktor package for function goric().
-## JN: "the function goric is in the restriktor package"
                                                            # Authors of goric(): Vanbrabant and Kuiper.
 library(restriktor)
 
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 H1 <- "abs(overallPhi12) < abs(overallPhi21)"
 goric(out_CTmeta, H1, type = "gorica", comparison = "complement")
-## JN: won't work if another package with a function called "goric" is loaded, regardless of the order they were loaded in
 
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 H1 <- "abs(overallPhi12) < abs(overallPhi21); abs(overallPhi11) < abs(overallPhi22)"
@@ -208,7 +204,6 @@ goric(est, VCOV = VCOV, H1, type = "gorica", comparison = "complement")
 
 ```{r lagged correlation matrix}
 ## What if primary studies report a (lagged) correlation matrix ##
-## JN: add a question mark
 
 q <- 2
 corr_YXYX <- matrix(c(1.00, 0.40, 0.63, 0.34,
@@ -231,10 +226,8 @@ Phi_3 <- out_3$standPhi_DeltaTStar
 SigmaVAR_3 <- out_3$standSigmaVAR_DeltaTStar
 #
 Phi <- rbind(Phi_1, Phi_2, Phi_3) # This, returns a stacked matrix of size S q times q.
-## JN: this comment should not have a comma
 SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3)
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
-## JN: why is there no summary of this?
 out_CTmeta$Overall_standPhi
 ```
 
