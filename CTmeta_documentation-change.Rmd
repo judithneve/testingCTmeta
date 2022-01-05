@@ -289,7 +289,6 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2)
 BetweenLevel <- c(1, 1, 2) # Assuming the first two studies used the same sample/dataset
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2, BetweenLevel = BetweenLevel) # Two-level RE meta-analysis example
 # Note, one can also use this in case there are moderators (as in the example below).
-## JN: only the previous comment was added.
 ```
 
 ```{r}
@@ -297,11 +296,9 @@ CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2, BetweenLevel = BetweenL
 
 Mod <- matrix(c(64,65,47)) # 1 moderator
 #q <- dim(Phi)[2]; Mod <- matrix(cbind(c(64,65,47), c(78,89,34)), ncol = q); colnames(Mod) <- c("Mod1", "Mod2") # two moderators, in each column 1
-## JN: why is this commented out? i.e. why are we not fitting a model with two moderators?
 CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod) # fixed effects model
 #CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE = 2); CTma$tau2 # random effects model
 summary(CTma)
-## JN: why is some of the code commented out?
 ```
 
 ```{r}
@@ -309,7 +306,6 @@ summary(CTma)
 Mod <- matrix(c(64,65,47)) # 1 moderator
 BetweenLevel <- c(1, 1, 2) # Assuming the first two studies used the same sample/dataset
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE = 2, BetweenLevel = BetweenLevel) # Two-level RE meta-analysis example
-## JN: this has no extra information
 ```
 
 ```{r}
@@ -322,7 +318,6 @@ forest(CTma$summaryMetaAnalysis)
 # Note, in case a univariate approach had to be taken, leading to multiple analyses, then one should create a plot per analysis:
 # lapply(CTma$summaryMetaAnalysis_jk, funnel, label = 'out')
 #
-## JN: there is no extra information here
 ```
 
 ```{r}
@@ -336,8 +331,6 @@ forest(CTma$summaryMetaAnalysis)
 # Notes on forest:
 # - For random-effects models of class "rma.mv" (see rma.mv) with multiple  values, the addpred argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the value).
 # - One can also look into the functionality of addpoly().
-
-## JN: these notes are extra compared to the previous part. They should also be rephrased
 ```
 
 ```{r}
@@ -355,7 +348,6 @@ yi_Phi12 <- CTma$summaryMetaAnalysis$yi[elt]
 vi_Phi12 <- CTma$summaryMetaAnalysis$vi[elt]
 funnel(yi_Phi12, vi_Phi12, label = 'out')
 forest(yi_Phi12, vi_Phi12)
-## JN: this is identical to the previous part
 ```
 
 ```{r comments making Phi Plot}
@@ -364,26 +356,17 @@ forest(yi_Phi12, vi_Phi12)
 # Option 1: Using the plot option in the function:
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, PrintPlot = TRUE)
 # The plot can be stored and retrieved as an object as follows:
-## JN: "We can store the plot as an object as follows:"
 # CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, PrintPlot = TRUE)
-## JN: add "If the plot is tored as an object, we can retrive it as follows:"
 # CTma$PhiPlot
-
-## JN: this is clearer, why the version with no comments? would also uncomment the two code lines
 
 
 # Option 2: A customized Phi-plot can be made using the function 'PhiPlot' (see below) or by using the interactive web app from my website (\url{https://www.uu.nl/staff/RMKuiper/Websites\%20\%2F\%20Shiny\%20apps}).
-## JN: the url formatting shows in the documentation
 # Alternatively, one can use the function 'ggPhiPlot' instead of 'PhiPlot'.
-## JN: "Alternatively, "ggPhiPlot" can be used instead of "PhiPlot"."
 
 # Extract the (q times q) overall Phi matrix
-## JN: change the line spacing
-## JN: rephrase (q times q)
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 # resulting overall Phi:
 overallPhi <- out_CTmeta$Overall_standPhi
-## JN: better explained
 
 # Make Phi-plot:
 Title <- as.list(expression(paste0(Phi(Delta[t]), " plot:"),
@@ -394,8 +377,6 @@ ggPhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 # The plot can be stored and retrieved as an object as follows:
 # ggPhiPlot <- ggPhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 # ggPhiPlot$PhiPlot
-
-## JN: I would uncomment the last two lines
 ```
 
 ```{r commented goric}
@@ -408,8 +389,6 @@ if (!require("restriktor")) install.packages("restriktor") # Use restriktor pack
 #if (!require("devtools")) install.packages("devtools")
 #library(devtools)
 #install_github("LeonardV/restriktor")
-
-## JN: information above has been added. Slightly change the language
 
 #
 library(restriktor)
@@ -465,8 +444,6 @@ DeltaTStar <- 1
 # Note that one can already make the time-intervals equal via the arguments DeltaTStar and DeltaT, but CTmeta can as well.
 # In this example, I deliberately make the time-intervals unequal, such that the example is in line with the input (i.e., DeltaT <- matrix(c(2, 3, 1))) and such the resulting overall Phi should equal the Phi that underlies this lagged correlation matrix (which I check at the end).
 
-## JN: more info here. change the language a little bit
-
 out_1 <- TransPhi_Corr(DeltaTStar = DeltaT[1], DeltaT = 1, N = N[1], corr_YXYX)
 Phi_1 <- out_1$standPhi_DeltaTStar
 SigmaVAR_1 <- out_1$standSigmaVAR_DeltaTStar
@@ -478,15 +455,12 @@ Phi_3 <- out_3$standPhi_DeltaTStar
 SigmaVAR_3 <- out_3$standSigmaVAR_DeltaTStar
 
 # Make Phi
-## JN: this comment was added and makes this easier to understand. Change the language
 Phi <- rbind(Phi_1, Phi_2, Phi_3) # This, returns a stacked matrix of size S q times q.
-## JN: change the language of the comment
 SigmaVAR <- rbind(SigmaVAR_1, SigmaVAR_2, SigmaVAR_3)
 # For more details, see ?TransPhi_Corr
 
 # The example CTmeta() code above can be run using this Phi; e.g.,
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
-## JN: why is this here since it's ran and saved just below?
 
 # The overall q-times-q (here, 2x2) lagged effects matrix Phi
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
