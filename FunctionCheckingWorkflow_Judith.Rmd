@@ -23,9 +23,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 6. Modify documentation
 
+
 # For each function:
 
 ## CTmeta
+
+### Workflow
 
 1. Extensively check function
 
@@ -85,4 +88,4 @@ i.e.: does it make a difference whether it's 0, 1, 2 or 1, 2, 3?
 
 7. When PhiPlot = TRUE, the plot prints twice
 
-8. When a model has moderators and PrintPlot = TRUE, the function breaks
+8. When a model has moderators and PrintPlot = TRUE, the plot is not rendered

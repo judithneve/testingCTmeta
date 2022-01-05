@@ -46,7 +46,7 @@ JN: throughout the document, change 's plurals to either just s or "word"s
                          ## it can be a factor in practice - is it meant to be this way??
 #   Label = NULL,        ## still need to figure out how this works
 #   alpha = 0.05,
-#   PrintPlot = FALSE    ## only works when no moderators - is this how it's meant to be?
+#   PrintPlot = FALSE    ### only works when no moderators
 # )
 
 # Value
