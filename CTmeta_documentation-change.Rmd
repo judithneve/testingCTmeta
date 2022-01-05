@@ -65,16 +65,13 @@ DeltaT <- matrix(c(2, 3, 1))
 DeltaTStar <- 1
 #
 # I will use the example matrices stored in the package:
-## JN: "we will use"?
 Phi <- myPhi
 SigmaVAR <- mySigmaVAR
 Gamma <- myGamma # Note: CTmeta does not need both SigmaVAR and Gamma, as denomstrated below.
 # These are all three stacked matrices of size S*q times q.
-## JN: clarify dimensions in previous line
 # The CTmeta function will standardize these matrices (to make comparison of effects meaningful).
 #
 Moderators = 0 # By default set to 0. Hence, not per se needed, as demonstrated below.
-## JN: in previous line, should be <- instead of = for consistency
 ##################################################################################################
 ```
 
@@ -83,7 +80,6 @@ Note on format: a line just goes until the end of the line and needs side-wise s
 ```{r examples intro}
 # Below, you can find example code. Note that, here, only 3 primary studies are used.
 # In practice, one would normally have (many) more, but the code stays (more or less) the same.
-## JN: In practice, there would normally be (many) more
 ```
 
 ### Without comments
@@ -92,7 +88,6 @@ Note on format: a line just goes until the end of the line and needs side-wise s
 
 ```{r fixed effects model}
 ### Examples without comments ###
-## JN: do we need this separation? (discussion in Teams)
 
 ## Example without moderators ##
 
@@ -105,21 +100,17 @@ CTma <- CTmeta(N,
                Phi,
                SigmaVAR)
 CTma
-## JN: I would change "messageMultivar" to not have "Hence,"
 summary(CTma)
 ```
 
 ```{r Random effects (RE) model}
 # Random effects (RE) model #
 
-CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, # JN: as above
-       FEorRE = 2)                           # JN: changing the default "FE" to "RE"
-## JN: why is this example not getting saved and summary'd?
+CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2)
 
 BetweenLevel <- c(1, 1, 2) # Assuming the first two studies used the same sample/dataset
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2,
        BetweenLevel = BetweenLevel) # Two-level RE meta-analysis example
-## JN: why is it not saved and summarised?
 ```
 
 #### With moderators
@@ -136,13 +127,9 @@ summary(CTma)
 
 ```{r 2 moderators random effects}
 q <- dim(Phi)[2]; Mod <- matrix(cbind(c(64,65,47), c(78,89,34)), ncol = q); colnames(Mod) <- c("Mod1", "Mod2") # two moderators, in each column 1
-## JN: comment in previous line should be changed to "one in each column"
-## JN: why is this all on the same line?
-## JN: there should be a comment to explain why q is dim(Phi)[2]
 
 CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod,
                FEorRE = 2); CTma$tau2 # random effects model
-## JN: why two commands on the same line?
 summary(CTma)
 ```
 
@@ -151,7 +138,6 @@ Mod <- matrix(c(64,65,47)) # 1 moderator
 BetweenLevel <- c(1, 1, 2) # Assuming the first two studies used the same sample/dataset.
 ## JN: the way BetweenLevel works should be clarified
 CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, Moderators = 1, Mod = Mod, FEorRE = 2, BetweenLevel = BetweenLevel) # Two-level RE meta-analysis example
-## JN: why is this not saved and summarised?
 ```
 
 ```{r funnel/forest plots}
@@ -160,14 +146,11 @@ CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, FEorRE = 2)
 funnel(CTma$summaryMetaAnalysis, label = 'out')
 forest(CTma$summaryMetaAnalysis)
 # One can do the same for the two-level analysis.
-## JN: "The same can be done for the two-level analysis"
 #
 # Note, in case a univariate approach had to be taken, leading to multiple analyses, then one should create a plot per analysis:
-## JN: Note that when a univariate approach is taken (leading to multiple analysis), there should be one plot per analysis:
 # lapply(CTma$summaryMetaAnalysis_jk, funnel, label = 'out')
 #
 # In case you want to create a plot per element of the study-specific Phi's:
-## JN: "To create a plot per element of the ... Phis"
 #elt <- rep(F, (q*q))
 #elt[1] <- T # First element out of q*q true, so referring to element Phi11.
 #yi_Phi11 <- CTma$summaryMetaAnalysis$yi[elt]
@@ -175,7 +158,6 @@ forest(CTma$summaryMetaAnalysis)
 #funnel(yi_Phi11, vi_Phi11, label = 'out')
 #forest(yi_Phi11, vi_Phi11)
 elt <- rep(F, (q*q))
-## JN: why is it called "elt"? What does that stand for?
 elt[2] <- T # Second element out of q*q true, so referring to element Phi12.
 yi_Phi12 <- CTma$summaryMetaAnalysis$yi[elt]
 vi_Phi12 <- CTma$summaryMetaAnalysis$vi[elt]
@@ -185,8 +167,6 @@ forest(yi_Phi12, vi_Phi12)
 
 ```{r phiplot}
 ## Make customized Phi-plot of resulting overall Phi ##
-## JN: specify this is simply creating the same plot by hand
-## JN: "Making"
 
 CTma <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR, PrintPlot = TRUE)
 CTma$PhiPlot
@@ -194,7 +174,7 @@ CTma$PhiPlot
 out_CTmeta <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 overallPhi <- out_CTmeta$Overall_standPhi
 Title <- as.list(expression(paste0(Phi(Delta[t]), " plot:"),
-   "How do the overall lagged parameters vary as a function of the time-interval"))
+   "How do the overall lagged parameters vary as a function of the time-interval?"))
 ## JN: change title, it shows wrong
 PhiPlot(DeltaTStar, overallPhi, Min = 0, Max = 40, Step = 0.5, Title = Title)
 # or

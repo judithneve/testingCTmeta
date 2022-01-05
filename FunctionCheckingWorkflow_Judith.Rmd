@@ -62,6 +62,8 @@ Notes:
 
 * if both are specified, it seems Gamma takes precendence
 
+4. How does BetweenLevel work?
+
 ### Smaller notes:
 
 1. "The arguments SigmaVAR and Gamma are not found: Both SigmaVAR and Gamma are unknown; either one (or both) should be part of the input. In case of first matrix, specify 'SigmaVAR = SigmaVAR'."
