@@ -2626,15 +2626,16 @@ To do:
 ## alpha != 0.05
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.broken <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               alpha = 0.1)
+               alpha = 0.9)
 
 CTma.broken$LB_elliptical_CI
 CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
+CTma.broken$UB_elliptical_CI == CTma$UB_elliptical_CI
 summary(CTma.broken) == summary(CTma)
 # TRUE
 ```
@@ -2642,7 +2643,23 @@ summary(CTma.broken) == summary(CTma)
 To do:
 - figure out where alpha comes into play
 
-## negative alpha
+Done and fixed:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               alpha = 0.9)
+
+CTma.broken$LB_elliptical_CI
+CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
+CTma.broken$UB_elliptical_CI == CTma$UB_elliptical_CI
+```
+
+
+## negative alpha - using the modified CTmeta
 
 ```{r}
 CTma.broken <- CTmeta(N,
@@ -2652,13 +2669,19 @@ CTma.broken <- CTmeta(N,
                SigmaVAR,
                alpha = -0.05)
 
+# Warning in qchisq(p = alpha, df = (q * q), lower.tail = FALSE) : Production de NaN
+
 CTma.broken$LB_elliptical_CI
-CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
-# TRUE
+# NaN
+
+summary(CTma.broken)
+CTma.broken
+# LB and UB not given
+# some of the output still there
 ```
 
 To do:
-- ????
+- nothing more
 
 ## negative alpha != -0.05
 
@@ -2670,17 +2693,77 @@ CTma.broken <- CTmeta(N,
                SigmaVAR,
                alpha = -0.1)
 
+# Warning in qchisq(p = alpha, df = (q * q), lower.tail = FALSE) : Production de NaN
+
 CTma.broken$LB_elliptical_CI
-CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
-# TRUE
+# NaN
+
+summary(CTma.broken)
+CTma.broken
+# LB and UB not given
+# some of the output still there
 ```
 
 To do:
-- ????
+- nothing more
 
 ## alpha = 1
 
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               alpha = 1)
+
+CTma.broken$LB_elliptical_CI
+
+summary(CTma.broken)
+CTma.broken
+# LB and UB same value as overall_phi
+# some of the output still there
+```
+
+## alpha = 0
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               alpha = 0)
+
+CTma.broken$LB_elliptical_CI
+# - Inf
+
+summary(CTma.broken)
+CTma.broken
+# LB and UB -Inf
+# some of the output still there
+```
+
 ## alpha > 1
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               alpha = 1.2)
+
+# Warning in qchisq(p = alpha, df = (q * q), lower.tail = FALSE) : Production de NaN
+
+CTma.broken$LB_elliptical_CI
+# NaN
+
+summary(CTma.broken)
+CTma.broken
+# LB and UB not given
+# some of the output still there
+```
 
 
 

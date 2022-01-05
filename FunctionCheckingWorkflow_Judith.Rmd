@@ -37,6 +37,8 @@ Done.
 
 3. Read through function: is there anything (especially regarding errors/warnings) that should still be changed?
 
+Done.
+
 4. Discussion with Rebecca about unclear parts
 
 5. Go through the function check process again
@@ -47,11 +49,9 @@ Done.
 
 1. Label
 
-2. alpha: it doesn't seem to change anything as to how the function is running
+2. Check_SigmaVAR.R: need to reformat the error messages
 
-3. Check_SigmaVAR.R: need to reformat the error messages
-
-4. How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don't match?
+3. How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don't match?
 
 Notes:
 

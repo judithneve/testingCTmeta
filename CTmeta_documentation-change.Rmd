@@ -30,43 +30,28 @@ JN: throughout the document, change 's plurals to either just s or "word"s
 ```{r}
 ?CTmeta
 
-# as a whole: first specify the format of the input, then what it corresponds to - Alex and Rebecca, do you agree?
-# all will be adapted slightly based on the input tests
+## as a whole: first specify the format of the input, then what it corresponds to - Alex and Rebecca, do you agree?
 
-# CTmeta(                # Continuous-time meta-analysis (CTmeta) on standardized lagged effects (Phi) taking into account the various time-intervals used in the primary studies. There is also an interactive web application on my website to perform CTmeta: https://www.uu.nl/staff/RMKuiper/Websites%20%2F%20Shiny%20apps. --- clear description
-#   N,                   # change the format in which the matrix dimensions are given.
-                         # specify N can be a vector of length S
-#   DeltaT,              # change the format in which the matrix dimensions are given.
-                         # specify DeltaT can be a vector of length S
-#   DeltaTStar,          # specify it must be specified
-#   Phi,                 # "one can use the function 'TransPhi_Corr" to "the function 'TransPhi_Corr' can be used"
-                         # include an example where Phi is an array
-#                        # change the format of the dimensions
-#   SigmaVAR = NULL,     # change the format of the dimensions (same problem as for Phi)
-                         # include an example where SigmaVAR is an array
-#   Gamma = NULL,        # change the format of the dimensions (same problem as for Phi and SigmaVAR)
-#                        # also: would it be okay to say "contemporary" instead of "contemporaneous"?
+# CTmeta(
+#   N,                   ## is it -1 only for time series or both?
+#   DeltaT,
+#   DeltaTStar,
+#   Phi,                 ## include an example where Phi is an array
+#   SigmaVAR = NULL,     ## include an example where SigmaVAR is an array
+#   Gamma = NULL,        ## would it be okay to say "contemporary" instead of "contemporaneous"?
 #   Moderators = 0,
-#   Mod = NULL,          # change the format of the dimensions
-#                        # specify what m is
-#   FEorRE = 1,          # can we change the name of the parameter?
-#                        # FE and RE are also valid inputs
-#   BetweenLevel = NULL, # extra comma not needed in "It will only be used,"
-#                        # not "==" but "="
-#                        # how it works should be clearer
-                         # it can be a factor
-#   Label = NULL,        # should add a comma after "forest plot"
-#                        # "a q*" instead of "an q*"
-#                        # "It will only be used, in case the multivariate approach can be used (in case of the univariate approach, it will always use the labeling Study 1 to Study S)" should be "It will only be used when the multivariate approach can be used (in case of the univariate approach, it will always use the labeling Study 1 to Study S)"
-#   alpha = 0.05,        # punctuation ";" could be ","
-#   PrintPlot = FALSE
+#   Mod = NULL,
+#   FEorRE = 1,
+#   BetweenLevel = NULL, ## how it works should be clearer
+                         ## it can be a factor in practice - is it meant to be this way??
+#   Label = NULL,        ## still need to figure out how this works
+#   alpha = 0.05,
+#   PrintPlot = FALSE    ## only works when no moderators - is this how it's meant to be?
 # )
 
 # Value
 
 # The output comprises, among others, the overall vectorized transformed standardized lagged effects, their covariance matrix, and the corresponding elliptical/multivariate 95% CI.
-
-# this is clear
 ```
 
 ## Examples
