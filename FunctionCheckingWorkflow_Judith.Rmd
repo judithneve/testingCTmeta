@@ -66,7 +66,9 @@ Notes:
 
 4. How does BetweenLevel work?
 
-5. PrintPlot
+5. PrintPlot: error message when the plot can't be made
+
+The question has been sent to Rebecca.
 
 ### Smaller notes:
 
@@ -86,12 +88,8 @@ Actually comes up with a bunch of warnings - it is clear what the problem is fro
 
 This would explain the output of the non-numerical moderator input
 
-5. Is a RE model with no BetweenLevel factor meant to work?
-
-6. What do the entries in BetweenLevel mean?
+5. What do the entries in BetweenLevel mean?
 
 i.e.: does it make a difference whether it's 0, 1, 2 or 1, 2, 3?
 
-7. When PhiPlot = TRUE, the plot prints twice
-
-8. When a model has moderators and PrintPlot = TRUE, the plot is not rendered
+6. When PhiPlot = TRUE, the plot prints twice
