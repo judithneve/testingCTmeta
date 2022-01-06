@@ -1077,7 +1077,7 @@ CTma.break <- CTmeta::CTmeta(N,
 To do:
 - nothing, the error message is fairly clear (maybe rephrase it a bit so it is more straight to the point)
 
-NOT DONE: this will need to be changed in Check_SigmaVAR.R
+Done: this was changed in HelpFile_Check_SigmaVAR.R
 
 ```{r}
 CTma.break <- CTmeta(N,
@@ -1137,7 +1137,7 @@ CTma.break <- CTmeta::CTmeta(N,
 To do:
 - clarify the error message
 
-NOT DONE: cannot find the error message - this should be changed in Check_SigmaVAR.R
+Done: this changed in HelpFile_Check_SigmaVAR.R
 
 ## SigmaVAR as a matrix with an extra row
 

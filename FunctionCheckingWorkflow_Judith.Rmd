@@ -44,6 +44,8 @@ Done.
 
 4. Discussion with Rebecca about unclear parts
 
+a. Some of the bigger essence changes are cutting out "currently, ... is of size ..." for matrices: giving a vector of dimensions does not provide clear enough information, and formatting it such that the dimensions are given is more hassle than necessary for an error message that clearly states the size it should be.
+
 5. Go through the function check process again
 
 6. Modify documentation
@@ -54,7 +56,7 @@ Done.
 
 1. Label
 
-2. Check_SigmaVAR.R: need to reformat the error messages
+2. PrintPlot: error message when the plot can't be made
 
 3. How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don't match?
 
@@ -65,8 +67,6 @@ Notes:
 * if both are specified, it seems Gamma takes precendence
 
 4. How does BetweenLevel work?
-
-5. PrintPlot: error message when the plot can't be made
 
 The question has been sent to Rebecca.
 
