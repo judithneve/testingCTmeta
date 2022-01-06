@@ -1,0 +1,16 @@
+---
+title: "Calc CTMparam from VARparam edits"
+author: "Judith Neve"
+date: "06/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Questions
+
+"The process is stable, it is restoring to its equilibrium"
+
+can this be corrected to "The process is stable, it is returning to its equilibrium"?
