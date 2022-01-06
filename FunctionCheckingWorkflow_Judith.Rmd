@@ -54,7 +54,7 @@ Done.
 
 ### Don't forget:
 
-1. Label
+1. How does BetweenLevel work?
 
 2. PrintPlot: error message when the plot can't be made
 
@@ -67,8 +67,6 @@ Notes:
 * it appears that neither can be broken - otherwise, we get errors.
 
 * if both are specified, it seems Gamma takes precendence
-
-4. How does BetweenLevel work?
 
 ### Smaller notes:
 
