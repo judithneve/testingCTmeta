@@ -2595,7 +2595,7 @@ CTma.RE.broken <- CTmeta(N,
 ## Specifying Label
 
 ```{r}
-CTma.lab <- CTmeta(N,
+CTma.lab <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -2607,17 +2607,188 @@ CTma.lab <- CTmeta(N,
 To do:
 - figure out how to use Label
 
+Fixed:
+
+```{r}
+CTma.lab <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = paste("test", 1:(2*2*3)))
+
+funnel(CTma.lab$summaryMetaAnalysis, label = 'out')
+forest(CTma.lab$summaryMetaAnalysis)
+```
+
+
 ## Label with NAs
 
-## Label with non-numbers
+```{r}
+lab.broken <- paste("test", 1:(2*2*3))
+lab.broken[3] <- NA
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+
+# Error in rma.mv(yi = vecVecStandPhi, V = CovMx, mods = ~overallPhi - 1, : NAs in study labels.
+```
+
+To do:
+- nothing, the error is pretty clear
+
+## Label with non-characters
+
+```{r}
+lab.broken <- 1:(2*2*3)
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+```
+
 
 ## Label a matrix with the right number of elements
 
+```{r}
+lab.broken <- paste("test", 1:(2*2*3))
+lab.broken <- matrix(lab.broken, ncol = 1)
+lab.broken
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+```
+
+This breaks as expected.
+
+## Label as a matrix with one row per study and the right number of elements
+
+```{r}
+lab.broken <- paste("test", 1:(2*2*3))
+lab.broken <- matrix(lab.broken, ncol = 3)
+lab.broken
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+
+funnel(CTma.lab.broken$summaryMetaAnalysis, label = 'out')
+forest(CTma.lab.broken$summaryMetaAnalysis)
+```
+
+This runs. The documentation should be changed.
+
+## Label as an array with a panel per study
+
+```{r}
+lab.broken <- paste("test", 1:(2*2*3))
+lab.broken <- array(lab.broken, dim = c(2, 2, 3))
+lab.broken
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+
+funnel(CTma.lab.broken$summaryMetaAnalysis, label = 'out')
+forest(CTma.lab.broken$summaryMetaAnalysis)
+```
+
+This runs. The documentation should be changed.
+
 ## Label an array with the right number of elements
+
+```{r}
+lab.broken <- paste("test", 1:(2*2*3))
+lab.broken <- array(lab.broken, dim = c(1, 1, 12))
+lab.broken
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+```
+
+Breaks as expected.
+
+## Label as an array with a panel per study but wrong dimension panels
+
+```{r}
+lab.broken <- paste("test", 1:(2*2*3))
+lab.broken <- array(lab.broken, dim = c(1, 4, 3))
+lab.broken
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+```
+
+Breaks as expected
+
+## Label as an array with the wrong dimensions
+
+```{r}
+lab.broken <- paste("test", 1:(2*2*3))
+lab.broken <- array(lab.broken, dim = c(3, 2, 2))
+lab.broken
+
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = lab.broken)
+```
+
+Breaks as expected
 
 ## Label a longer vector
 
+```{r}
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = paste("test", 1:(2*2*4)))
+```
+
+Breaks as expected.
+
+
 ## Label a shorter vector
+
+```{r}
+CTma.lab.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Label = paste("test", 1:(2*2*2)))
+```
+
+Breaks as expected.
 
 
 
@@ -2930,7 +3101,7 @@ NOT DONE: where is this controlled?
 
 
 
-# Funnel plots
+# Funnel and forest plots
 
 ## FE model with moderator
 

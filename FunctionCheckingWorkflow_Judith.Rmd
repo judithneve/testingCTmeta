@@ -58,6 +58,8 @@ Done.
 
 2. PrintPlot: error message when the plot can't be made
 
+The question has been sent to Rebecca.
+
 3. How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don't match?
 
 Notes:
@@ -67,8 +69,6 @@ Notes:
 * if both are specified, it seems Gamma takes precendence
 
 4. How does BetweenLevel work?
-
-The question has been sent to Rebecca.
 
 ### Smaller notes:
 
@@ -93,3 +93,5 @@ This would explain the output of the non-numerical moderator input
 i.e.: does it make a difference whether it's 0, 1, 2 or 1, 2, 3?
 
 6. When PhiPlot = TRUE, the plot prints twice
+
+7. What exactly should be in N?
