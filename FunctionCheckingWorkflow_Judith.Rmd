@@ -64,7 +64,7 @@ Notes:
 
 * it appears that neither can be broken - otherwise, we get errors.
 
-* if both are specified, it seems Gamma takes precendence
+* if both are specified, it seems Gamma takes precedence
 
 ### Smaller notes:
 

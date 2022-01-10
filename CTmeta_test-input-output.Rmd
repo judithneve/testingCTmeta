@@ -2992,7 +2992,6 @@ CTma.broken
 summary(CTma.broken) == summary(CTma)
 ```
 
-
 ## PrintPlot for FE with moderator
 
 ```{r}
@@ -3044,7 +3043,32 @@ summary(CTma.mod.break) == summary(CTma)
 To do:
 - make the plot only print once
 
-NOT DONE: what controls this?
+When PrintPlot = TRUE, ggPhiPlot is run and saved in a variable. We test whether ggPhiPlot prints when it is saved.
+
+```{r}
+Phi.test <- myPhi[1:2,1:2]
+
+phi_plot <- ggPhiPlot(DeltaTStar, Phi.test)
+```
+
+ggPhiPlot does print as it saves. We modify the function CTmeta to take out the print() command.
+
+Testing this worked:
+
+```{r}
+CTma.broken <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               PrintPlot = TRUE)
+
+CTma.broken
+summary(CTma.broken) == summary(CTma)
+CTma.broken$PhiPlot
+```
+
+
 
 ## PrintPlot for RE with moderator
 
@@ -3097,12 +3121,27 @@ summary(CTma.mod.break) == summary(CTma.RE.noBL)
 To do:
 - make the plot only print once
 
-NOT DONE: where is this controlled?
+Done:
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               PrintPlot = TRUE)
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.RE.noBL)
+CTma.mod.break$PhiPlot
+```
+
 
 ## PrintPlot for RE without moderator, specified BetweenLevel
 
 ```{r}
-CTma.mod.break <- CTmeta(N,
+CTma.mod.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -3119,7 +3158,22 @@ summary(CTma.mod.break) == summary(CTma.RE)
 To do:
 - make the plot only print once
 
-NOT DONE: where is this controlled?
+Done:
+
+```{r}
+CTma.mod.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               BetweenLevel = BetweenLevel,
+               PrintPlot = TRUE)
+
+CTma.mod.break
+summary(CTma.mod.break) == summary(CTma.RE)
+CTma.mod.break$PhiPlot
+```
 
 
 
