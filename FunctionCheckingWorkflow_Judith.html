@@ -202,7 +202,12 @@ pre code {
 </ol>
 <p>Done.</p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>Discussion with Rebecca about unclear parts</p></li>
+<li>Discussion with Rebecca about unclear parts</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>Some of the bigger essence changes are cutting out “currently, … is of size …” for matrices: giving a vector of dimensions does not provide clear enough information, and formatting it such that the dimensions are given is more hassle than necessary for an error message that clearly states the size it should be.</li>
+</ol>
+<ol start="5" style="list-style-type: decimal">
 <li><p>Go through the function check process again</p></li>
 <li><p>Modify documentation</p></li>
 </ol>
@@ -211,20 +216,17 @@ pre code {
 <div id="dont-forget" class="section level3">
 <h3>Don’t forget:</h3>
 <ol style="list-style-type: decimal">
-<li><p>Label</p></li>
-<li><p>Check_SigmaVAR.R: need to reformat the error messages</p></li>
-<li><p>How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don’t match?</p></li>
+<li>PrintPlot: error message when the plot can’t be made</li>
+</ol>
+<p>The question has been sent to Rebecca.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don’t match?</li>
 </ol>
 <p>Notes:</p>
 <ul>
 <li><p>it appears that neither can be broken - otherwise, we get errors.</p></li>
 <li><p>if both are specified, it seems Gamma takes precendence</p></li>
 </ul>
-<ol start="4" style="list-style-type: decimal">
-<li><p>How does BetweenLevel work?</p></li>
-<li><p>PrintPlot: error message when the plot can’t be made</p></li>
-</ol>
-<p>The question has been sent to Rebecca.</p>
 </div>
 <div id="smaller-notes" class="section level3">
 <h3>Smaller notes:</h3>
@@ -245,11 +247,8 @@ pre code {
 </ol>
 <p>This would explain the output of the non-numerical moderator input</p>
 <ol start="5" style="list-style-type: decimal">
-<li>What do the entries in BetweenLevel mean?</li>
-</ol>
-<p>i.e.: does it make a difference whether it’s 0, 1, 2 or 1, 2, 3?</p>
-<ol start="6" style="list-style-type: decimal">
-<li>When PhiPlot = TRUE, the plot prints twice</li>
+<li><p>When PhiPlot = TRUE, the plot prints twice</p></li>
+<li><p>What exactly should be in N?</p></li>
 </ol>
 </div>
 </div>

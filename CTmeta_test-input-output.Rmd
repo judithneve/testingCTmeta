@@ -2335,6 +2335,8 @@ summary(CTma.broken) == summary(CTma)
 
 ## BetweenLevel all identical
 
+So the same e.g. sample gets used for all included studies
+
 ```{r}
 BetweenLevel.broken <- rep(1, 3)
 
@@ -2357,9 +2359,6 @@ summary(CTma.RE.broken) == summary(CTma.RE.noBL)
 
 CTma.RE.id.BL <- CTma.RE.broken
 ```
-
-To do:
-- figure out what BetweenLevel means
 
 ## BetweenLevel all identical and != 1
 
@@ -2388,6 +2387,29 @@ summary(CTma.RE.broken) == summary(CTma.RE.id.BL)
 
 To do:
 - nothing
+
+So, it does not matter what the value that's input to BetweenLevel is - since it's converted to a factor.
+
+Let's check this.
+
+## BetweenLevel values switched
+
+```{r}
+BetweenLevel.broken <- c(2, 2, 1)
+
+CTma.RE.broken <- CTmeta(N,
+                  DeltaT,
+                  DeltaTStar,
+                  Phi,
+                  SigmaVAR,
+                  FEorRE = 2,
+                  BetweenLevel = BetweenLevel.broken)
+CTma.RE.broken
+
+summary(CTma.RE) == summary(CTma.RE.broken)
+```
+
+Yes, they can be switched.
 
 ## BetweenLevel with NAs
 

@@ -54,13 +54,11 @@ Done.
 
 ### Don't forget:
 
-1. How does BetweenLevel work?
-
-2. PrintPlot: error message when the plot can't be made
+1. PrintPlot: error message when the plot can't be made
 
 The question has been sent to Rebecca.
 
-3. How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don't match?
+2. How to deal with both Gamma and SigmaVAR being specified - which one is more important? What if one of them is broken? What if they don't match?
 
 Notes:
 
@@ -86,10 +84,6 @@ Actually comes up with a bunch of warnings - it is clear what the problem is fro
 
 This would explain the output of the non-numerical moderator input
 
-5. What do the entries in BetweenLevel mean?
+5. When PhiPlot = TRUE, the plot prints twice
 
-i.e.: does it make a difference whether it's 0, 1, 2 or 1, 2, 3?
-
-6. When PhiPlot = TRUE, the plot prints twice
-
-7. What exactly should be in N?
+6. What exactly should be in N?
