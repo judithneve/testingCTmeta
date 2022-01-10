@@ -1339,6 +1339,19 @@ summary(CTma.break) == summary(CTma)
 
 Does this depend on Gamma at all?
 
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Gamma)
+
+summary(CTma.break)
+summary(CTma.break) == summary(CTma)
+```
+
+
 ## Both SigmaVAR and Gamma (broken)
 
 ```{r}
@@ -1353,6 +1366,15 @@ CTma.break <- CTmeta::CTmeta(N,
 
 So this probably depends on Gamma more than on SigmaVAR.
 
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Gamma.broken)
+```
+
 ## Both SigmaVAR (broken) and Gamma
 
 ```{r}
@@ -1366,6 +1388,16 @@ CTma.break <- CTmeta::CTmeta(N,
 ```
 
 So if both are specified, both need to be working. What happens if Gamma is a different matrix and SigmaVAR is identical (and vice-versa)?
+
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR.broken,
+               Gamma)
+# "The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 3 times 2"
+```
 
 ## Both SigmaVAR (not as should be but running) and Gamma
 
@@ -1387,6 +1419,19 @@ summary(CTma.break) == summary(CTma)
 
 The results don't change when SigmaVAR is different, so maybe this relies on Gamma more.
 
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR.broken,
+               Gamma)
+
+summary(CTma.break)
+summary(CTma.break) == summary(CTma)
+```
+
+
 ## Both SigmaVAR and Gamma (not as should be but running)
 
 ```{r}
@@ -1407,8 +1452,19 @@ CTma.break <- CTmeta::CTmeta(N,
 So it seems like this relies on Gamma more.
 
 To do:
-- ask Rebecca
-- write a warning for when both are specified saying SigmaVAR will be ignored?
+- write a warning for when both are specified saying SigmaVAR will be ignored
+
+Done:
+
+```{r}
+CTma.break <- CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               Gamma.broken)
+```
+
 
 ## Gamma as an array
 
