@@ -8,6 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(CTmeta)
+source("CTmeta.R")
+source("HelpFile_Check_SigmaVAR.R")
+source("HelpFile_Check_B_or_Phi.R")
+source("Phi-ggplot.R")
 ```
 
 This document tests what can be used as input and output for the function CTmeta. Each argument is examined in turn, and at the end some additional checks are done to verify plots can be made for different configurations of the model.
@@ -105,11 +109,12 @@ N.break <- N
 N.break[2] <- NA
 N.break
 
-CTma.broken <- CTmeta::CTmeta(N.break,
+CTma.break <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 # Error in eigen(CovMx_Phi) : valeurs infinies ou manquantes dans 'x'
 ```
 
@@ -119,11 +124,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N.break,
+CTma.break <- CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## N with non-numbers
@@ -134,11 +140,12 @@ N.break <- N
 N.break[2] <- "text"
 N.break
 
-CTma.broken <- CTmeta::CTmeta(N.break,
+CTma.break <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 # Error in N - q : non-numeric argument to binary operator
 ```
 
@@ -146,11 +153,12 @@ To do:
 - nothing, the error seems pretty easy to infer from
 
 ```{r}
-CTma.broken <- CTmeta(N.break,
+CTma.break <- CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 Still behaves the same, as required.
@@ -163,13 +171,13 @@ Still behaves the same, as required.
 N.break <- as.vector(N)
 N.break
 
-CTma.broken <- CTmeta(N.break,
+CTma.break <- CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-summary(CTma.broken) == summary(CTma)
+CTma.break
+summary(CTma.break) == summary(CTma)
 # no difference
 ```
 
@@ -183,13 +191,13 @@ To do:
 N.break <- matrix(c(N, 5, 5, 5), ncol = 2)
 N.break
 
-CTma.broken <- CTmeta::CTmeta(N.break,
+CTma.break <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -199,11 +207,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N.break,
+CTma.break <- CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -214,13 +223,13 @@ CTma.broken <- CTmeta(N.break,
 N.break <- c(as.vector(N), 6)
 N.break
 
-CTma.broken <- CTmeta::CTmeta(N.break,
+CTma.break <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -230,11 +239,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N.break,
+CTma.break <- CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -245,13 +255,13 @@ CTma.broken <- CTmeta(N.break,
 N.break <- N[-3,]
 N.break
 
-CTma.broken <- CTmeta::CTmeta(N.break,
+CTma.break <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -261,11 +271,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N.break,
+CTma.break <- CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -276,13 +287,13 @@ CTma.broken <- CTmeta(N.break,
 N.break <- rbind(N, 1)
 N.break
 
-CTma.broken <- CTmeta::CTmeta(N.break,
+CTma.break <- CTmeta::CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -292,11 +303,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N.break,
+CTma.break <- CTmeta(N.break,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -311,11 +323,12 @@ DeltaT.break <- DeltaT
 DeltaT.break[2] <- NA
 DeltaT.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 # Error in eigen(CovMx_Phi) : valeurs infinies ou manquantes dans 'x'
 ```
 
@@ -325,11 +338,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -341,11 +355,12 @@ DeltaT.break <- DeltaT
 DeltaT.break[2] <- "text"
 DeltaT.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 # Error in DeltaTStar/DeltaT : non-numeric argument to binary operator
 ```
 
@@ -353,11 +368,12 @@ To do:
 - nothing, the error is pretty clear
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## DeltaT as a vector
@@ -367,13 +383,13 @@ CTma.broken <- CTmeta(N,
 DeltaT.break <- as.vector(DeltaT)
 DeltaT.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-summary(CTma.broken) == summary(CTma)
+CTma.break
+summary(CTma.break) == summary(CTma)
 # no difference
 ```
 
@@ -384,16 +400,16 @@ To do:
 
 ```{r}
 # making DeltaT a S*2 matrix
-DeltaT.broken <- matrix(c(N, 5, 5, 5), ncol = 2)
-DeltaT.broken
+DeltaT.break <- matrix(c(N, 5, 5, 5), ncol = 2)
+DeltaT.break
 
-CTma.broken <- CTmeta::CTmeta(N,
-               DeltaT.broken,
+CTma.break <- CTmeta::CTmeta(N,
+               DeltaT.break,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -403,11 +419,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
-               DeltaT.broken,
+CTma.break <- CTmeta(N,
+               DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## DeltaT as a (S-1)*1 matrix
@@ -417,13 +434,13 @@ CTma.broken <- CTmeta(N,
 DeltaT.break <- DeltaT[-3,]
 DeltaT.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -433,11 +450,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## DeltaT as a (S+1)*1 matrix
@@ -447,13 +465,13 @@ CTma.broken <- CTmeta(N,
 DeltaT.break <- rbind(DeltaT, 5)
 DeltaT.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -463,11 +481,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## DeltaT as a vector that is too long
@@ -477,13 +496,13 @@ CTma.broken <- CTmeta(N,
 DeltaT.break <- c(DeltaT, 5)
 DeltaT.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
-# this runs, but CTma.broken is an error message. The error message also is formatted weirdly and should be rephrased.
+CTma.break
+# this runs, but CTma.break is an error message. The error message also is formatted weirdly and should be rephrased.
 ```
 
 To do:
@@ -493,11 +512,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT.break,
                DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -507,12 +527,12 @@ CTma.broken <- CTmeta(N,
 ## DeltaTstar not specified
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                # DeltaTStar,
                Phi,
                SigmaVAR)
-CTma.broken
+CTma.break
 # "The argument DeltaTStar should be a scalar, that is, one number, that is, a vector with one element. If you want to inspect multiple DeltaTStar values, you should do the analysis for each value seperately. Notably, currently, DeltaTStar = 0.25" 12 times with variations in "notably, currently, ..."
 ```
 
@@ -523,22 +543,23 @@ To do:
 Done - the error message was modified to exclude the "Notably, currently, ..." part. This is because the error here is simply because of the length of the argument. If it is not a scalar, the error message just gets repeated pointlessly.:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                # DeltaTStar,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## DeltaTstar as a vector with different values
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar = DeltaT,
                Phi,
                SigmaVAR)
-CTma.broken
+CTma.break
 # "The argument DeltaTStar should be a scalar, that is, one number, that is, a vector with one element. If you want to inspect multiple DeltaTStar values, you should do the analysis for each value seperately. Notably, currently, DeltaTStar = 2" 3 times with variations in "notably, currently, ..."
 ```
 
@@ -549,22 +570,23 @@ To do:
 Done - the error message was modified to exclude the "Notably, currently, ..." part. This is because the error here is simply because of the length of the argument. If it is not a scalar, the error message just gets repeated pointlessly.:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar = DeltaT,
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## DeltaTstar as a vector with identical values
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar = rep(1, 3),
                Phi,
                SigmaVAR)
-CTma.broken
+CTma.break
 # "The argument DeltaTStar should be a scalar, that is, one number, that is, a vector with one element. If you want to inspect multiple DeltaTStar values, you should do the analysis for each value seperately. Notably, currently, DeltaTStar = 1" 3 times
 ```
 
@@ -574,11 +596,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar = rep(1, 3),
                Phi,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -596,11 +619,12 @@ Phi.break <- Phi
 Phi.break[2,1] <- NA
 Phi.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi.break,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 # Error in eigen(Phi[, , s]) : valeurs infinies ou manquantes dans 'x'
 ```
 
@@ -608,11 +632,12 @@ To do:
 - nothing, the error speaks for itself
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi.break,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 
@@ -624,11 +649,12 @@ Phi.break <- Phi
 Phi.break[2,1] <- "text"
 Phi.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi.break,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 # Error in tcrossprod(x, y) : requires numeric/complex matrix/vector arguments
 ```
 
@@ -638,11 +664,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi.break,
-               SigmaVAR)
+               SigmaVAR) %>%
+  try()
 ```
 
 ## Phi as an array
@@ -651,13 +678,13 @@ CTma.broken <- CTmeta(N,
 Phi1 <- Phi[1:2,]
 Phi2 <- Phi[3:4,]
 Phi3 <- Phi[5:6,]
-Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(2, 2, 3))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2, Phi3), dim = c(2, 2, 3))
+Phi.break
 
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
+                     Phi.break,
                      SigmaVAR)
 
 CTma.break
@@ -674,13 +701,13 @@ To do:
 Phi1 <- Phi[1:2,]
 Phi2 <- Phi[3:4,]
 Phi3 <- Phi[5:6,]
-Phi.broken <- array(c(Phi1, Phi2, Phi3, rep(5, 6)), dim = c(2, 2, 4))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2, Phi3, rep(5, 6)), dim = c(2, 2, 4))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
+                     Phi.break,
                      SigmaVAR)
 
 CTma.break
@@ -694,10 +721,10 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
-               Phi.broken,
+               Phi.break,
                SigmaVAR)
 
 CTma.break
@@ -712,8 +739,8 @@ summary(CTma.break) == summary(CTma)
 Phi1 <- Phi[1,]
 Phi2 <- Phi[2:4,]
 Phi3 <- Phi[5:6,]
-Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(2, 2, 3))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2, Phi3), dim = c(2, 2, 3))
+Phi.break
 
 # actually, arrays always have identically sized matrices. This does not need to be tested as the values end up falling where they're supposed to.
 ```
@@ -724,15 +751,16 @@ Phi.broken
 Phi1 <- rbind(Phi[1:2,], c(5, 5))
 Phi2 <- rbind(Phi[3:4,], c(5, 5))
 Phi3 <- rbind(Phi[5:6,], c(5, 5))
-Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(3, 2, 3))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2, Phi3), dim = c(3, 2, 3))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
-# Error in eigen(Phi[, , s]) : la matrice n'est pas carrée dans 'eigen'
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
+# Error in eigen(Phi[, , s]) : la matrice n'est pas carree dans 'eigen'
 ```
 
 To do:
@@ -742,8 +770,9 @@ To do:
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 ```
 
 
@@ -753,14 +782,15 @@ CTma.break <- CTmeta(N,
 Phi1 <- cbind(Phi[1:2,], c(5, 5, 5))
 Phi2 <- cbind(Phi[3:4,], c(5, 5, 5))
 Phi3 <- cbind(Phi[5:6,], c(5, 5, 5))
-Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(2, 3, 3))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2, Phi3), dim = c(2, 3, 3))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 # Error in SigmaVAR[(teller + 1):(teller + q), 1:q] : subscript out of bounds
 ```
 
@@ -773,8 +803,9 @@ NOT DONE: unsure how to do this - is this necessary, i.e. an error/mistake that'
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 ```
 
 
@@ -784,14 +815,15 @@ CTma.break <- CTmeta(N,
 Phi1 <- rbind(cbind(Phi[1:2,], c(5, 5)), c(3, 3, 3))
 Phi2 <- rbind(cbind(Phi[3:4,], c(5, 5)), c(3, 3, 3))
 Phi3 <- rbind(cbind(Phi[5:6,], c(5, 5)), c(3, 3, 3))
-Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(3, 3, 3))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2, Phi3), dim = c(3, 3, 3))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 # Error in SigmaVAR[(teller + 1):(teller + q), 1:q] : subscript out of bounds
 ```
 
@@ -804,20 +836,21 @@ NOT DONE: unsure how to do this - is this necessary, i.e. an error/mistake that'
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 ```
 
 ## Phi as a matrix with an extra row
 
 ```{r}
-Phi.broken <- rbind(myPhi, rep(6,2))
-Phi.broken
+Phi.break <- rbind(myPhi, rep(6,2))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
+                     Phi.break,
                      SigmaVAR)
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -833,7 +866,7 @@ Done:
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
+                     Phi.break,
                      SigmaVAR)
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -847,14 +880,15 @@ summary(CTma.break) == summary(CTma)
 Phi1 <- Phi[1,]
 Phi2 <- Phi[3,]
 Phi3 <- Phi[5,]
-Phi.broken <- array(c(Phi1, Phi2, Phi3), dim = c(1, 2, 3))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2, Phi3), dim = c(1, 2, 3))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 # Error in Phi[1:q, 1:q, s] : subscript out of bounds
 ```
 
@@ -865,22 +899,24 @@ To do:
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 ```
 
 
 ## Phi as a matrix with an extra column
 
 ```{r}
-Phi.broken <- cbind(Phi, rep(6,6))
-Phi.broken
+Phi.break <- cbind(Phi, rep(6,6))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 # breaks, as expected
 ## Error in SigmaVAR[(teller + 1):(teller + q), 1:q] : 
 ##  subscript out of bounds
@@ -895,8 +931,9 @@ NOT DONE: unsure how to do this - is this necessary, i.e. an error/mistake that'
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 ```
 
 ## Phi as an array with one less matrix but the right number of elements
@@ -904,14 +941,15 @@ CTma.break <- CTmeta(N,
 ```{r}
 Phi1 <- Phi[1:3,]
 Phi2 <- Phi[4:6,]
-Phi.broken <- array(c(Phi1, Phi2), dim = c(3, 2, 2))
-Phi.broken
+Phi.break <- array(c(Phi1, Phi2), dim = c(3, 2, 2))
+Phi.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 # Error in Phi[1:q, 1:q, s] : subscript out of bounds
 ```
 
@@ -924,8 +962,9 @@ Done - made this into an error:
 CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
-                     Phi.broken,
-                     SigmaVAR)
+                     Phi.break,
+                     SigmaVAR) %>%
+  try()
 ```
 
 
@@ -941,11 +980,12 @@ SigmaVAR.break <- SigmaVAR
 SigmaVAR.break[2,1] <- NA
 SigmaVAR.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.break)
+               SigmaVAR.break) %>%
+  try()
 # Error in solve.default(Sxy) : Lapack routine dgesv: system is exactly singular: U[1,1] = 0
 ```
 
@@ -955,11 +995,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.break)
+               SigmaVAR.break) %>%
+  try()
 ```
 
 
@@ -971,11 +1012,12 @@ SigmaVAR.break <- SigmaVAR
 SigmaVAR.break[2,1] <- "text"
 SigmaVAR.break
 
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.break)
+               SigmaVAR.break) %>%
+  try()
 # Error in solve(diag(q * q) - PhiKronPhi) %*% vecS : requires numeric/complex matrix/vector arguments
 ```
 
@@ -985,11 +1027,12 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.break)
+               SigmaVAR.break) %>%
+  try()
 ```
 
 ## SigmaVAR as an array
@@ -998,14 +1041,14 @@ CTma.broken <- CTmeta(N,
 SigmaVAR1 <- SigmaVAR[1:2,]
 SigmaVAR2 <- SigmaVAR[3:4,]
 SigmaVAR3 <- SigmaVAR[5:6,]
-SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(2, 2, 3))
-SigmaVAR.broken
+SigmaVAR.break <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(2, 2, 3))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1021,14 +1064,14 @@ To do:
 SigmaVAR1 <- SigmaVAR[1:2,]
 SigmaVAR2 <- SigmaVAR[3:4,]
 SigmaVAR3 <- SigmaVAR[5:6,]
-SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3, rep(5, 6)), dim = c(2, 2, 4))
-SigmaVAR.broken
+SigmaVAR.break <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3, rep(5, 6)), dim = c(2, 2, 4))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1041,14 +1084,14 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.broken)
+               SigmaVAR.break)
 
-CTma.broken
-summary(CTma.broken) == summary(CTma)
+CTma.break
+summary(CTma.break) == summary(CTma)
 ```
 
 
@@ -1063,14 +1106,15 @@ As seen for Phi, an array cannot have different size matrices.
 SigmaVAR1 <- rbind(SigmaVAR[1:2,], c(5, 5))
 SigmaVAR2 <- rbind(SigmaVAR[3:4,], c(5, 5))
 SigmaVAR3 <- rbind(SigmaVAR[5:6,], c(5, 5))
-SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(3, 2, 3))
-SigmaVAR.broken
+SigmaVAR.break <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(3, 2, 3))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break) %>%
+  try()
 # The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 3 times 2
 ```
 
@@ -1084,7 +1128,8 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break) %>%
+  try()
 ```
 
 
@@ -1094,14 +1139,15 @@ CTma.break <- CTmeta(N,
 SigmaVAR1 <- SigmaVAR[1,]
 SigmaVAR2 <- SigmaVAR[3,]
 SigmaVAR3 <- SigmaVAR[5,]
-SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(1, 2, 3))
-SigmaVAR.broken
+SigmaVAR.break <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(1, 2, 3))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break) %>%
+  try()
 # Error in SigmaVAR[1:q, 1:q, s] : subscript out of bounds
 ```
 
@@ -1113,7 +1159,8 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break) %>%
+  try()
 ```
 
 
@@ -1123,14 +1170,15 @@ CTma.break <- CTmeta(N,
 SigmaVAR1 <- cbind(SigmaVAR[1:2,], c(5, 5))
 SigmaVAR2 <- cbind(SigmaVAR[3:4,], c(5, 5))
 SigmaVAR3 <- cbind(SigmaVAR[5:6,], c(5, 5))
-SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(2, 3, 3))
-SigmaVAR.broken
+SigmaVAR.break <- array(c(SigmaVAR1, SigmaVAR2, SigmaVAR3), dim = c(2, 3, 3))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break) %>%
+  try()
 # The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 2 times 3
 ```
 
@@ -1139,17 +1187,27 @@ To do:
 
 Done: this changed in HelpFile_Check_SigmaVAR.R
 
+```{r}
+CTma.break <- CTmeta(N,
+                     DeltaT,
+                     DeltaTStar,
+                     Phi,
+                     SigmaVAR.break) %>%
+  try()
+```
+
+
 ## SigmaVAR as a matrix with an extra row
 
 ```{r}
-SigmaVAR.broken <- rbind(SigmaVAR, c(5, 5))
-SigmaVAR.broken
+SigmaVAR.break <- rbind(SigmaVAR, c(5, 5))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 CTma.break
 summary(CTma.break) == summary(CTma)
 # this runs ignoring the last row
@@ -1165,7 +1223,7 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 CTma.break
 summary(CTma.break) == summary(CTma)
 ```
@@ -1174,14 +1232,14 @@ summary(CTma.break) == summary(CTma)
 ## SigmaVAR as a matrix with an extra column
 
 ```{r}
-SigmaVAR.broken <- cbind(SigmaVAR, rep(5, 6))
-SigmaVAR.broken
+SigmaVAR.break <- cbind(SigmaVAR, rep(5, 6))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 CTma.break
 summary(CTma.break) == summary(CTma)
 # this runs ignoring the last column
@@ -1197,7 +1255,7 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 CTma.break
 summary(CTma.break) == summary(CTma)
 ```
@@ -1206,14 +1264,14 @@ summary(CTma.break) == summary(CTma)
 ## SigmaVAR as a matrix with an extra column and an extra row
 
 ```{r}
-SigmaVAR.broken <- rbind(cbind(SigmaVAR, rep(5, 6)), c(6, 6, 6))
-SigmaVAR.broken
+SigmaVAR.break <- rbind(cbind(SigmaVAR, rep(5, 6)), c(6, 6, 6))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 CTma.break
 summary(CTma.break) == summary(CTma)
 # this runs ignoring the last column and the last row
@@ -1229,7 +1287,7 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break)
 CTma.break
 summary(CTma.break) == summary(CTma)
 ```
@@ -1240,14 +1298,15 @@ summary(CTma.break) == summary(CTma)
 ```{r}
 SigmaVAR1 <- SigmaVAR[1:3,]
 SigmaVAR2 <- SigmaVAR[4:6,]
-SigmaVAR.broken <- array(c(SigmaVAR1, SigmaVAR2), dim = c(3, 2, 2))
-SigmaVAR.broken
+SigmaVAR.break <- array(c(SigmaVAR1, SigmaVAR2), dim = c(3, 2, 2))
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break) %>%
+  try()
 # Error in SigmaVAR[1:q, 1:q, s] : subscript out of bounds
 ```
 
@@ -1259,7 +1318,8 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     SigmaVAR.broken)
+                     SigmaVAR.break) %>%
+  try()
 ```
 
 
@@ -1270,15 +1330,16 @@ CTma.break <- CTmeta(N,
 ## Gamma with NAs, SigmaVAR not specified
 
 ```{r}
-Gamma.broken <- Gamma
-Gamma.broken[2,1] <- NA
-Gamma.broken
+Gamma.break <- Gamma
+Gamma.break[2,1] <- NA
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break) %>%
+  try()
 # Error in eigen(CovMx_Phi) : valeurs infinies ou manquantes dans 'x'
 ```
 
@@ -1292,22 +1353,24 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break) %>%
+  try()
 ```
 
 
 ## Gamma with non-numbers, SigmaVAR not specified
 
 ```{r}
-Gamma.broken <- Gamma
-Gamma.broken[2,1] <- "text"
-Gamma.broken
+Gamma.break <- Gamma
+Gamma.break[2,1] <- "text"
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break) %>%
+  try()
 # Error in Ph %*% Gam : requires numeric/complex matrix/vector arguments
 ```
 
@@ -1319,7 +1382,8 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break) %>%
+  try()
 ```
 
 ## Both SigmaVAR and Gamma
@@ -1352,7 +1416,7 @@ summary(CTma.break) == summary(CTma)
 ```
 
 
-## Both SigmaVAR and Gamma (broken)
+## Both SigmaVAR and Gamma (break)
 
 ```{r}
 CTma.break <- CTmeta::CTmeta(N,
@@ -1360,7 +1424,8 @@ CTma.break <- CTmeta::CTmeta(N,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Gamma.broken)
+               Gamma.break) %>%
+  try()
 # Error in Phi_DeltaT %*% Gamma : requires numeric/complex matrix/vector arguments
 ```
 
@@ -1372,18 +1437,20 @@ CTma.break <- CTmeta(N,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Gamma.broken)
+               Gamma.break) %>%
+  try()
 ```
 
-## Both SigmaVAR (broken) and Gamma
+## Both SigmaVAR (break) and Gamma
 
 ```{r}
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.broken,
-               Gamma)
+               SigmaVAR.break,
+               Gamma) %>%
+  try()
 # "The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 3 times 2"
 ```
 
@@ -1394,23 +1461,24 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.broken,
-               Gamma)
+               SigmaVAR.break,
+               Gamma) %>%
+  try()
 # "The residual covariance matrix SigmaVAR should, like Phi, be a square matrix of size q times q, with q = 2. Currently, it is of size 3 times 2"
 ```
 
 ## Both SigmaVAR (not as should be but running) and Gamma
 
 ```{r}
-SigmaVAR.broken <- SigmaVAR
-SigmaVAR.broken[2,1] <- 10000
-SigmaVAR.broken
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[2,1] <- 10000
+SigmaVAR.break
 
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.broken,
+               SigmaVAR.break,
                Gamma)
 
 summary(CTma.break)
@@ -1424,7 +1492,7 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               SigmaVAR.broken,
+               SigmaVAR.break,
                Gamma)
 
 summary(CTma.break)
@@ -1435,16 +1503,17 @@ summary(CTma.break) == summary(CTma)
 ## Both SigmaVAR and Gamma (not as should be but running)
 
 ```{r}
-Gamma.broken <- Gamma
-Gamma.broken[2,1] <- 1.5
-Gamma.broken
+Gamma.break <- Gamma
+Gamma.break[2,1] <- 1.5
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Gamma.broken)
+               Gamma.break) %>%
+  try()
 
 # Error in FUN(newX[, i], ...) : invalid 'type' (complex) of argument
 ```
@@ -1462,7 +1531,8 @@ CTma.break <- CTmeta(N,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Gamma.broken)
+               Gamma.break) %>%
+  try()
 ```
 
 
@@ -1472,14 +1542,14 @@ CTma.break <- CTmeta(N,
 Gamma1 <- Gamma[1:2,]
 Gamma2 <- Gamma[3:4,]
 Gamma3 <- Gamma[5:6,]
-Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(2, 2, 3))
-Gamma.broken
+Gamma.break <- array(c(Gamma1, Gamma2, Gamma3), dim = c(2, 2, 3))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1494,7 +1564,7 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1507,14 +1577,14 @@ summary(CTma.break) == summary(CTma)
 Gamma1 <- Gamma[1:2,]
 Gamma2 <- Gamma[3:4,]
 Gamma3 <- Gamma[5:6,]
-Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3, rep(5, 6)), dim = c(2, 2, 4))
-Gamma.broken
+Gamma.break <- array(c(Gamma1, Gamma2, Gamma3, rep(5, 6)), dim = c(2, 2, 4))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1531,7 +1601,7 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1548,14 +1618,15 @@ As seen before, this sort of array does not exist.
 Gamma1 <- rbind(Gamma[1:2,], c(5, 5))
 Gamma2 <- rbind(Gamma[3:4,], c(5, 5))
 Gamma3 <- rbind(Gamma[5:6,], c(5, 5))
-Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(3, 2, 3))
-Gamma.broken
+Gamma.break <- array(c(Gamma1, Gamma2, Gamma3), dim = c(3, 2, 3))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break) %>%
+  try()
 
 # Error in Phi_DeltaT %*% Gamma : non-conformable arguments
 ```
@@ -1568,7 +1639,8 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break) %>%
+  try()
 ```
 
 
@@ -1578,14 +1650,15 @@ CTma.break <- CTmeta(N,
 Gamma1 <- Gamma[1,]
 Gamma2 <- Gamma[3,]
 Gamma3 <- Gamma[5,]
-Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(1, 2, 3))
-Gamma.broken
+Gamma.break <- array(c(Gamma1, Gamma2, Gamma3), dim = c(1, 2, 3))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break) %>%
+  try()
 
 # Error in Gamma[1:q, 1:q, s] : subscript out of bounds
 ```
@@ -1598,7 +1671,8 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break) %>%
+  try()
 ```
 
 
@@ -1608,14 +1682,15 @@ CTma.break <- CTmeta(N,
 Gamma1 <- cbind(Gamma[1:2,], c(5, 5))
 Gamma2 <- cbind(Gamma[3:4,], c(5, 5))
 Gamma3 <- cbind(Gamma[5:6,], c(5, 5))
-Gamma.broken <- array(c(Gamma1, Gamma2, Gamma3), dim = c(2, 3, 3))
-Gamma.broken
+Gamma.break <- array(c(Gamma1, Gamma2, Gamma3), dim = c(2, 3, 3))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break) %>%
+  try()
 
 # Error in Phi_DeltaT %*% Gamma : non-conformable arguments
 ```
@@ -1628,21 +1703,22 @@ CTma.break <- CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break) %>%
+  try()
 ```
 
 
 ## Gamma as a matrix with an extra row
 
 ```{r}
-Gamma.broken <- rbind(Gamma, c(5, 5))
-Gamma.broken
+Gamma.break <- rbind(Gamma, c(5, 5))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1659,7 +1735,7 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1669,14 +1745,14 @@ summary(CTma.break) == summary(CTma)
 ## Gamma as a matrix with an extra column
 
 ```{r}
-Gamma.broken <- cbind(Gamma, rep(5, 6))
-Gamma.broken
+Gamma.break <- cbind(Gamma, rep(5, 6))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1693,7 +1769,7 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1702,14 +1778,14 @@ summary(CTma.break) == summary(CTma)
 ## Gamma as a matrix with one extra row and one extra column
 
 ```{r}
-Gamma.broken <- rbind(cbind(Gamma, rep(5, 6)), c(6, 6, 6))
-Gamma.broken
+Gamma.break <- rbind(cbind(Gamma, rep(5, 6)), c(6, 6, 6))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1726,7 +1802,7 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break)
 
 CTma.break
 summary(CTma.break) == summary(CTma)
@@ -1737,14 +1813,15 @@ summary(CTma.break) == summary(CTma)
 ```{r}
 Gamma1 <- Gamma[1:3,]
 Gamma2 <- Gamma[4:6,]
-Gamma.broken <- array(c(Gamma1, Gamma2), dim = c(3, 2, 2))
-Gamma.broken
+Gamma.break <- array(c(Gamma1, Gamma2), dim = c(3, 2, 2))
+Gamma.break
 
 CTma.break <- CTmeta::CTmeta(N,
                      DeltaT,
                      DeltaTStar,
                      Phi,
-                     Gamma = Gamma.broken)
+                     Gamma = Gamma.break) %>%
+  try()
 
 # Error in Gamma[1:q, 1:q, s] : subscript out of bounds
 ```
@@ -1757,7 +1834,8 @@ CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
-               Gamma = Gamma.broken)
+               Gamma = Gamma.break) %>%
+  try()
 ```
 
 
@@ -1793,7 +1871,8 @@ CTma.mod.break <- CTmeta(N,
                Phi,
                SigmaVAR,
                Moderators = 2,
-               Mod = Mod)
+               Mod = Mod) %>%
+  try()
 ```
 
 
@@ -2011,10 +2090,10 @@ To do:
 ## Moderators = 0, Mod specified
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+CTma.break <- CTmeta::CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
                Moderators = 0,
                Mod = Mod)
-CTma.broken
+CTma.break
 
 summary(CTma.break) == summary(CTma.mod)
 # Mod gets ignored
@@ -2027,10 +2106,10 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+CTma.break <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
                Moderators = 0,
                Mod = Mod)
-CTma.broken
+CTma.break
 
 summary(CTma.break) == summary(CTma.mod)
 # Mod gets ignored
@@ -2041,9 +2120,9 @@ summary(CTma.break) == summary(CTma)
 ## Moderators not specified, Mod specified
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+CTma.break <- CTmeta::CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
                Mod = Mod)
-CTma.broken
+CTma.break
 
 summary(CTma.break) == summary(CTma.mod)
 # Mod gets ignored
@@ -2056,9 +2135,9 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+CTma.break <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
                Mod = Mod)
-CTma.broken
+CTma.break
 
 summary(CTma.break) == summary(CTma.mod)
 # Mod gets ignored
@@ -2068,10 +2147,11 @@ summary(CTma.break) == summary(CTma)
 ## Moderators as a vector
 
 ```{r}
-Mod.broken <- c(64,65,47)
-CTma.broken <- CTmeta::CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+Mod.break <- c(64,65,47)
+CTma.break <- CTmeta::CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
                Moderators = 1,
-               Mod = Mod.broken) # fixed effects model
+               Mod = Mod.break) %>% # fixed effects model
+  try()
 # breaks, as expected
 ## Error in if (dim(Mod)[1] != S) { : argument is of length zero
 ```
@@ -2080,9 +2160,10 @@ To do:
 - nothing?
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
+CTma.break <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR,
                Moderators = 1,
-               Mod = Mod.broken)
+               Mod = Mod.break) %>%
+  try()
 ```
 
 
@@ -2118,7 +2199,8 @@ CTma.mod.break <- CTmeta(N,
                Phi,
                SigmaVAR,
                Moderators = 1,
-               Mod = Mod.break)
+               Mod = Mod.break) %>%
+  try()
 ```
 
 
@@ -2153,7 +2235,8 @@ CTma.mod.break <- CTmeta(N,
                Phi,
                SigmaVAR,
                Moderators = 1,
-               Mod = Mod.break)
+               Mod = Mod.break) %>%
+  try()
 ```
 
 ## Moderators a matrix with an extra column with all identical moderators
@@ -2246,8 +2329,9 @@ CTma.mod.break <- CTmeta::CTmeta(N,
                Phi,
                SigmaVAR,
                Moderators = 1,
-               Mod = Mod.break)
-# Error in model.frame.default(object, data, xlev = xlev) : les longueurs des variables diffèrent (trouvé pour 'Mod.')
+               Mod = Mod.break) %>%
+  try()
+# Error in model.frame.default(object, data, xlev = xlev) : les longueurs des variables different (trouve pour 'Mod.')
 ```
 
 To do:
@@ -2262,7 +2346,8 @@ CTma.mod.break <- CTmeta(N,
                Phi,
                SigmaVAR,
                Moderators = 1,
-               Mod = Mod.break)
+               Mod = Mod.break) %>%
+  try()
 ```
 
 
@@ -2273,7 +2358,7 @@ CTma.mod.break <- CTmeta(N,
 ## FEorRE = 3
 
 ```{r}
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2281,7 +2366,7 @@ CTma.RE.broken <- CTmeta::CTmeta(N,
                   FEorRE = 3,
                   BetweenLevel = BetweenLevel)
 
-CTma.RE.broken
+CTma.RE.break
 # "The argument FEorRE should be 1 or 2; not 3"
 ```
 
@@ -2291,39 +2376,36 @@ To do:
 Done:
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 3,
-                  BetweenLevel = BetweenLevel)
+                  BetweenLevel = BetweenLevel) %>%
+  try()
 ```
 
 
 ## FEorRE = 2, BetweenLevel not specified
 
 ```{r}
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2)
 
-CTma.RE.broken
-summary(CTma.RE.broken) == summary(CTma.RE)
+CTma.RE.break
+summary(CTma.RE.break) == summary(CTma.RE)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma)
+summary(CTma.RE.break) == summary(CTma)
 # FALSE
 # this is its own model then: save it for future comparisons
 
-CTma.RE.noBL <- CTma.RE.broken 
+CTma.RE.noBL <- CTma.RE.break 
 ```
-
-To do:
-- ask Rebecca if this is meant to work
-- if it is, include an example in the documentation
 
 ## Added "FE" and "RE" as possible inputs
 
@@ -2359,15 +2441,15 @@ summary(CTma.RE.2) == summary(CTma.RE)
 ## BetweenLevel for FE
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 1,
                   BetweenLevel = BetweenLevel)
-CTma.broken
-summary(CTma.broken) == summary(CTma)
+CTma.break
+summary(CTma.break) == summary(CTma)
 # TRUE
 ```
 
@@ -2377,15 +2459,15 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 1,
                   BetweenLevel = BetweenLevel)
-CTma.broken
-summary(CTma.broken) == summary(CTma)
+CTma.break
+summary(CTma.break) == summary(CTma)
 ```
 
 
@@ -2394,50 +2476,50 @@ summary(CTma.broken) == summary(CTma)
 So the same e.g. sample gets used for all included studies
 
 ```{r}
-BetweenLevel.broken <- rep(1, 3)
+BetweenLevel.break <- rep(1, 3)
 
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break)
 # Warning: Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0.
 
-CTma.RE.broken
-summary(CTma.RE.broken) == summary(CTma.RE)
+CTma.RE.break
+summary(CTma.RE.break) == summary(CTma.RE)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma)
+summary(CTma.RE.break) == summary(CTma)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma.RE.noBL)
+summary(CTma.RE.break) == summary(CTma.RE.noBL)
 # FALSE
 
-CTma.RE.id.BL <- CTma.RE.broken
+CTma.RE.id.BL <- CTma.RE.break
 ```
 
 ## BetweenLevel all identical and != 1
 
 ```{r}
-BetweenLevel.broken <- rep(0, 3)
+BetweenLevel.break <- rep(0, 3)
 
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break)
 # Warning: Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0.
 
-CTma.RE.broken
-summary(CTma.RE.broken) == summary(CTma.RE)
+CTma.RE.break
+summary(CTma.RE.break) == summary(CTma.RE)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma)
+summary(CTma.RE.break) == summary(CTma)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma.RE.noBL)
+summary(CTma.RE.break) == summary(CTma.RE.noBL)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma.RE.id.BL)
+summary(CTma.RE.break) == summary(CTma.RE.id.BL)
 # TRUE
 ```
 
@@ -2451,18 +2533,18 @@ Let's check this.
 ## BetweenLevel values switched
 
 ```{r}
-BetweenLevel.broken <- c(2, 2, 1)
+BetweenLevel.break <- c(2, 2, 1)
 
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
-CTma.RE.broken
+                  BetweenLevel = BetweenLevel.break)
+CTma.RE.break
 
-summary(CTma.RE) == summary(CTma.RE.broken)
+summary(CTma.RE) == summary(CTma.RE.break)
 ```
 
 Yes, they can be switched.
@@ -2470,17 +2552,18 @@ Yes, they can be switched.
 ## BetweenLevel with NAs
 
 ```{r}
-BetweenLevel.broken <- BetweenLevel
-BetweenLevel.broken[2] <- NA
-BetweenLevel.broken
+BetweenLevel.break <- BetweenLevel
+BetweenLevel.break[2] <- NA
+BetweenLevel.break
 
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break) %>%
+  try()
 # Error in rma.mv(yi = vecVecStandPhi, V = CovMx, mods = ~overallPhi - 1, : No NAs allowed in variables specified in the 'random' argument.
 ```
 
@@ -2490,32 +2573,33 @@ To do:
 Done:
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break) %>%
+  try()
 ```
 
 
 ## BetweenLevel with non-numbers
 
 ```{r}
-BetweenLevel.broken <- c("a", "a", "bee")
-BetweenLevel.broken
+BetweenLevel.break <- c("a", "a", "bee")
+BetweenLevel.break
 
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break)
 
-CTma.RE.broken
-summary(CTma.RE.broken) == summary(CTma.RE)
+CTma.RE.break
+summary(CTma.RE.break) == summary(CTma.RE)
 # TRUE
 ```
 
@@ -2525,7 +2609,7 @@ To do:
 ## FEorRE = 1, BetweenLevel specified
 
 ```{r}
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2533,10 +2617,10 @@ CTma.RE.broken <- CTmeta::CTmeta(N,
                   FEorRE = 1,
                   BetweenLevel = BetweenLevel)
 
-CTma.RE.broken
-summary(CTma.RE.broken) == summary(CTma.RE)
+CTma.RE.break
+summary(CTma.RE.break) == summary(CTma.RE)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma)
+summary(CTma.RE.break) == summary(CTma)
 # TRUE
 ```
 
@@ -2546,7 +2630,7 @@ To do:
 Done:
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
@@ -2554,10 +2638,10 @@ CTma.RE.broken <- CTmeta(N,
                   FEorRE = 1,
                   BetweenLevel = BetweenLevel)
 
-CTma.RE.broken
-summary(CTma.RE.broken) == summary(CTma.RE)
+CTma.RE.break
+summary(CTma.RE.break) == summary(CTma.RE)
 # FALSE
-summary(CTma.RE.broken) == summary(CTma)
+summary(CTma.RE.break) == summary(CTma)
 # TRUE
 ```
 
@@ -2565,18 +2649,18 @@ summary(CTma.RE.broken) == summary(CTma)
 ## BetweenLevel an S*2 matrix
 
 ```{r}
-BetweenLevel.broken <- cbind(BetweenLevel, c(1, 2, 3))
-BetweenLevel.broken
+BetweenLevel.break <- cbind(BetweenLevel, c(1, 2, 3))
+BetweenLevel.break
 
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break)
 
-CTma.RE.broken
+CTma.RE.break
 # "The argument BetweenLevel should be a S vector or S x 1 matrix.\n                   Thus, the number of elements in BetweenLevel should equal S = 3 not 6."
 ```
 
@@ -2587,31 +2671,32 @@ To do:
 Done:
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break) %>%
+  try()
 ```
 
 
 ## BetweenLevel an (S+1)*1 matrix
 
 ```{r}
-BetweenLevel.broken <- rbind(as.matrix(BetweenLevel), 3)
-BetweenLevel.broken
+BetweenLevel.break <- rbind(as.matrix(BetweenLevel), 3)
+BetweenLevel.break
 
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break)
 
-CTma.RE.broken
+CTma.RE.break
 # "The argument BetweenLevel should be a S vector or S x 1 matrix.\n                   Thus, the number of elements in BetweenLevel should equal S = 3 not 4."
 ```
 
@@ -2622,31 +2707,32 @@ To do:
 Done:
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break) %>%
+  try()
 ```
 
 
 ## BetweenLevel an (S-1)*1 matrix
 
 ```{r}
-BetweenLevel.broken <- BetweenLevel[2:3]
-BetweenLevel.broken
+BetweenLevel.break <- BetweenLevel[2:3]
+BetweenLevel.break
 
-CTma.RE.broken <- CTmeta::CTmeta(N,
+CTma.RE.break <- CTmeta::CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break)
 
-CTma.RE.broken
+CTma.RE.break
 # "The argument BetweenLevel should be a S vector or S x 1 matrix.\n                   Thus, the number of elements in BetweenLevel should equal S = 3 not 2."
 ```
 
@@ -2657,13 +2743,14 @@ To do:
 Done:
 
 ```{r}
-CTma.RE.broken <- CTmeta(N,
+CTma.RE.break <- CTmeta(N,
                   DeltaT,
                   DeltaTStar,
                   Phi,
                   SigmaVAR,
                   FEorRE = 2,
-                  BetweenLevel = BetweenLevel.broken)
+                  BetweenLevel = BetweenLevel.break) %>%
+  try()
 ```
 
 
@@ -2678,7 +2765,8 @@ CTma.lab <- CTmeta::CTmeta(N,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = rep("test", 2*2*3))
+               Label = rep("test", 2*2*3)) %>%
+  try()
 # Error in q * q : non-numeric argument to binary operator
 ```
 
@@ -2703,15 +2791,16 @@ forest(CTma.lab$summaryMetaAnalysis)
 ## Label with NAs
 
 ```{r}
-lab.broken <- paste("test", 1:(2*2*3))
-lab.broken[3] <- NA
+lab.break <- paste("test", 1:(2*2*3))
+lab.break[3] <- NA
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break) %>%
+  try()
 
 # Error in rma.mv(yi = vecVecStandPhi, V = CovMx, mods = ~overallPhi - 1, : NAs in study labels.
 ```
@@ -2722,30 +2811,32 @@ To do:
 ## Label with non-characters
 
 ```{r}
-lab.broken <- 1:(2*2*3)
+lab.break <- 1:(2*2*3)
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break) %>%
+  try()
 ```
 
 
 ## Label a matrix with the right number of elements
 
 ```{r}
-lab.broken <- paste("test", 1:(2*2*3))
-lab.broken <- matrix(lab.broken, ncol = 1)
-lab.broken
+lab.break <- paste("test", 1:(2*2*3))
+lab.break <- matrix(lab.break, ncol = 1)
+lab.break
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break) %>%
+  try()
 ```
 
 This breaks as expected.
@@ -2753,19 +2844,19 @@ This breaks as expected.
 ## Label as a matrix with one row per study and the right number of elements
 
 ```{r}
-lab.broken <- paste("test", 1:(2*2*3))
-lab.broken <- matrix(lab.broken, ncol = 3)
-lab.broken
+lab.break <- paste("test", 1:(2*2*3))
+lab.break <- matrix(lab.break, ncol = 3)
+lab.break
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break)
 
-funnel(CTma.lab.broken$summaryMetaAnalysis, label = 'out')
-forest(CTma.lab.broken$summaryMetaAnalysis)
+funnel(CTma.lab.break$summaryMetaAnalysis, label = 'out')
+forest(CTma.lab.break$summaryMetaAnalysis)
 ```
 
 This runs. The documentation should be changed.
@@ -2773,19 +2864,19 @@ This runs. The documentation should be changed.
 ## Label as an array with a panel per study
 
 ```{r}
-lab.broken <- paste("test", 1:(2*2*3))
-lab.broken <- array(lab.broken, dim = c(2, 2, 3))
-lab.broken
+lab.break <- paste("test", 1:(2*2*3))
+lab.break <- array(lab.break, dim = c(2, 2, 3))
+lab.break
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break)
 
-funnel(CTma.lab.broken$summaryMetaAnalysis, label = 'out')
-forest(CTma.lab.broken$summaryMetaAnalysis)
+funnel(CTma.lab.break$summaryMetaAnalysis, label = 'out')
+forest(CTma.lab.break$summaryMetaAnalysis)
 ```
 
 This runs. The documentation should be changed.
@@ -2793,16 +2884,17 @@ This runs. The documentation should be changed.
 ## Label an array with the right number of elements
 
 ```{r}
-lab.broken <- paste("test", 1:(2*2*3))
-lab.broken <- array(lab.broken, dim = c(1, 1, 12))
-lab.broken
+lab.break <- paste("test", 1:(2*2*3))
+lab.break <- array(lab.break, dim = c(1, 1, 12))
+lab.break
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break) %>%
+  try()
 ```
 
 Breaks as expected.
@@ -2810,16 +2902,17 @@ Breaks as expected.
 ## Label as an array with a panel per study but wrong dimension panels
 
 ```{r}
-lab.broken <- paste("test", 1:(2*2*3))
-lab.broken <- array(lab.broken, dim = c(1, 4, 3))
-lab.broken
+lab.break <- paste("test", 1:(2*2*3))
+lab.break <- array(lab.break, dim = c(1, 4, 3))
+lab.break
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break) %>%
+  try()
 ```
 
 Breaks as expected
@@ -2827,16 +2920,17 @@ Breaks as expected
 ## Label as an array with the wrong dimensions
 
 ```{r}
-lab.broken <- paste("test", 1:(2*2*3))
-lab.broken <- array(lab.broken, dim = c(3, 2, 2))
-lab.broken
+lab.break <- paste("test", 1:(2*2*3))
+lab.break <- array(lab.break, dim = c(3, 2, 2))
+lab.break
 
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = lab.broken)
+               Label = lab.break) %>%
+  try()
 ```
 
 Breaks as expected
@@ -2844,12 +2938,13 @@ Breaks as expected
 ## Label a longer vector
 
 ```{r}
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = paste("test", 1:(2*2*4)))
+               Label = paste("test", 1:(2*2*4))) %>%
+  try()
 ```
 
 Breaks as expected.
@@ -2858,12 +2953,13 @@ Breaks as expected.
 ## Label a shorter vector
 
 ```{r}
-CTma.lab.broken <- CTmeta(N,
+CTma.lab.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
-               Label = paste("test", 1:(2*2*2)))
+               Label = paste("test", 1:(2*2*2))) %>%
+  try()
 ```
 
 Breaks as expected.
@@ -2875,17 +2971,17 @@ Breaks as expected.
 ## alpha != 0.05
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                alpha = 0.9)
 
-CTma.broken$LB_elliptical_CI
-CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
-CTma.broken$UB_elliptical_CI == CTma$UB_elliptical_CI
-summary(CTma.broken) == summary(CTma)
+CTma.break$LB_elliptical_CI
+CTma.break$LB_elliptical_CI == CTma$LB_elliptical_CI
+CTma.break$UB_elliptical_CI == CTma$UB_elliptical_CI
+summary(CTma.break) == summary(CTma)
 # TRUE
 ```
 
@@ -2895,23 +2991,23 @@ To do:
 Done and fixed:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                alpha = 0.9)
 
-CTma.broken$LB_elliptical_CI
-CTma.broken$LB_elliptical_CI == CTma$LB_elliptical_CI
-CTma.broken$UB_elliptical_CI == CTma$UB_elliptical_CI
+CTma.break$LB_elliptical_CI
+CTma.break$LB_elliptical_CI == CTma$LB_elliptical_CI
+CTma.break$UB_elliptical_CI == CTma$UB_elliptical_CI
 ```
 
 
 ## negative alpha - using the modified CTmeta
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -2920,11 +3016,11 @@ CTma.broken <- CTmeta(N,
 
 # Warning in qchisq(p = alpha, df = (q * q), lower.tail = FALSE) : Production de NaN
 
-CTma.broken$LB_elliptical_CI
+CTma.break$LB_elliptical_CI
 # NaN
 
-summary(CTma.broken)
-CTma.broken
+summary(CTma.break)
+CTma.break
 # LB and UB not given
 # some of the output still there
 ```
@@ -2935,7 +3031,7 @@ To do:
 ## negative alpha != -0.05
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -2944,11 +3040,11 @@ CTma.broken <- CTmeta(N,
 
 # Warning in qchisq(p = alpha, df = (q * q), lower.tail = FALSE) : Production de NaN
 
-CTma.broken$LB_elliptical_CI
+CTma.break$LB_elliptical_CI
 # NaN
 
-summary(CTma.broken)
-CTma.broken
+summary(CTma.break)
+CTma.break
 # LB and UB not given
 # some of the output still there
 ```
@@ -2959,17 +3055,17 @@ To do:
 ## alpha = 1
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                alpha = 1)
 
-CTma.broken$LB_elliptical_CI
+CTma.break$LB_elliptical_CI
 
-summary(CTma.broken)
-CTma.broken
+summary(CTma.break)
+CTma.break
 # LB and UB same value as overall_phi
 # some of the output still there
 ```
@@ -2977,18 +3073,18 @@ CTma.broken
 ## alpha = 0
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                alpha = 0)
 
-CTma.broken$LB_elliptical_CI
+CTma.break$LB_elliptical_CI
 # - Inf
 
-summary(CTma.broken)
-CTma.broken
+summary(CTma.break)
+CTma.break
 # LB and UB -Inf
 # some of the output still there
 ```
@@ -2996,7 +3092,7 @@ CTma.broken
 ## alpha > 1
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -3005,11 +3101,11 @@ CTma.broken <- CTmeta(N,
 
 # Warning in qchisq(p = alpha, df = (q * q), lower.tail = FALSE) : Production de NaN
 
-CTma.broken$LB_elliptical_CI
+CTma.break$LB_elliptical_CI
 # NaN
 
-summary(CTma.broken)
-CTma.broken
+summary(CTma.break)
+CTma.break
 # LB and UB not given
 # some of the output still there
 ```
@@ -3021,13 +3117,13 @@ CTma.broken
 ## PrintPlot = 2
 
 ```{r}
-CTma.broken <- CTmeta::CTmeta(N,
+CTma.break <- CTmeta::CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                PrintPlot = 2)
-CTma.broken
+CTma.break
 # "The argument 'PrintPlot' should be T(RUE) or F(ALSE); or 1 or 0; not 2"
 ```
 
@@ -3037,15 +3133,15 @@ To do:
 Done:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                PrintPlot = 2)
 
-CTma.broken
-summary(CTma.broken) == summary(CTma)
+CTma.break
+summary(CTma.break) == summary(CTma)
 ```
 
 ## PrintPlot for FE with moderator
@@ -3058,7 +3154,8 @@ CTma.mod.break <- CTmeta::CTmeta(N,
                SigmaVAR,
                Moderators = 1,
                Mod = Mod,
-               PrintPlot = TRUE)
+               PrintPlot = TRUE) %>%
+  try()
 # Warning in log(Eigen_ParamVAR) : NaNs produced Error: $ operator is invalid for atomic vectors
 ```
 
@@ -3113,16 +3210,16 @@ ggPhiPlot does print as it saves. We modify the function CTmeta to take out the 
 Testing this worked:
 
 ```{r}
-CTma.broken <- CTmeta(N,
+CTma.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
                SigmaVAR,
                PrintPlot = TRUE)
 
-CTma.broken
-summary(CTma.broken) == summary(CTma)
-CTma.broken$PhiPlot
+CTma.break
+summary(CTma.break) == summary(CTma)
+CTma.break$PhiPlot
 ```
 
 
@@ -3138,7 +3235,8 @@ CTma.mod.break <- CTmeta::CTmeta(N,
                FEorRE = 2,
                Moderators = 1,
                Mod = Mod,
-               PrintPlot = TRUE)
+               PrintPlot = TRUE) %>%
+  try()
 # Warning in log(Eigen_ParamVAR) : NaNs produced Error: $ operator is invalid for atomic vectors
 ```
 
@@ -3399,42 +3497,44 @@ To do:
 ## Only N
 
 ```{r}
-CTma.broken <- CTmeta(N)
+CTma.break <- CTmeta(N) %>%
+  try()
 # Error in CTmeta(N) : argument "DeltaT" is missing, with no default
 ```
 
 ### Then fixing that
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT)
+CTma.break <- CTmeta(N, DeltaT) %>%
+  try()
 # argument "DeltaTStar" is missing, with no default
 ```
 
 ### Then fixing that
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT, DeltaTStar)
+CTma.break <- CTmeta(N, DeltaT, DeltaTStar) %>%
+  try()
 # argument "Phi" is missing, with no default
 ```
 
 ### Then fixing that
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi)
-
-CTma.broken
+CTma.break <- CTmeta(N, DeltaT, DeltaTStar, Phi) %>%
+  try()
 ```
 
 ### Then fixing that
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
+CTma.break <- CTmeta(N, DeltaT, DeltaTStar, Phi, SigmaVAR)
 ```
 
 ```{r}
-CTma.broken <- CTmeta(N, DeltaT, DeltaTStar, Phi, Gamma = Gamma)
-CTma.broken
-summary(CTma.broken) == summary(CTma)
+CTma.break <- CTmeta(N, DeltaT, DeltaTStar, Phi, Gamma = Gamma)
+CTma.break
+summary(CTma.break) == summary(CTma)
 ```
 
 ### Conclusion:
