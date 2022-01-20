@@ -34,3 +34,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Can't include an if statement for the case where it has more columns than q since q is defined from Phi.
 
+## Area
+
+## Questions:
+
+1. Why do Phi = myPhi and Phi = outVAR give different results?
+
