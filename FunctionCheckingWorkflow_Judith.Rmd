@@ -28,30 +28,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## CTmeta
 
-### Workflow
-
-1. Extensively check function
-
-Done.
-
-2. Modify function as per checks
-
-Done.
-
-3. Read through function: is there anything (especially regarding errors/warnings) that should still be changed?
-
-Done.
-
-4. Discussion with Rebecca about unclear parts
-
-a. Some of the bigger essence changes are cutting out "currently, ... is of size ..." for matrices: giving a vector of dimensions does not provide clear enough information, and formatting it such that the dimensions are given is more hassle than necessary for an error message that clearly states the size it should be.
-
-5. Go through the function check process again
-
-6. Modify documentation
-
-Done.
-
 ### Questions:
 
 1. How do we deal with Phi that has too many columns?
