@@ -54,20 +54,7 @@ Done.
 
 ### Questions:
 
-1. PrintPlot: error message when the plot can't be made
-
-The question has been sent to Rebecca.
-
-2. How do we deal with Phi that has too many columns?
+1. How do we deal with Phi that has too many columns?
 
 Can't include an if statement for the case where it has more columns than q since q is defined from Phi.
 
-3. Can moderators be factors?
-
-This would explain the output of the non-numerical moderator input
-
-4. What exactly should be in N?
-
-5. "The arguments SigmaVAR and Gamma are not found: Both SigmaVAR and Gamma are unknown; either one (or both) should be part of the input. In case of first matrix, specify 'SigmaVAR = SigmaVAR'."
-
-What does this mean?
