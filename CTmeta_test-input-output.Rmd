@@ -3065,7 +3065,7 @@ CTma.mod.break <- CTmeta::CTmeta(N,
 To do:
 - why is this going wrong?
 
-Temporary fix:
+Done:
 
 ```{r}
 CTma.mod.break <- CTmeta(N,
@@ -3076,6 +3076,7 @@ CTma.mod.break <- CTmeta(N,
                Moderators = 1,
                Mod = Mod,
                PrintPlot = TRUE)
+CTma.mod.break
 
 summary(CTma.mod.break) == summary(CTma.mod)
 ```
@@ -3144,10 +3145,19 @@ CTma.mod.break <- CTmeta::CTmeta(N,
 To do:
 - why is this going wrong?
 
-Temporary fix:
+Done:
 
 ```{r}
-CTma.mod.break <- CTmeta(N,
+CTma.mod.RE <- CTmeta::CTmeta(N,
+               DeltaT,
+               DeltaTStar,
+               Phi,
+               SigmaVAR,
+               FEorRE = 2,
+               Moderators = 1,
+               Mod = Mod)
+
+CTma.mod.RE.break <- CTmeta(N,
                DeltaT,
                DeltaTStar,
                Phi,
@@ -3156,6 +3166,9 @@ CTma.mod.break <- CTmeta(N,
                Moderators = 1,
                Mod = Mod,
                PrintPlot = TRUE)
+
+CTma.mod.RE.break
+summary(CTma.mod.RE.break) == summary(CTma.mod.RE)
 ```
 
 ## PrintPlot for RE without moderator
