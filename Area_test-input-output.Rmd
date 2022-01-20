@@ -16,3 +16,67 @@ Where the function runs, the output is compared to the expected output.
 
 After every attempt to "break" the function, a diagnostic is written as a comment in the code chunk, and the code chunk is followed by a "to do" list to indicate what needs to be specified/improved/changed in the function documentation or the function itself.
 
+# DeltaT
+
+## DeltaT a vector with repeating numbers
+
+## DeltaT a vector with different numbers
+
+## DeltaT a matrix
+
+## DeltaT = 0
+
+## DeltaT = Inf
+
+## DeltaT = -Inf
+
+## DeltaT a character
+
+
+
+# Phi
+
+## Not square matrix
+
+## Phi with NAs
+
+## Phi with non-numbers
+
+
+
+
+# Drift
+
+## Both Phi and Drift
+
+## Not square matrix
+
+## Drift with NAs
+
+## Drift with non-numbers
+
+
+
+# t_min
+
+## Negative
+
+## Decimal
+
+## Inf
+
+## Character
+
+
+
+# t_max
+
+## Smaller than t_min
+
+## Decimal
+
+## Negative
+
+## Inf
+
+## Character
