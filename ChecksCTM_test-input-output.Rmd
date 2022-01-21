@@ -28,21 +28,139 @@ sig <- ChecksCTM(Drift, Sigma)
 gam <- ChecksCTM(Drift, Gamma = Gamma)
 ```
 
+
+
+
 # Drift
 
 ## Drift with too many rows
 
+```{r}
+Drift.broken <- rbind(Drift, c(1, 1))
+
+ChecksCTM(Drift.broken, Sigma) %>% try()
+```
+
+Understandable error message.
+
+
 ## Drift with too many columns
+
+```{r}
+Drift.broken <- cbind(Drift, c(1, 1))
+
+ChecksCTM(Drift.broken, Sigma) %>% try()
+```
+
+Understandable error message.
+
 
 ## Drift with NAs
 
+```{r}
+Drift.broken <- Drift
+Drift.broken[1,2] <- NA
+
+ChecksCTM(Drift.broken, Sigma) %>% try()
+```
+
+Added an error for missing values in Drift.
+
+
+## No Drift, only Sigma and Gamma
+
+```{r}
+ChecksCTM(Sigma = Sigma, Gamma = Gamma) %>% try()
+```
+
+
+## All three
+
+```{r}
+ChecksCTM(Drift, Sigma, Gamma)
+```
+
+## All three, but non-compatible
+
+```{r}
+Drift.broken <- Drift
+Drift.broken[1,1] <- -1.75
+
+ChecksCTM(Drift.broken, Sigma, Gamma)
+```
+
+```{r}
+Sigma.broken <- Sigma
+Sigma.broken[2,1] <- -1.75
+
+ChecksCTM(Drift, Sigma.broken, Gamma)
+```
+
+```{r}
+Gamma.broken <- Gamma
+Gamma.broken[2,1] <- -1.75
+
+ChecksCTM(Drift, Sigma, Gamma.broken)
+```
+
+Added a check that they are all compatible.
+
+
+## Only Drift
+
+```{r}
+ChecksCTM(Drift) %>% try()
+```
+
+Clear error.
+
+
 ## Drift with non-numerical values
+
+```{r}
+Drift.broken <- Drift
+Drift.broken[1,2] <- "text"
+
+ChecksCTM(Drift.broken, Sigma) %>% try()
+```
+
+Added an error.
 
 ## Drift with positive eigenvalues
 
+```{r}
+Drift.broken <- matrix(c(2, -1, -1, 2), nrow = 2)
+
+pos.eig <- ChecksCTM(Drift.broken, Sigma)
+pos.eig$error
+```
+
+Problems:
+- prints some stuff that is not saved (in "cat" functions)
+- there are no returns to line in lists so \n is always visible
+
+
 ## Drift with complex eigenvalues
 
+```{r}
+Drift.broken <- matrix(c(1/2, -1/2, 3/4, 5/4), nrow = 2, byrow = TRUE)
+
+complex.eig <- ChecksCTM(Drift.broken, Sigma)
+complex.eig$error
+```
+
 ## Drift with complex eigenvectors
+
+```{r}
+Drift.broken <- matrix(c(1/2, -0.6, 3/4, 1.1), nrow = 2, byrow = TRUE)
+
+complex.eig <- ChecksCTM(Drift.broken, Sigma)
+complex.eig$error
+```
+
+## Drift with positive and complex eigenvalues
+
+Assuming this works ok.
 
 
 
@@ -50,17 +168,64 @@ gam <- ChecksCTM(Drift, Gamma = Gamma)
 
 ## More rows
 
+```{r}
+Sigma.broken <- rbind(Sigma, c(1, 1))
+
+ChecksCTM(Drift, Sigma.broken) %>% try()
+```
+
 ## More columns
+
+```{r}
+Sigma.broken <- cbind(Sigma, c(1, 1))
+
+ChecksCTM(Drift, Sigma.broken) %>% try()
+```
 
 ## NAs
 
+```{r}
+Sigma.broken <- Sigma
+Sigma.broken[1,1] <- NA
+
+ChecksCTM(Drift, Sigma.broken) %>% try()
+```
+
+Added an error for NAs in Sigma.
+
 ## Non-numbers
+
+```{r}
+Sigma.broken <- Sigma
+Sigma.broken[1,1] <- "text"
+
+ChecksCTM(Drift, Sigma.broken) %>% try()
+```
 
 ## Not diagonal
 
+```{r}
+Sigma.broken <- Sigma
+Sigma.broken[1,2] <- 1
+
+ChecksCTM(Drift, Sigma.broken) %>% try()
+```
+
+Works.
+
 ## 0 in diagonal
 
+```{r}
+Sigma.broken <- matrix(c(0, 1, 1, 0), nrow = 2)
+
+ChecksCTM(Drift, Sigma.broken) %>% try()
+```
+
+Works.
+
 ## Not positive definite
+
+See above.
 
 
 
@@ -68,22 +233,52 @@ gam <- ChecksCTM(Drift, Gamma = Gamma)
 
 ## More rows
 
+```{r}
+Gamma.broken <- rbind(Gamma, c(1, 1))
+
+ChecksCTM(Drift, Gamma = Gamma.broken) %>% try()
+```
+
 ## More columns
+
+```{r}
+Gamma.broken <- cbind(Gamma, c(1, 1))
+
+ChecksCTM(Drift, Gamma = Gamma.broken) %>% try()
+```
 
 ## NAs
 
+```{r}
+Gamma.broken <- Gamma
+Gamma.broken[1,1] <- NA
+
+ChecksCTM(Drift, Gamma = Gamma.broken) %>% try()
+```
+
+Added an error for NAs in Gamma.
+
 ## Non-numbers
 
-## Not diagonal
+```{r}
+Gamma.broken <- Gamma
+Gamma.broken[1,1] <- "text"
+
+ChecksCTM(Drift, Gamma = Gamma.broken) %>% try()
+```
 
 ## 0 in diagonal
 
+```{r}
+Gamma.broken <- matrix(c(0, 1, 1, 0), nrow = 2)
+
+ChecksCTM(Drift, Gamma = Gamma.broken) %>% try()
+```
+
+Works; shows problems
+
 ## Not positive definite
 
+See above.
 
 
-# Combinations
-
-## Sigma and Gamma not positive definite
-
-## Drift with positive eigenvalues and Gamma not positive definite
