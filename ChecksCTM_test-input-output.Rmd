@@ -1,0 +1,21 @@
+---
+title: "Testing the input and output of Area"
+author: "Judith Neve"
+date: "20/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(CTmeta)
+```
+
+This document tests what can be used as input and output for the function Area. Each argument is examined in turn, and at the end some additional checks are done to verify plots can be made for different configurations of the model.
+
+Where the function runs, the output is compared to the expected output.
+
+After every attempt to "break" the function, a diagnostic is written as a comment in the code chunk, and the code chunk is followed by a "to do" list to indicate what needs to be specified/improved/changed in the function documentation or the function itself.
+
+Original example:
+
+

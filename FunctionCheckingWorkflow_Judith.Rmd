@@ -28,15 +28,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## CTmeta
 
-### Questions:
-
 1. How do we deal with Phi that has too many columns?
 
 Can't include an if statement for the case where it has more columns than q since q is defined from Phi.
 
 ## Area
-
-## Questions:
 
 1. Why do Phi = myPhi and Phi = outVAR give different results?
 
@@ -47,4 +43,10 @@ Can't include an if statement for the case where it has more columns than q sinc
 3. Can t_max be -Inf?
 
 4. Do I check ctFit?
+
+## ChecksCTM
+
+1. Description of arguments?
+
+2. Example 2?
 
