@@ -34,6 +34,7 @@ Judith <- Judith[Judith != "CTmeta"]
 Judith <- Judith[Judith != "coef.CTmeta"]
 # no need to actually look at coef.CTmeta, this just makes coef() work
 Judith <- Judith[Judith != "Area"]
+Judith <- Judith[Judith != "ChecksCTM"]
 
 Judith <- Judith[Judith != "myData"]
 Judith <- Judith[Judith != "myDrift"]
