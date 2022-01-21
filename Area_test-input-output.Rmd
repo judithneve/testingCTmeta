@@ -187,8 +187,322 @@ To do:
 
 # DeltaT with a Phi from varest
 
-TO DO
+```{r}
+Phi <- out_VAR
+```
 
+## Checking this runs as well as the other examples
+
+```{r}
+Area(Phi = Phi)
+Area(DeltaT, Phi, t_min = 1, t_max = 2)
+PhiPlot(DeltaT, Phi)
+```
+
+## Checks on DeltaT that give errors
+
+### DeltaT a vector with repeating numbers
+
+```{r}
+DeltaT.break <- rep(1, 3)
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+The error works fine.
+
+### DeltaT a vector with different numbers
+
+Already covered by the previous error.
+
+### DeltaT a matrix
+
+Already covered by the previous error.
+
+### DeltaT = 0
+
+```{r}
+DeltaT.break <- 0
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- the problem is in CTMparam
+
+After looking through that function in detail, a division by DeltaT is involved, so DeltaT cannot be 0. Conclusion:
+
+- add an error if DeltaT is 0
+
+## DeltaT a decimal
+
+```{r}
+DeltaT.break <- 1.5
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi)
+res.phi.break
+```
+
+## DeltaT a small decimal
+
+```{r}
+DeltaT.break <- 0.01
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi)
+res.phi.break
+```
+
+## Negative DeltaT
+
+```{r}
+DeltaT.break <- -1
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for negative DeltaT
+
+Done.
+
+## DeltaT = Inf
+
+```{r}
+DeltaT.break <- Inf
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for DeltaT = Inf
+
+Done.
+
+## DeltaT a large number
+
+```{r}
+DeltaT.break <- 10000
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi)
+res.phi.break
+```
+
+## DeltaT = -Inf
+
+```{r}
+DeltaT.break <- -Inf
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for DeltaT = -Inf
+
+Done.
+
+## DeltaT a character
+
+```{r}
+DeltaT.break <- "text"
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for DeltaT as text
+
+
+
+
+
+
+
+
+
+
+# DeltaT with a Phi from ctsemFit
+
+```{r}
+library(ctsem)
+library(ctsemOMX)
+
+############ from https://rdrr.io/cran/ctsemOMX/man/ctFit.html ############
+data(ctExample1)
+traitmodel <- ctModel(n.manifest=2, n.latent=2, Tpoints=6, LAMBDA=diag(2), 
+  manifestNames=c('LeisureTime', 'Happiness'), 
+  latentNames=c('LeisureTime', 'Happiness'), TRAITVAR="auto")
+traitfit <- ctFit(dat=ctExample1, ctmodelobj=traitmodel)
+##########################################################################
+
+Phi <- traitfit
+```
+
+## Checking this runs as well as the other examples
+
+```{r}
+Area(Phi = Phi)
+Area(DeltaT, Phi, t_min = 1, t_max = 2)
+PhiPlot(DeltaT, Phi)
+```
+
+
+## Checks on DeltaT that give errors
+
+### DeltaT a vector with repeating numbers
+
+```{r}
+DeltaT.break <- rep(1, 3)
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+The error works fine.
+
+### DeltaT a vector with different numbers
+
+Already covered by the previous error.
+
+### DeltaT a matrix
+
+Already covered by the previous error.
+
+### DeltaT = 0
+
+```{r}
+DeltaT.break <- 0
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- the problem is in CTMparam
+
+After looking through that function in detail, a division by DeltaT is involved, so DeltaT cannot be 0. Conclusion:
+
+- add an error if DeltaT is 0
+
+## DeltaT a decimal
+
+```{r}
+DeltaT.break <- 1.5
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi)
+res.phi.break
+```
+
+## DeltaT a small decimal
+
+```{r}
+DeltaT.break <- 0.01
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi)
+res.phi.break
+```
+
+## Negative DeltaT
+
+```{r}
+DeltaT.break <- -1
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for negative DeltaT
+
+Done.
+
+## DeltaT = Inf
+
+```{r}
+DeltaT.break <- Inf
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for DeltaT = Inf
+
+Done.
+
+## DeltaT a large number
+
+```{r}
+DeltaT.break <- 10000
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi)
+res.phi.break
+```
+
+## DeltaT = -Inf
+
+```{r}
+DeltaT.break <- -Inf
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for DeltaT = -Inf
+
+Done.
+
+## DeltaT a character
+
+```{r}
+DeltaT.break <- "text"
+
+res.phi.break <- Area(DeltaT = DeltaT.break,
+                      Phi = Phi) %>%
+  try()
+```
+
+To do:
+
+- add an error for DeltaT as text
+
+## Returning Phi to its original value
+
+```{r}
+Phi <- myPhi[1:2, 1:2]
+```
 
 
 

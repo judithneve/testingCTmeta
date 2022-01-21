@@ -46,3 +46,5 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 3. Can t_max be -Inf?
 
+4. Do I check ctFit?
+
