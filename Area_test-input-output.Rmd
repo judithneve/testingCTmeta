@@ -31,6 +31,7 @@ out_VAR <- VAR(data, p = 1)
 res.phi <- Area(DeltaT = DeltaT, Phi = Phi)
 res.drift <- Area(DeltaT, Drift = Drift)
 res.VAR <- Area(DeltaT, out_VAR)
+res.VAR.rebecca <- CTmeta::Area(DeltaT, out_VAR)
 ```
 
 ```{r}
@@ -39,6 +40,9 @@ res.drift$Area_range == res.phi$Area_range
 
 res.drift$Area == res.VAR$Area
 res.drift$Area_range == res.VAR$Area_range
+
+res.VAR$Area == res.VAR.rebecca$Area
+res.VAR$Area_range == res.VAR.rebecca$Area_range
 ```
 
 
@@ -79,6 +83,10 @@ To do:
 
 - the problem is in CTMparam
 
+After looking through that function in detail, a division by DeltaT is involved, so DeltaT cannot be 0. Conclusion:
+
+- add an error if DeltaT is 0
+
 ## DeltaT a decimal
 
 ```{r}
@@ -116,6 +124,8 @@ To do:
 
 - the problem is meant to be DeltaT here, not Drift; the message should be changed, but the solutions are the same
 
+Done.
+
 ## DeltaT = Inf
 
 ```{r}
@@ -129,6 +139,8 @@ res.phi.break <- Area(DeltaT = DeltaT.break,
 To do:
 
 - add an error for DeltaT = Inf
+
+Done.
 
 ## DeltaT a large number
 
@@ -154,6 +166,8 @@ To do:
 
 - add an error for DeltaT = -Inf
 
+Done.
+
 ## DeltaT a character
 
 ```{r}
@@ -167,6 +181,13 @@ res.phi.break <- Area(DeltaT = DeltaT.break,
 To do:
 
 - add an error for DeltaT as text
+
+
+
+
+# DeltaT with a Phi from varest
+
+TO DO
 
 
 
@@ -200,6 +221,8 @@ To do:
 
 - add an error if Phi has NAs
 
+Done.
+
 ## Phi with non-numbers
 
 ```{r}
@@ -214,6 +237,8 @@ res.phi.break <- Area(DeltaT = DeltaT,
 To do:
 
 - add an error if Phi has non-numerical values
+
+Done.
 
 
 
@@ -236,6 +261,8 @@ res.phi.break$Area_range == res.phi$Area_range
 To do:
 
 - add a warning if both Phi and Drift are specified
+
+Done.
 
 ## Not square matrix
 
@@ -279,6 +306,8 @@ To do:
 
 - add an error if Drift has non-numerical values
 
+Done.
+
 
 
 # t_min
@@ -305,13 +334,38 @@ res.tmin.break <- Area(DeltaT = DeltaT,
 
 res.tmin.break$Area == res.phi$Area
 res.tmin.break$Area_range == res.phi$Area_range
+
+res.tmin.break$Area_range
+res.phi$Area_range
 ```
 
 Area_range changes.
 
 To do:
 
-- ask Rebecca if this is normal.
+- is this taking -t_min?
+
+```{r}
+res.tmin.3 <- Area(DeltaT = DeltaT,
+                      Phi = Phi,
+                      t_min = 3)
+
+res.tmin.break <- Area(DeltaT = DeltaT,
+                      Phi = Phi,
+                      t_min = -3)
+
+res.tmin.break$Area == res.tmin.3$Area
+res.tmin.break$Area_range == res.tmin.3$Area_range
+
+res.tmin.break$Area_range
+res.tmin.3$Area_range
+```
+
+It is not taking -t_min.
+
+To do:
+
+- ask Rebecca if t_min should be negative.
 
 ## Decimal
 
@@ -340,6 +394,8 @@ To do:
 
 - add an error
 
+Done.
+
 ## -Inf
 
 ```{r}
@@ -352,6 +408,8 @@ res.tmin.break <- Area(DeltaT = DeltaT,
 To do:
 
 - add an error
+
+Done.
 
 ## Character
 
@@ -366,51 +424,22 @@ To do:
 
 - add an error
 
+Done.
+
 ## Vector
 
 ```{r}
 res.tmin.break <- Area(DeltaT = DeltaT,
                       Phi = Phi,
-                      t_min = c(1, 2))
-res.tmin.break
-
-res.tmin.break$Area == res.phi$Area
-res.tmin.break$Area_range == res.phi$Area_range
-```
-
-```{r}
-res.tmin.break <- Area(DeltaT = DeltaT,
-                      Phi = Phi,
-                      t_min = c(0, 2))
-res.tmin.break
-
-res.tmin.break$Area == res.phi$Area
-res.tmin.break$Area_range == res.phi$Area_range
-```
-
-```{r}
-res.tmin.break <- Area(DeltaT = DeltaT,
-                      Phi = Phi,
-                      t_min = c(2, 0))
-res.tmin.break
-
-res.tmin.break$Area == res.phi$Area
-res.tmin.break$Area_range == res.phi$Area_range
-```
-
-```{r}
-res.tmin.break <- Area(DeltaT = DeltaT,
-                      Phi = Phi,
-                      t_min = c(0, 0))
-res.tmin.break
-
-res.tmin.break$Area == res.phi$Area
-res.tmin.break$Area_range == res.phi$Area_range
+                      t_min = c(1, 2)) %>%
+  try()
 ```
 
 To do:
 
 - add an error if t_min is not a scalar
+
+Done.
 
 
 
@@ -459,6 +488,17 @@ res.tmax.break$Area_range == -(res.range$Area_range)
 To do:
 
 - add a warning saying t_max is larger than t_min
+
+Done.
+
+```{r}
+res.range <- Area(DeltaT = DeltaT,
+                      Phi = Phi,
+                      t_min = Inf,
+                      t_max = 0) %>%
+  try()
+```
+
 
 ## t_max = t_min
 
@@ -512,6 +552,15 @@ res.tmax.break$Area == res.phi$Area
 res.tmax.break$Area_range == res.phi$Area_range
 ```
 
+## -Inf
+
+```{r}
+res.tmax.break <- Area(DeltaT = DeltaT,
+                      Phi = Phi,
+                      t_max = -Inf) %>%
+  try()
+```
+
 ## Character
 
 ```{r}
@@ -525,54 +574,20 @@ To do:
 
 - add an error for text
 
+Done.
+
 ## Vector
 
 ```{r}
-res.tmax.1 <- Area(DeltaT = DeltaT,
-                      Phi = Phi,
-                      t_max = 1)
-
 res.tmax.break <- Area(DeltaT = DeltaT,
                       Phi = Phi,
-                      t_max = c(1, 2))
-res.tmax.break
-
-res.tmax.break$Area == res.phi$Area
-res.tmax.break$Area_range == res.tmax.1$Area_range
-```
-
-```{r}
-res.tmax.break <- Area(DeltaT = DeltaT,
-                      Phi = Phi,
-                      t_max = c(0, 2))
-res.tmax.break
-
-res.tmax.break$Area == res.phi$Area
-res.tmax.break$Area_range == res.phi$Area_range
-```
-
-```{r}
-res.tmax.break <- Area(DeltaT = DeltaT,
-                      Phi = Phi,
-                      t_max = c(2, 0))
-res.tmax.break
-
-res.tmax.break$Area == res.phi$Area
-res.tmax.break$Area_range == res.phi$Area_range
-```
-
-```{r}
-res.tmax.break <- Area(DeltaT = DeltaT,
-                      Phi = Phi,
-                      t_max = c(0, 0))
-res.tmax.break
-
-res.tmax.break$Area == res.phi$Area
-res.tmax.break$Area_range == res.phi$Area_range
+                      t_max = c(1, 2)) %>%
+  try()
 ```
 
 To do:
 
 - add an error if t_max is not a scalar
 
+Done.
 

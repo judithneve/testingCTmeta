@@ -40,3 +40,9 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 1. Why do Phi = myPhi and Phi = outVAR give different results?
 
+-> Rebecca is looking into this
+
+2. Can t_min be negative?
+
+3. Can t_max be -Inf?
+
