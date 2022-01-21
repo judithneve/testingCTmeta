@@ -18,4 +18,72 @@ After every attempt to "break" the function, a diagnostic is written as a commen
 
 Original example:
 
+```{r}
+Drift <- myDrift
+q <- dim(Drift)[1]
+Sigma <- diag(q)
+Gamma <- Gamma.fromCTM(Drift, Sigma)
 
+sig <- ChecksCTM(Drift, Sigma)
+gam <- ChecksCTM(Drift, Gamma = Gamma)
+```
+
+# Drift
+
+## Drift with too many rows
+
+## Drift with too many columns
+
+## Drift with NAs
+
+## Drift with non-numerical values
+
+## Drift with positive eigenvalues
+
+## Drift with complex eigenvalues
+
+## Drift with complex eigenvectors
+
+
+
+# Sigma
+
+## More rows
+
+## More columns
+
+## NAs
+
+## Non-numbers
+
+## Not diagonal
+
+## 0 in diagonal
+
+## Not positive definite
+
+
+
+# Gamma
+
+## More rows
+
+## More columns
+
+## NAs
+
+## Non-numbers
+
+## Not diagonal
+
+## 0 in diagonal
+
+## Not positive definite
+
+
+
+# Combinations
+
+## Sigma and Gamma not positive definite
+
+## Drift with positive eigenvalues and Gamma not positive definite
