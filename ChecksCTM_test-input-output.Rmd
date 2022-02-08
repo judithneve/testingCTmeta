@@ -131,8 +131,7 @@ Added an error.
 ```{r}
 Drift.broken <- matrix(c(2, -1, -1, 2), nrow = 2)
 
-pos.eig <- ChecksCTM(Drift.broken, Sigma)
-pos.eig$error
+ChecksCTM(Drift.broken, Sigma)
 ```
 
 Problems:

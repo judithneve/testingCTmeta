@@ -26,5 +26,16 @@ library(ctsem)
 out_CTM <- ctFit(...)
 ChecksCTM(out_CTM)
 
+
+if (!require("ctsem")) install.packages("ctsem")
+library(ctsem)
+library(ctsemOMX)
+data(ctExample1)
+traitmodel <- ctModel(n.manifest=2, n.latent=2, Tpoints=6, LAMBDA=diag(2), 
+                      manifestNames=c('LeisureTime', 'Happiness'), 
+                      latentNames=c('LeisureTime', 'Happiness'), TRAITVAR="auto")
+out_CTM <- ctFit(dat=ctExample1, ctmodelobj=traitmodel)
+ChecksCTM(out_CTM, Sigma)
+
 sig
 gam

@@ -43,3 +43,6 @@ Judith <- Judith[Judith != "myGamma"]
 Judith
 ```
 
+eigen(summary(Phi)$DRIFT)$val -- for PhiPlot function, if multiple plots are produced in one plot because Phi does not have a single solution
+
+go back to CTmeta
