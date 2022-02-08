@@ -38,12 +38,6 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 -> Rebecca is looking into this
 
-2. Can t_min be negative?
-
-3. Can t_max be -Inf?
-
-4. Do I check ctFit?
-
 ## ChecksCTM
 
 1. Description of arguments?
@@ -51,4 +45,12 @@ Can't include an if statement for the case where it has more columns than q sinc
 2. Example 2?
 
 3. Format of output: cat & list
+
+
+
+
+
+## PhiPlot
+
+Need to account for when there are multiple solutions for Phi and issue a message
 

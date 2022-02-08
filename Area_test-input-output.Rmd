@@ -406,6 +406,8 @@ After looking through that function in detail, a division by DeltaT is involved,
 
 - add an error if DeltaT is 0
 
+Done.
+
 ## DeltaT a decimal
 
 ```{r}
