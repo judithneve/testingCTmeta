@@ -31,52 +31,323 @@ Gamma <- Gamma.fromVAR(Phi, SigmaVAR)
 CTMpar <- CTMparam(DeltaT, Phi, SigmaVAR)
 ```
 
+
 # DeltaT
 
 ## DeltaT = 2
 
+```{r}
+CTMpar.break <- CTMparam(DeltaT = 2, Phi, SigmaVAR)
+
+summary(CTMpar.break) == summary(CTMpar)
+CTMpar.break$standSigma == CTMpar$standSigma
+```
+
+Looks like it works!
+
+
 ## DeltaT = Inf
+
+```{r}
+CTMpar.break <- CTMparam(DeltaT = Inf, Phi, SigmaVAR)
+CTMpar.break
+summary(CTMpar.break) == summary(CTMpar)
+CTMpar.break$standSigma == CTMpar$standSigma
+```
+
+This is ok - the results are enough to show there may be something wrong + specifies the process in not stable
 
 ## DeltaT = 0
 
+```{r}
+CTMpar.break <- CTMparam(DeltaT = 0, Phi, SigmaVAR) %>% try()
+```
+
+## DeltaT = -1
+
+```{r}
+CTMpar.break <- CTMparam(DeltaT = -1, Phi, SigmaVAR)
+CTMpar.break
+summary(CTMpar.break) == summary(CTMpar)
+CTMpar.break$standSigma == CTMpar$standSigma
+```
+
+Negative values will work, but there is a message in the output that shows this is not ideal. We can keep this.
+
 ## DeltaT = c(1, 0)
+
+```{r}
+CTMpar.break <- CTMparam(DeltaT = c(1, 0), Phi, SigmaVAR) %>% try()
+```
 
 ## DeltaT = TRUE
 
+```{r}
+CTMpar.break <- CTMparam(DeltaT = TRUE, Phi, SigmaVAR)
+CTMpar.break
+summary(CTMpar.break) == summary(CTMpar)
+CTMpar.break$standSigma == CTMpar$standSigma
+```
+
+TRUE is converted to 1. That's ok.
+
 ## DeltaT = "text"
 
+```{r}
+CTMpar.break <- CTMparam(DeltaT = "text", Phi, SigmaVAR) %>% try()
+```
+
+The error does suggest DeltaT or Phi is the problem. No need for further checks.
+
 ## DeltaT = NA
+
+```{r}
+CTMpar.break <- CTMparam(DeltaT = NA, Phi, SigmaVAR) %>% try()
+```
+
+This runs well.
 
 
 # SigmaVAR
 
 ## SigmaVAR with NAs
 
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[2,1] <- NA
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR with text
+
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[2,1] <- "text"
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR.break) %>% try()
+```
 
 ## SigmaVAR with 1 extra row
 
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break <- rbind(SigmaVAR.break, c(1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR with 1 extra col
+
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break <- cbind(SigmaVAR.break, c(1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR.break) %>% try()
+```
 
 ## SigmaVAR with 1 extra row and 1 extra col
 
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break <- cbind(SigmaVAR.break, c(1,1))
+SigmaVAR.break <- rbind(SigmaVAR.break, c(1,1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR a vector
+
+```{r}
+SigmaVAR.break <- SigmaVAR %>% as.vector()
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR.break) %>% try()
+```
 
 ## Both SigmaVAR and Gamma - which one gets used?
 
-Update the documentation accordingly.
+```{r}
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR, Gamma = Gamma)
+CTMpar.break
+```
+
+We first input a mismatched Gamma.
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break[1,1] <- 10
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR, Gamma = Gamma.break)
+CTMpar.break
+
+summary(CTMpar.break) == summary(CTMpar)
+CTMpar.break$standSigma == CTMpar$standSigma
+```
+
+Gamma is used.
+
+We input a mismatched SigmaVAR.
+
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[1,1] <- 10
+
+CTMpar.break <- CTMparam(DeltaT, Phi, SigmaVAR = SigmaVAR.break, Gamma = Gamma)
+CTMpar.break
+
+summary(CTMpar.break) == summary(CTMpar)
+CTMpar.break$standSigma == CTMpar$standSigma
+```
+
+SigmaVAR is also used.
+
+Added a warning that says they are mismatched.
+
+
+
+# Gamma
+
+## Gamma with NAs
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break[2,1] <- NA
+
+CTMpar.break <- CTMparam(DeltaT, Phi, Gamma = Gamma.break)
+CTMpar.break
+```
+
+NA values appear but some things are still in. This should be fine.
+
+## Gamma with text
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break[2,1] <- "text"
+
+CTMpar.break <- CTMparam(DeltaT, Phi, Gamma = Gamma.break) %>% try()
+```
+
+## Gamma with 1 extra row
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break <- rbind(Gamma.break, c(1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi, Gamma = Gamma.break) %>% try()
+```
+
+Proper break.
+
+## Gamma with 1 extra col
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break <- cbind(Gamma.break, c(1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi, Gamma = Gamma.break) %>% try()
+```
+
+Proper break.
+
+## Gamma with 1 extra row and 1 extra col
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break <- cbind(Gamma.break, c(1,1))
+Gamma.break <- rbind(Gamma.break, c(1,1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi, Gamma = Gamma.break) %>% try()
+```
+
+Proper break.
+
+## Gamma a vector
+
+```{r}
+Gamma.break <- Gamma %>% as.vector()
+
+CTMpar.break <- CTMparam(DeltaT, Phi, Gamma = Gamma.break) %>% try()
+```
+
+Proper break.
+
 
 
 # Phi
 
 ## Phi with NAs
 
+```{r}
+Phi.break <- Phi
+Phi.break[2,1] <- NA
+
+CTMpar.break <- CTMparam(DeltaT, Phi.break, SigmaVAR) %>% try()
+```
+
+The error message.
+
 ## Phi with text
+
+```{r}
+Phi.break <- Phi
+Phi.break[2,1] <- "text"
+
+CTMpar.break <- CTMparam(DeltaT, Phi.break, SigmaVAR) %>% try()
+```
+
+Error message added.
 
 ## Phi with 1 extra row
 
+```{r}
+Phi.break <- Phi
+Phi.break <- rbind(Phi.break, c(1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi.break, SigmaVAR) %>% try()
+```
+
+Error message added.
+
 ## Phi with 1 extra col
 
-## Phi with 1 extra row and 1 extra col
+```{r}
+Phi.break <- Phi
+Phi.break <- cbind(Phi.break, c(1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi.break, SigmaVAR) %>% try()
+```
+
+Error message added.
+
+## Phi with 1 extra row and 1 extra col but normal size SigmaVAR
+
+```{r}
+Phi.break <- Phi
+Phi.break <- rbind(Phi.break, c(1,1))
+Phi.break <- cbind(Phi.break, c(1,1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi.break, SigmaVAR) %>% try()
+```
+
+Error message is about SigmaVAR, not Phi.
+
+## Phi with 1 extra row and 1 extra col but larger SigmaVAR
+
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break <- rbind(SigmaVAR.break, c(1,1))
+SigmaVAR.break <- cbind(SigmaVAR.break, c(1,1,1))
+
+CTMpar.break <- CTMparam(DeltaT, Phi.break, SigmaVAR.break) %>% try()
+```
+
+This would likely run fine if the matrices were from actual data - there is no warning about size.
 
 ## Phi a vector
+
+```{r}
+Phi.break <- Phi %>% as.vector()
+
+CTMpar.break <- CTMparam(DeltaT, Phi.break, SigmaVAR) %>% try()
+```
