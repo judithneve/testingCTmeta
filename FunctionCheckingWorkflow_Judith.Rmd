@@ -40,11 +40,9 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 ## ChecksCTM
 
-1. Description of arguments?
+1. "nl"
 
-2. Example 2?
-
-3. Format of output: cat & list
+-> asked Rebecca
 
 
 
