@@ -19,14 +19,64 @@ After every attempt to "break" the function, a diagnostic is written as a commen
 Original example:
 
 ```{r}
+DeltaT <- 1
+Phi <- myPhi[1:2, 1:2]
+#
+q <- dim(Phi)[1]
+SigmaVAR <- diag(q) # for ease
+#
+Gamma <- Gamma.fromVAR(Phi, SigmaVAR)
+##################################################################################################
 
+CTMpar <- CTMparam(DeltaT, Phi, SigmaVAR)
 ```
 
+# DeltaT
 
+## DeltaT = 2
+
+## DeltaT = Inf
+
+## DeltaT = 0
+
+## DeltaT = c(1, 0)
+
+## DeltaT = TRUE
+
+## DeltaT = "text"
+
+## DeltaT = NA
 
 
 # SigmaVAR
 
+## SigmaVAR with NAs
+
+## SigmaVAR with text
+
+## SigmaVAR with 1 extra row
+
+## SigmaVAR with 1 extra col
+
+## SigmaVAR with 1 extra row and 1 extra col
+
+## SigmaVAR a vector
+
 ## Both SigmaVAR and Gamma - which one gets used?
 
 Update the documentation accordingly.
+
+
+# Phi
+
+## Phi with NAs
+
+## Phi with text
+
+## Phi with 1 extra row
+
+## Phi with 1 extra col
+
+## Phi with 1 extra row and 1 extra col
+
+## Phi a vector
