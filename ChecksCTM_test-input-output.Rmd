@@ -138,6 +138,8 @@ Problems:
 - prints some stuff that is not saved (in "cat" functions)
 - there are no returns to line in lists so \n is always visible
 
+Fixed!
+
 
 ## Drift with complex eigenvalues
 
