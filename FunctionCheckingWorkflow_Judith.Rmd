@@ -38,12 +38,6 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 -> Rebecca is looking into this
 
-## ChecksCTM
-
-1. "nl"
-
--> asked Rebecca
-
 
 
 

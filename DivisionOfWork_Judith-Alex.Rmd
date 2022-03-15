@@ -35,6 +35,7 @@ Judith <- Judith[Judith != "coef.CTmeta"]
 # no need to actually look at coef.CTmeta, this just makes coef() work
 Judith <- Judith[Judith != "Area"]
 Judith <- Judith[Judith != "ChecksCTM"]
+Judith <- Judith[Judith != "CTMparam"]
 
 Judith <- Judith[Judith != "myData"]
 Judith <- Judith[Judith != "myDrift"]
@@ -47,4 +48,3 @@ eigen(summary(Phi)$DRIFT)$val -- for PhiPlot function, if multiple plots are pro
 
 go back to CTmeta
 
-ChecksCTM: only the "nl" left to figure out (wait for Rebecca's response)
