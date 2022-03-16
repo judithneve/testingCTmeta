@@ -200,13 +200,53 @@ DiagDeltaT(Phi, SigmaVAR.break, Gamma = Gamma) %>% try()
 
 ## Drift with NA
 
+```{r}
+Drift.break <- Drift
+Drift.break[1,2] <- NA
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+Add an error
+
 ## Non-numeric Drift
+
+```{r}
+Drift.break <- Drift
+Drift.break[1,2] <- "text"
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
 
 ## Drift with one more row
 
+```{r}
+Drift.break <- rbind(Drift, c(0,1))
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+From the error message we know to look at Drift
+
 ## Drift with one more col
 
+```{r}
+Drift.break <- cbind(Drift, c(0,1))
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+From the error message we know to look at Drift
+
 ## Drift with one more row and one more col
+
+```{r}
+Drift.break <- matrix(data = c(16, -8, -4, -8, 29, 12, -4, 12, 41), nrow = 3, ncol = 3, byrow = TRUE)
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+Also: cleanup needed for the messages
 
 
 # Sigma
