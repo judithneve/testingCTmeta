@@ -29,23 +29,87 @@ SigmaVAR <- Gamma - Phi %*% Gamma %*% t(Phi)
 DiagDeltaT.obj <- DiagDeltaT(Phi, SigmaVAR)
 ```
 
+
 # Phi
 
 ## Phi with NA
 
+```{r}
+Phi.break <- Phi
+Phi.break[1,2] <- NA
+
+DiagDeltaT(Phi.break, SigmaVAR) %>% try()
+```
+
+Shows there is a problem with Phi. No need for an error message
+
+
 ## Non-numeric Phi
+
+```{r}
+Phi.break <- Phi
+Phi.break[1,2] <- "text"
+
+DiagDeltaT(Phi.break, SigmaVAR) %>% try()
+```
+
+Shows there is a problem with Phi. No need for an error message
 
 ## Phi with one more row
 
+```{r}
+Phi.break <- rbind(Phi, c(1,1))
+
+DiagDeltaT(Phi.break, SigmaVAR) %>% try()
+```
+
+Appropriate error message
+
 ## Phi with one more col
+
+```{r}
+Phi.break <- cbind(Phi, c(1,1))
+
+DiagDeltaT(Phi.break, SigmaVAR) %>% try()
+```
+
+Appropriate error message
 
 ## Phi with one more row and one more col
 
+```{r}
+Phi.break <- matrix(data = c(16, -8, -4, -8, 29, 12, -4, 12, 41), nrow = 3, ncol = 3, byrow = TRUE)
+
+DiagDeltaT(Phi.break, SigmaVAR) %>% try()
+```
+
+Error is about SigmaVAR but the true issue is they are mismatched. Reuse code from CTMparam to fix this.
+
+Fixed!
+
 ## Phi and Drift (broken)
 
-Probably add a message/warning here
+```{r}
+Drift.break <- myDrift
+Drift.break[1,1] <- NA
+
+DiagDeltaT(Phi, SigmaVAR, Drift = Drift.break) %>% try()
+```
+
+Breaks because Drift is broken. Add a warning that Drift is ignored.
+
+Done!
 
 ## Phi (broken) and Drift
+
+```{r}
+Drift <- myDrift
+
+DiagDeltaT(Phi.break, SigmaVAR, Drift = Drift) %>% try()
+```
+
+Returns the expected warning and the error relevant to Phi.
+
 
 
 # SigmaVAR
