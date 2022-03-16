@@ -116,25 +116,84 @@ Returns the expected warning and the error relevant to Phi.
 
 ## SigmaVAR with NA
 
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[1,2] <- NA
+
+DiagDeltaT(Phi, SigmaVAR.break) %>% try()
+```
+
+specify an error message for missing values in SigmaVAR
+
 ## Non-numeric SigmaVAR
+
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[1,2] <- "text"
+
+DiagDeltaT(Phi, SigmaVAR.break) %>% try()
+```
 
 ## SigmaVAR with one more row
 
+```{r}
+SigmaVAR.break <- rbind(SigmaVAR, c(1,1))
+
+DiagDeltaT(Phi, SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR with one more col
+
+```{r}
+SigmaVAR.break <- cbind(SigmaVAR, c(1,1))
+
+DiagDeltaT(Phi, SigmaVAR.break) %>% try()
+```
 
 ## SigmaVAR with one more row and one more col
 
+```{r}
+SigmaVAR.break <- rbind(cbind(SigmaVAR, c(0,0)), c(0,0,1))
+
+DiagDeltaT(Phi, SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR and Sigma (broken)
 
-Probably add a message/warning here
+```{r}
+Sigma <- diag(2)
+
+Sigma.break <- cbind(Sigma, c(1,1))
+
+DiagDeltaT(Phi, SigmaVAR, Sigma = Sigma.break) %>% try()
+
+DiagDeltaT.obj$SigmaVAR_DeltaT_diag == DiagDeltaT(Phi, SigmaVAR, Sigma = Sigma.break)$SigmaVAR_DeltaT_diag
+```
+
+Sigma fully gets ignored. Added a warning
+
 
 ## SigmmaVAR and Gamma (broken)
 
-Probably add a message/warning here
+```{r}
+Gamma.break <- cbind(Gamma, c(1,1))
+
+DiagDeltaT(Phi, SigmaVAR, Gamma = Gamma.break) %>% try()
+```
+
+Originally not ignored. Added a warning
 
 ## SigmaVAR (broken) and Sigma
 
+```{r}
+DiagDeltaT(Phi, SigmaVAR.break, Sigma = Sigma) %>% try()
+```
+
 ## SigmaVAR (broken) and Gamma
+
+```{r}
+DiagDeltaT(Phi, SigmaVAR.break, Gamma = Gamma) %>% try()
+```
 
 
 # Drift
