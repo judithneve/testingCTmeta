@@ -248,6 +248,8 @@ DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
 
 Also: cleanup needed for the messages
 
+Done :)
+
 
 # Sigma
 

@@ -42,10 +42,6 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 1. xstart_DeltaT has issues
 
-GO THROUGH THE MESSAGES
-
-clean up messages for when Drift is not as it should be
-
 
 
 
