@@ -387,14 +387,120 @@ DiagDeltaT(Phi, Gamma = Gamma.break) %>% try()
 
 ## xstart_deltaT = 0
 
+```{r}
+xstart_deltaT.break <- 0
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+DiagDeltaT.obj
+```
+
+The output is the same
+
 ## xstart_DeltaT = 1.5
+
+```{r}
+xstart_deltaT.break <- 1.5
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+DiagDeltaT.obj
+```
+
+## xstart_DeltaT = 1500
+
+```{r}
+xstart_deltaT.break <- 1500
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+DiagDeltaT.obj
+```
+
+## xstart_DeltaT = 15
+
+```{r}
+xstart_deltaT.break <- 15
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+DiagDeltaT.obj
+```
+
+## xstart_DeltaT = 5
+
+```{r}
+xstart_deltaT.break <- 5
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+DiagDeltaT.obj
+```
+
+## xstart_DeltaT = -5
+
+```{r}
+xstart_deltaT.break <- -5
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+DiagDeltaT.obj
+```
 
 ## xstart_DeltaT = "text"
 
+```{r}
+xstart_deltaT.break <- "text"
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
+
 ## xstart_DeltaT = NA
+
+```{r}
+xstart_deltaT.break <- NA
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
 
 ## xstart_DeltaT = NULL
 
+```{r}
+xstart_deltaT.break <- NULL
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
+
 ## xstart_DeltaT = c(1, 2, 3)
 
+```{r}
+xstart_deltaT.break <- c(1,2,3)
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
+
 ## xstart_DeltaT = c(4, 2, 3)
+
+```{r}
+xstart_deltaT.break <- c(4,2,3)
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
+
+## xstart_DeltaT = c(4, NA, 3)
+
+```{r}
+xstart_deltaT.break <- c(4,NA,3)
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
+
+## xstart_DeltaT = c(NA, NA, 3)
+
+```{r}
+xstart_deltaT.break <- c(NA,NA,3)
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
+
+## xstart_DeltaT = c(NA, NA, NA)
+
+```{r}
+xstart_deltaT.break <- c(NA,NA,NA)
+
+DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = xstart_deltaT.break) %>% try()
+```
