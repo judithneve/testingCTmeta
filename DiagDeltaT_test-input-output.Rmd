@@ -338,13 +338,49 @@ Done :)
 
 ## Gamma with NA
 
+```{r}
+Gamma.break <- Gamma
+Gamma.break[1,2] <- NA
+
+DiagDeltaT(Phi, Gamma = Gamma.break) %>% try()
+```
+
+Add an error.
+
 ## Non-numeric Gamma
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break[1,2] <- "text"
+
+DiagDeltaT(Phi, Gamma = Gamma.break) %>% try()
+```
+
+Error works.
 
 ## Gamma with one more row
 
+```{r}
+Gamma.break <- rbind(Gamma, c(1,1))
+
+DiagDeltaT(Phi, Gamma = Gamma.break) %>% try()
+```
+
 ## Gamma with one more col
 
+```{r}
+Gamma.break <- cbind(Gamma, c(1,1))
+
+DiagDeltaT(Phi, Gamma = Gamma.break) %>% try()
+```
+
 ## Gamma with one more row and one more col
+
+```{r}
+Gamma.break <- cbind(rbind(Gamma, c(1,1)), c(1,1,1))
+
+DiagDeltaT(Phi, Gamma = Gamma.break) %>% try()
+```
 
 
 # xstart_DeltaT
