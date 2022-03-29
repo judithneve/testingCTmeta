@@ -28,7 +28,7 @@ Drift <- myDrift
 q <- dim(Drift)[1]
 Sigma <- diag(q) # for ease
 #
-Gamma.fromCTM(Drift, Sigma)
+gammafromCTM <- Gamma.fromCTM(Drift, Sigma)
 
 
 ## Example 2: input from fitted object of class "ctsemFit" ##
@@ -53,7 +53,6 @@ Gamma.fromCTM(Drift, Sigma)
  ##################################################################################
  #
  Gamma.fromCTM(out_CTM) %>% try()
-
 ```
 
 # Drift
@@ -64,10 +63,10 @@ Gamma.fromCTM(Drift, Sigma)
 Drift.break <- Drift
 Drift.break[1,2] <- NA
 
-DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+Gamma.fromCTM(Drift = Drift.break, Sigma = Sigma) %>% try()
 ```
 
-Add an error
+Added an error
 
 ## Non-numeric Drift
 
@@ -75,7 +74,7 @@ Add an error
 Drift.break <- Drift
 Drift.break[1,2] <- "text"
 
-DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+Gamma.fromCTM(Drift = Drift.break, Sigma = Sigma) %>% try()
 ```
 
 ## Drift with one more row
@@ -83,32 +82,29 @@ DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
 ```{r}
 Drift.break <- rbind(Drift, c(0,1))
 
-DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+Gamma.fromCTM(Drift = Drift.break, Sigma = Sigma) %>% try()
 ```
 
-From the error message we know to look at Drift
+Correct error
 
 ## Drift with one more col
 
 ```{r}
 Drift.break <- cbind(Drift, c(0,1))
 
-DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+Gamma.fromCTM(Drift = Drift.break, Sigma = Sigma) %>% try()
 ```
-
-From the error message we know to look at Drift
+Correct error
 
 ## Drift with one more row and one more col
 
 ```{r}
 Drift.break <- matrix(data = c(16, -8, -4, -8, 29, 12, -4, 12, 41), nrow = 3, ncol = 3, byrow = TRUE)
 
-DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+Gamma.fromCTM(Drift = Drift.break, Sigma = Sigma) %>% try()
 ```
 
-Also: cleanup needed for the messages
-
-Done :)
+Corrected error so it is about the mismatch of sizes
 
 
 # Sigma
@@ -119,10 +115,10 @@ Done :)
 Sigma.break <- Sigma
 Sigma.break[1,2] <- NA
 
-DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+Gamma.fromCTM(Drift = Drift, Sigma = Sigma.break) %>% try()
 ```
 
-Clear default error message
+It does return something full of NAs - appropriate
 
 ## Non-numeric Sigma
 
@@ -130,17 +126,17 @@ Clear default error message
 Sigma.break <- Sigma
 Sigma.break[1,2] <- "text"
 
-DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+Gamma.fromCTM(Drift = Drift, Sigma = Sigma.break) %>% try()
 ```
 
-Clear enough error.
+Made the error be in Check_Sigma.
 
 ## Sigma with one more row
 
 ```{r}
 Sigma.break <- rbind(Sigma, c(1,1))
 
-DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+Gamma.fromCTM(Drift = Drift, Sigma = Sigma.break) %>% try()
 ```
 
 ## Sigma with one more col
@@ -148,7 +144,7 @@ DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
 ```{r}
 Sigma.break <- cbind(Sigma, c(1,1))
 
-DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+Gamma.fromCTM(Drift = Drift, Sigma = Sigma.break) %>% try()
 ```
 
 ## Sigma with one more row and one more col
@@ -156,42 +152,5 @@ DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
 ```{r}
 Sigma.break <- cbind(rbind(Sigma, c(1,1)), c(1,1,1))
 
-DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+Gamma.fromCTM(Drift = Drift, Sigma = Sigma.break) %>% try()
 ```
-
-## Sigma and Gamma (both working)
-
-```{r}
-Sig.Gam <- DiagDeltaT(Phi, Sigma = Sigma, Gamma = Gamma) %>% try()
-```
-
-## Sigma and Gamma (broken)
-
-```{r}
-Gamma.break <- rbind(Gamma, c(1,1))
-
-DiagDeltaT(Phi, Sigma = Sigma, Gamma = Gamma.break) %>% try()
-```
-
-```{r}
-Gamma.break <- Gamma
-Gamma.break[1,1] <- NA
-
-DiagDeltaT(Phi, Sigma = Sigma, Gamma = Gamma.break) %>% try()
-```
-
-The problem is with Gamma, but the error relates to Sigma.
-
-## Sigma (broken) and Gamma
-
-```{r}
-Sigma.break <- rbind(Sigma, c(1,1))
-
-DiagDeltaT(Phi, Sigma = Sigma.break, Gamma = Gamma)
-Sig.Gam
-```
-
-Gamma is used by default. Modify documentation and add a warning.
-
-Done :)
-

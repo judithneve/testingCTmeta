@@ -38,9 +38,9 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 -> Rebecca is looking into this
 
-## DiagDeltaT
+## Gamma.fromCTM
 
-1. xstart_DeltaT has issues
+1. Fix the ctfit example
 
 
 
