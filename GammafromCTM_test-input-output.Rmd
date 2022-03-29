@@ -1,0 +1,181 @@
+---
+title: "Testing the input and output of Area"
+author: "Judith Neve"
+date: "20/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(CTmeta)
+```
+
+This document tests what can be used as input and output for the function Area. Each argument is examined in turn, and at the end some additional checks are done to verify plots can be made for different configurations of the model.
+
+Where the function runs, the output is compared to the expected output.
+
+After every attempt to "break" the function, a diagnostic is written as a comment in the code chunk, and the code chunk is followed by a "to do" list to indicate what needs to be specified/improved/changed in the function documentation or the function itself.
+
+Original example:
+
+```{r}
+# library(CTmeta)
+
+## Example 1 ##
+#
+Drift <- myDrift
+#
+q <- dim(Drift)[1]
+Sigma <- diag(q) # for ease
+#
+Gamma.fromCTM(Drift, Sigma)
+
+
+## Example 2: input from fitted object of class "ctsemFit" ##
+#
+#data <- myData
+#if (!require("ctsemFit")) install.packages("ctsemFit")
+#library(ctsemFit)
+#out_CTM <- ctFit(...)
+#Gamma.fromCTM(out_CTM)
+```
+
+# Drift
+
+## Drift with NA
+
+```{r}
+Drift.break <- Drift
+Drift.break[1,2] <- NA
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+Add an error
+
+## Non-numeric Drift
+
+```{r}
+Drift.break <- Drift
+Drift.break[1,2] <- "text"
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+## Drift with one more row
+
+```{r}
+Drift.break <- rbind(Drift, c(0,1))
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+From the error message we know to look at Drift
+
+## Drift with one more col
+
+```{r}
+Drift.break <- cbind(Drift, c(0,1))
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+From the error message we know to look at Drift
+
+## Drift with one more row and one more col
+
+```{r}
+Drift.break <- matrix(data = c(16, -8, -4, -8, 29, 12, -4, 12, 41), nrow = 3, ncol = 3, byrow = TRUE)
+
+DiagDeltaT(Drift = Drift.break, SigmaVAR = SigmaVAR) %>% try()
+```
+
+Also: cleanup needed for the messages
+
+Done :)
+
+
+# Sigma
+
+## Sigma with NA
+
+```{r}
+Sigma.break <- Sigma
+Sigma.break[1,2] <- NA
+
+DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+```
+
+Clear default error message
+
+## Non-numeric Sigma
+
+```{r}
+Sigma.break <- Sigma
+Sigma.break[1,2] <- "text"
+
+DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+```
+
+Clear enough error.
+
+## Sigma with one more row
+
+```{r}
+Sigma.break <- rbind(Sigma, c(1,1))
+
+DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+```
+
+## Sigma with one more col
+
+```{r}
+Sigma.break <- cbind(Sigma, c(1,1))
+
+DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+```
+
+## Sigma with one more row and one more col
+
+```{r}
+Sigma.break <- cbind(rbind(Sigma, c(1,1)), c(1,1,1))
+
+DiagDeltaT(Phi, Sigma = Sigma.break) %>% try()
+```
+
+## Sigma and Gamma (both working)
+
+```{r}
+Sig.Gam <- DiagDeltaT(Phi, Sigma = Sigma, Gamma = Gamma) %>% try()
+```
+
+## Sigma and Gamma (broken)
+
+```{r}
+Gamma.break <- rbind(Gamma, c(1,1))
+
+DiagDeltaT(Phi, Sigma = Sigma, Gamma = Gamma.break) %>% try()
+```
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break[1,1] <- NA
+
+DiagDeltaT(Phi, Sigma = Sigma, Gamma = Gamma.break) %>% try()
+```
+
+The problem is with Gamma, but the error relates to Sigma.
+
+## Sigma (broken) and Gamma
+
+```{r}
+Sigma.break <- rbind(Sigma, c(1,1))
+
+DiagDeltaT(Phi, Sigma = Sigma.break, Gamma = Gamma)
+Sig.Gam
+```
+
+Gamma is used by default. Modify documentation and add a warning.
+
+Done :)
+

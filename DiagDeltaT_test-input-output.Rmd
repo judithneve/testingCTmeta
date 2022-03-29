@@ -414,9 +414,7 @@ DiagDeltaT(Phi, SigmaVAR, DeltaT_start = DeltaT_start.break) %>% try()
 ```{r}
 DeltaT_start.break <- 1500
 
-CTmeta::DiagDeltaT(Phi, SigmaVAR, xstart_DeltaT = DeltaT_start.break) %>% try()
 DiagDeltaT(Phi, SigmaVAR, DeltaT_start = DeltaT_start.break) %>% try()
-DiagDeltaT.obj
 ```
 
 ## DeltaT_start = 15
