@@ -38,6 +38,22 @@ Gamma.fromCTM(Drift, Sigma)
 #library(ctsemFit)
 #out_CTM <- ctFit(...)
 #Gamma.fromCTM(out_CTM)
+
+ #
+ if (!require("ctsem")) install.packages("ctsem")
+ library(ctsem)
+ library(ctsemOMX)
+ #
+ ############ adapted from https://rdrr.io/cran/ctsemOMX/man/ctFit.html ############
+ data(ctExample1)
+ model <- ctModel(n.manifest=2, n.latent=2, Tpoints=6, LAMBDA=diag(2),
+                  manifestNames=c('LeisureTime', 'Happiness'),
+                  latentNames=c('LeisureTime', 'Happiness'), TRAITVAR="auto")
+ out_CTM <- ctFit(dat=ctExample1, ctmodelobj=model)
+ ##################################################################################
+ #
+ Gamma.fromCTM(out_CTM) %>% try()
+
 ```
 
 # Drift
