@@ -28,8 +28,8 @@ Drift <- myDrift
 q <- dim(Drift)[1]
 Sigma <- diag(q) # for ease
 #
-gammafromCTM <- Gamma.fromCTM(Drift, Sigma)
-
+gammafromCTM <- CTmeta::Gamma.fromCTM(Drift, Sigma)
+gammafromCTM.mod <- Gamma.fromCTM(Drift, Sigma)
 
 ## Example 2: input from fitted object of class "ctsemFit" ##
 #
@@ -39,20 +39,96 @@ gammafromCTM <- Gamma.fromCTM(Drift, Sigma)
 #out_CTM <- ctFit(...)
 #Gamma.fromCTM(out_CTM)
 
- #
- if (!require("ctsem")) install.packages("ctsem")
- library(ctsem)
- library(ctsemOMX)
- #
- ############ adapted from https://rdrr.io/cran/ctsemOMX/man/ctFit.html ############
- data(ctExample1)
- model <- ctModel(n.manifest=2, n.latent=2, Tpoints=6, LAMBDA=diag(2),
-                  manifestNames=c('LeisureTime', 'Happiness'),
-                  latentNames=c('LeisureTime', 'Happiness'), TRAITVAR="auto")
- out_CTM <- ctFit(dat=ctExample1, ctmodelobj=model)
- ##################################################################################
- #
- Gamma.fromCTM(out_CTM) %>% try()
+#  #
+#  if (!require("ctsem")) install.packages("ctsem")
+library(ctsem)
+library(ctsemOMX)
+#  #
+library(mlVAR)
+# outcome <- list()
+# for (s in 1:50) {
+#   set.seed(s)
+# 
+# n <- 5
+# t <- 100
+# ctfit.data <- matrix(NA, nrow = t*n, ncol = 5)
+# ctfit.data[,1] <- rep(1:n, each = t)
+# ctfit.data[,2] <- rep(0:(t-1), n)
+# ctfit.data[,5] <- 1
+# for (i in 0:(n-1)*t) {
+#   temp <- simulateVAR(pars = myPhi[1:2,],  means = 0, lags = 1, Nt = t, init = 0, residuals = mySigmaVAR[1:2,], burnin = 100)
+#   ctfit.data[(i+1):(i+t), 3] <- temp[,1]
+#   ctfit.data[(i+1):(i+t), 4] <- temp[,2]
+# }
+# 
+# colnames(ctfit.data) <- c("idcol", "time", "V1", "V2", "d")
+# 
+# ctfit.data <- as.data.frame(ctfit.data) %>%
+#   pivot_wider(names_from = time,
+#               names_prefix = "T",
+#               values_from = c("V1", "V2", "d")) %>%
+#   select(-idcol, -d_T0)
+# 
+# colnames(ctfit.data)[(2*t+1):ncol(ctfit.data)] <- paste0("dT", 1:(t-1))
+# 
+# 
+#  model <- ctModel(n.manifest=2, n.latent=2, Tpoints=t, LAMBDA=diag(2),
+#                   manifestNames=c('V1', 'V2'),
+#                   latentNames=c('V1', 'V2'))
+#  out_CTM <- ctFit(dat=ctfit.data, ctmodelobj=model)
+# 
+#  outcome[[s]] <- Gamma.fromCTM(out_CTM) %>% try()
+# }
+# set.seed(3)
+# 
+# n <- 100
+# t <- 5
+# ctfit.data <- matrix(NA, nrow = t*n, ncol = 5)
+# ctfit.data[,1] <- rep(1:n, each = t)
+# ctfit.data[,2] <- rep(0:(t-1), n)
+# ctfit.data[,5] <- 1
+# for (i in 0:(t-1)*n+1) {
+#   temp <- simulateVAR(pars = myPhi[1:2,],  means = 0, lags = 1, Nt = t, init = 0, residuals = mySigmaVAR[1:2,], burnin = 100)
+#   ctfit.data[i:(i+n-1), 3] <- temp[,1]
+#   ctfit.data[i:(i+n-1), 4] <- temp[,2]
+# }
+# 
+# colnames(ctfit.data) <- c("idcol", "time", "V1", "V2", "d")
+# 
+# library(tidyverse)
+# ctfit.data <- as.data.frame(ctfit.data) %>%
+#   pivot_wider(names_from = time,
+#               names_prefix = "T",
+#               values_from = c("V1", "V2", "d")) %>%
+#   select(-idcol, -d_T0)
+# 
+# colnames(ctfit.data)[(2*t+1):ncol(ctfit.data)] <- paste0("dT", 1:(t-1))
+# 
+# 
+#  model <- ctModel(n.manifest=2, n.latent=2, Tpoints=t, LAMBDA=diag(2),
+#                   manifestNames=c('V1', 'V2'),
+#                   latentNames=c('V1', 'V2'))
+#  out_CTM <- ctFit(dat=ctfit.data, ctmodelobj=model)
+#  
+#  summary(out_CTM)
+# 
+#  Gamma.fromCTM(out_CTM) %>% try()
+ 
+ 
+ 
+if (!require("ctsem")) install.packages("ctsem")
+library(ctsem)
+library(ctsemOMX)
+#
+############ adapted from https://rdrr.io/cran/ctsemOMX/man/ctFit.html ############
+data(ctExample1)
+model <- ctModel(n.manifest=2, n.latent=2, Tpoints=6, LAMBDA=diag(2),
+                manifestNames=c('LeisureTime', 'Happiness'),
+                latentNames=c('LeisureTime', 'Happiness'), TRAITVAR="auto")
+out_Drift <- ctFit(dat=ctExample1, ctmodelobj=model)
+##################################################################################
+#
+Gamma.fromCTM(out_CTM)
 ```
 
 # Drift
