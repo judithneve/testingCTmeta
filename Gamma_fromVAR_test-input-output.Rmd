@@ -1,0 +1,145 @@
+---
+title: "Testing the input and output of coef.CTmeta"
+author: "Judith Neve"
+date: "04/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(CTmeta)
+```
+
+This document tests what can be used as input and output for the function CTmeta. Each argument is examined in turn, and at the end some additional checks are done to verify plots can be made for different configurations of the model.
+
+Where the function runs, the output is compared to the expected output.
+
+After every attempt to "break" the function, a diagnostic is written as a comment in the code chunk, and the code chunk is followed by a "to do" list to indicate what needs to be specified/improved/changed in the function documentation or the function itself.
+
+Setting up models that work well.
+
+```{r example setup}
+# q=2 variables and S=3 primary studies
+
+## Example 1 ##
+#
+Phi <- myPhi[1:2,1:2]
+#Phi <- matrix(c(0.50, 0.15, 0.25, 0.40), byrow=T, ncol = 2)
+q <- dim(Phi)[1]
+SigmaVAR <- diag(q) # for ease
+Gamma.fromVAR(Phi, SigmaVAR)
+
+
+## Example 2: input from fitted object of class "varest" ##
+#
+data <- myData
+if (!require("vars")) install.packages("vars")
+library(vars)
+out_VAR <- VAR(data, p = 1)
+Gamma.fromVAR(out_VAR)
+
+## Example 3: input from fitted object of class "ctfit" ##
+#
+if (!require("ctsem")) install.packages("ctsem")
+library(ctsem)
+library(ctsemOMX)
+#
+############ adapted from https://rdrr.io/cran/ctsemOMX/man/ctFit.html ############
+data(ctExample1)
+model <- ctModel(n.manifest=2, n.latent=2, Tpoints=6, LAMBDA=diag(2),
+                manifestNames=c('LeisureTime', 'Happiness'),
+                latentNames=c('LeisureTime', 'Happiness'), TRAITVAR="auto")
+out_CTM <- ctFit(dat=ctExample1, ctmodelobj=model)
+##################################################################################
+#
+Gamma.fromVAR(out_CTM)
+```
+
+# Phi
+
+## Phi with NA
+
+```{r}
+Phi.broken <- Phi
+Phi.broken[1,1] <- NA
+
+Gamma.fromVAR(Phi.broken, SigmaVAR) %>% try()
+```
+
+## Phi with text
+
+```{r}
+Phi.broken <- Phi
+Phi.broken[1,1] <- "text"
+
+Gamma.fromVAR(Phi.broken, SigmaVAR) %>% try()
+```
+
+## Phi with one more row
+
+```{r}
+Phi.broken <- rbind(Phi, c(1,1))
+
+Gamma.fromVAR(Phi.broken, SigmaVAR) %>% try()
+```
+
+## Phi with one more column
+
+```{r}
+Phi.broken <- cbind(Phi, c(1,1))
+
+Gamma.fromVAR(Phi.broken, SigmaVAR) %>% try()
+```
+
+## Phi with one more row and one more column
+
+```{r}
+Phi.broken <- cbind(rbind(Phi, c(1,1)), c(1,1,1))
+
+Gamma.fromVAR(Phi.broken, SigmaVAR) %>% try()
+```
+
+
+# SigmaVAR
+
+## SigmaVAR with NA
+
+```{r}
+SigmaVAR.broken <- SigmaVAR
+SigmaVAR.broken[1,1] <- NA
+
+Gamma.fromVAR(Phi, SigmaVAR.broken) %>% try()
+```
+
+## SigmaVAR with text
+
+```{r}
+SigmaVAR.broken <- SigmaVAR
+SigmaVAR.broken[1,1] <- "text"
+
+Gamma.fromVAR(Phi, SigmaVAR.broken) %>% try()
+```
+
+## SigmaVAR with one more row
+
+```{r}
+SigmaVAR.broken <- rbind(SigmaVAR, c(1,1))
+
+Gamma.fromVAR(Phi, SigmaVAR.broken) %>% try()
+```
+
+## SigmaVAR with one more column
+
+```{r}
+SigmaVAR.broken <- cbind(SigmaVAR, c(1,1))
+
+Gamma.fromVAR(Phi, SigmaVAR.broken) %>% try()
+```
+
+## SigmaVAR with one more row and one more column
+
+```{r}
+SigmaVAR.broken <- rbind(cbind(SigmaVAR, c(1,1)), c(1,1,1))
+
+Gamma.fromVAR(Phi, SigmaVAR.broken) %>% try()
+```

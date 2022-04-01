@@ -38,9 +38,12 @@ Can't include an if statement for the case where it has more columns than q sinc
 
 -> Rebecca is looking into this
 
-## Gamma.fromCTM
+-> also a problem in Gamma.fromVAR
 
-1. Fix the ctfit example
+
+
+
+!!! check that ctfit AND vars work for all functions that can take these as arguments
 
 
 
