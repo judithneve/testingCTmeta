@@ -39,6 +39,7 @@ Judith <- Judith[Judith != "CTMparam"]
 Judith <- Judith[Judith != "DiagDeltaT"]
 Judith <- Judith[Judith != "Gamma.fromCTM"]
 Judith <- Judith[Judith != "Gamma.fromVAR"]
+Judith <- Judith[Judith != "MaxDeltaT"]
 
 Judith <- Judith[Judith != "myData"]
 Judith <- Judith[Judith != "myDrift"]

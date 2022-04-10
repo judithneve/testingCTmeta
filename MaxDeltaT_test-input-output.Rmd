@@ -156,30 +156,107 @@ Problem in Phi clear enough
 Phi.broken <- cbind(Phi, c(1,1))
 
 MaxDeltaT(DeltaT, Phi.broken) %>% try()
-
-##### AT THIS POINT
 ```
+
+Error message works
 
 ## Phi with one more row
 
+```{r}
+Phi.broken <- rbind(Phi, c(1,1))
+
+MaxDeltaT(DeltaT, Phi.broken) %>% try()
+```
+
+Error message works
+
 ## Phi with one more col and one more row
+
+```{r}
+Phi.broken <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+
+MaxDeltaT(DeltaT, Phi.broken) %>% try()
+```
+
+Runs
 
 
 # Drift
 
 ## Drift with NA
 
+```{r}
+Drift.broken <- Drift
+Drift.broken[1,1] <- NA
+
+MaxDeltaT(DeltaT, Drift = Drift.broken) %>% try()
+```
+
+Error message added
+
 ## Drift with text
+
+```{r}
+Drift.broken <- Drift
+Drift.broken[1,1] <- "text"
+
+MaxDeltaT(DeltaT, Drift = Drift.broken) %>% try()
+```
+
+Error message added
 
 ## Drift with one more col
 
+```{r}
+Drift.broken <- cbind(Drift, c(1,1))
+
+MaxDeltaT(DeltaT, Drift = Drift.broken) %>% try()
+```
+
+Correct error
+
 ## Drift with one more row
 
+```{r}
+Drift.broken <- rbind(Drift, c(1,1))
+
+MaxDeltaT(DeltaT, Drift = Drift.broken) %>% try()
+```
+
+Correct error
+
 ## Drift with one more col and one more row
+
+```{r}
+Drift.broken <- rbind(cbind(Drift, c(1,1)), c(1,1,1))
+
+MaxDeltaT(DeltaT, Drift = Drift.broken) %>% try()
+```
+
+Runs
 
 
 # Both Phi and Drift
 
 ## Phi (broken) and Drift (working)
 
+```{r}
+Phi.broken <- Phi
+Phi.broken[1,1] <- NA
+
+MaxDeltaT(DeltaT, Phi.broken, Drift)
+MaxDeltaT(DeltaT, Phi, Drift)
+```
+
+Runs :)
+
 ## Phi (working) and Drift (broken)
+
+```{r}
+Drift.broken <- Drift
+Drift.broken[1,1] <- NA
+
+MaxDeltaT(DeltaT, Phi, Drift.broken) %>% try()
+```
+
+So Drift is used by default.
