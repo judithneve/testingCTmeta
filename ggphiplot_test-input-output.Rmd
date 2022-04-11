@@ -1,0 +1,327 @@
+---
+title: "Testing the input and output of ggphiplot"
+author: "Judith Neve"
+date: "20/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(CTmeta)
+library(vars)
+```
+
+This document tests what can be used as input and output for the function Area. Each argument is examined in turn, and at the end some additional checks are done to verify plots can be made for different configurations of the model.
+
+Where the function runs, the output is compared to the expected output.
+
+After every attempt to "break" the function, a diagnostic is written as a comment in the code chunk, and the code chunk is followed by a "to do" list to indicate what needs to be specified/improved/changed in the function documentation or the function itself.
+
+Original example:
+
+```{r}
+DeltaT <- 1
+Phi <- myPhi[1:2,1:2]
+Drift <- myDrift
+q <- dim(Phi)[1]
+SigmaVAR <- diag(q)
+
+data <- myData
+if (!require("vars")) install.packages("vars")
+library(vars)
+out_VAR <- VAR(data, p = 1)
+
+WhichElements <- matrix(1, ncol = q, nrow = q) # Now, all elements are 1
+diag(WhichElements) <- 0 # Now, the autoregressive parameters are excluded by setting the diagonals to 0.
+Lab <- c("12", "21")
+Labels <- NULL
+for(i in 1:length(Lab)){
+ e <- bquote(expression(Phi(Delta[t])[.(Lab[i])]))
+ Labels <- c(Labels, eval(e))
+}
+Col <- c(1,2)
+Lty <- c(1,2)
+```
+
+
+
+# DeltaT
+
+## DeltaT = 0
+
+```{r}
+ggPhiPlot(DeltaT = 0, Phi = Phi) %>% try()
+```
+
+## DeltaT = 0.5
+
+```{r}
+ggPhiPlot(DeltaT = 0.5, Phi = Phi) %>% try()
+
+ggPhiPlot(DeltaT = 0.5, Phi = Phi)
+ggPhiPlot(DeltaT = 1, Phi = Phi)
+```
+
+## DeltaT = Inf
+
+```{r}
+ggPhiPlot(DeltaT = Inf, Phi = Phi) %>% try()
+```
+
+## DeltaT = c(1, 2, 3)
+
+```{r}
+ggPhiPlot(DeltaT = c(1, 2, 3), Phi = Phi) %>% try()
+```
+
+## DeltaT = "text"
+
+```{r}
+ggPhiPlot(DeltaT = "text", Phi = Phi) %>% try()
+```
+
+## DeltaT = -1
+
+```{r}
+ggPhiPlot(DeltaT = -1, Phi = Phi) %>% try()
+```
+
+ADAPT THIS WRT WHAT REBECCA SAYS
+
+
+# Phi
+
+## Phi with NA
+
+## Phi with text
+
+## Phi with one more col
+
+## Phi with one more row
+
+## Phi with one more row and one more col
+
+## Phi from ctsemfit
+
+## Phi from varest
+
+
+# Drift
+
+## Both Phi (broken) and Drift (working)
+
+## Both Phi (working) and Drift (broken)
+
+## Drift with NA
+
+## Drift with text
+
+## Drift with one more col
+
+## Drift with one more row
+
+## Drift with one more row and one more col
+
+
+# Stand
+
+## Stand = 1, nothing specified
+
+## Stand = 2
+
+## Stand = "text
+
+## Stand = TRUE
+
+## Stand = FALSE
+
+## Stand = 1 and no SigmaVAR, Sigma, Gamma
+
+
+# SigmaVAR
+
+## Stand = 0
+
+## SigmaVAR with NA
+
+## SigmaVAR with text
+
+## SigmaVAR with one more col
+
+## SigmaVAR with one more row
+
+## SigmaVAR with one more row and one more col
+
+
+# Sigma
+
+## Theoretically working
+
+## Stand = 0
+
+## Sigma with NA
+
+## Sigma with text
+
+## Sigma with one more col
+
+## Sigma with one more row
+
+## Sigma with one more row and one more col
+
+
+# Gamma
+
+## Theoretically working
+
+## Stand = 0
+
+## Gamma with NA
+
+## Gamma with text
+
+## Gamma with one more col
+
+## Gamma with one more row
+
+## Gamma with one more row and one more col
+
+
+# Combinations of SigmaVAR, Sigma, Gamma
+
+## SigmaVAR (working) and Sigma (broken)
+
+## SigmaVAR (working) and Gamma (broken)
+
+## SigmaVAR (working) and Sigma (broken) and Gamma (broken)
+
+## SigmaVAR (broken) and Sigma (working)
+
+## SigmaVAR (broken) and Gamma (working)
+
+## SigmaVAR (broken) and Sigma (working) and Gamma (broken)
+
+## Gamma (working) and Sigma (broken)
+
+## Gamma (broken) and Sigma (working)
+
+## SigmaVAR (broken) and Sigma (broken) and Gamma (working)
+
+
+# Min
+
+## Min = c(1, 2)
+
+## Min = "text"
+
+## Min = -3
+
+
+# Max
+
+## Max = c(1, 2)
+
+## Max = "text"
+
+## Max = -3
+
+## Max < Min
+
+
+# Step
+
+## Step = 0.01
+
+## Step = 0
+
+## Step = 1
+
+## Step = c(1, 2, 3)
+
+## Step = "text"
+
+
+# WhichElements
+
+## WhichElements with NA
+
+## WhichElements with 2
+
+## WhichElements with TRUE/FALSE
+
+## WhichElements with text
+
+## WhichElements with an extra row
+
+## WhichElements with an extra col
+
+## WhichElements with an extra row and an extra col
+
+## WhichElements + Drift
+
+## WhichElements + Phi
+
+## WhichElements + Stand = 1 + Sigma
+
+
+# Labels
+
+## Labels too long
+
+## Labels too short
+
+## Specify labels
+
+
+# Col
+
+## Col too long
+
+## Col too short
+
+## Specify colours
+
+## Choose colours
+
+
+# Lty
+
+## Lty too long
+
+## Lty too short
+
+## Specify Lty
+
+## Choose Lty
+
+
+# Title
+
+## Title = TRUE
+
+## Title = "test"
+
+## Title = c()
+
+## Title = matrix()
+
+## Title = list()
+
+## Title = list() too long
+
+
+# MaxMinPhi
+
+## MaxMinPhi = TRUE
+
+## MaxMinPhi = 0
+
+## MaxMinPhi = 1
+
+## MaxMinPhi = c(0, 1)
+
+## MaxMinPhi = c(1, 2, 3)
+
+## MaxMinPhi = 2
+
+## MaxMinPhi = "text"
