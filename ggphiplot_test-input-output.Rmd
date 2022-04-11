@@ -86,146 +86,511 @@ ggPhiPlot(DeltaT = "text", Phi = Phi) %>% try()
 ggPhiPlot(DeltaT = -1, Phi = Phi) %>% try()
 ```
 
-ADAPT THIS WRT WHAT REBECCA SAYS
-
 
 # Phi
 
 ## Phi with NA
 
+```{r}
+Phi.break <- Phi
+Phi.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi.break) %>% try()
+```
+
+Error message shows problem in Phi
+
 ## Phi with text
+
+```{r}
+Phi.break <- Phi
+Phi.break[1,1] <- "text"
+
+ggPhiPlot(Phi = Phi.break) %>% try()
+```
 
 ## Phi with one more col
 
+```{r}
+Phi.break <- cbind(Phi, c(1,1))
+
+ggPhiPlot(Phi = Phi.break) %>% try()
+```
+
+Correct error message
+
 ## Phi with one more row
+
+```{r}
+Phi.break <- rbind(Phi, c(1,1))
+
+ggPhiPlot(Phi = Phi.break) %>% try()
+```
+
+Correct error message
 
 ## Phi with one more row and one more col
 
+```{r}
+Phi.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+
+ggPhiPlot(Phi = Phi.break) %>% try()
+```
+
 ## Phi from ctsemfit
 
+```{r}
+if (!require("ctsem")) install.packages("ctsem")
+library(ctsem)
+library(ctsemOMX)
+#
+############ adapted from https://rdrr.io/cran/ctsemOMX/man/ctFit.html ############
+data(ctExample1)
+model <- ctModel(n.manifest=2, n.latent=2, Tpoints=6, LAMBDA=diag(2),
+                manifestNames=c('LeisureTime', 'Happiness'),
+                latentNames=c('LeisureTime', 'Happiness'), TRAITVAR="auto")
+out_CTM <- ctFit(dat=ctExample1, ctmodelobj=model)
+##################################################################################
+#
+ggPhiPlot(DeltaT, out_CTM)
+```
+
+
 ## Phi from varest
+
+```{r}
+data <- myData
+if (!require("vars")) install.packages("vars")
+library(vars)
+out_VAR <- VAR(data, p = 1)
+
+ggPhiPlot(Phi = out_VAR)
+```
+
 
 
 # Drift
 
 ## Both Phi (broken) and Drift (working)
 
+```{r}
+Phi.break <- Phi
+Phi.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi.break, Drift = Drift)
+```
+
 ## Both Phi (working) and Drift (broken)
+
+```{r}
+Drift.break <- Drift
+Drift.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, Drift = Drift.break) %>% try()
+```
+
+So Drift is used by default.
 
 ## Drift with NA
 
+```{r}
+Drift.break <- Drift
+Drift.break[1,1] <- NA
+
+ggPhiPlot(Drift = Drift.break) %>% try()
+```
+
+Clear enough error.
+
 ## Drift with text
+
+```{r}
+Drift.break <- Drift
+Drift.break[1,1] <- "text"
+
+ggPhiPlot(Drift = Drift.break) %>% try()
+```
 
 ## Drift with one more col
 
+```{r}
+Drift.break <- cbind(Drift, c(1,1))
+
+ggPhiPlot(Drift = Drift.break) %>% try()
+```
+
 ## Drift with one more row
 
+```{r}
+Drift.break <- rbind(Drift, c(1,1))
+
+ggPhiPlot(Drift = Drift.break) %>% try()
+```
+
 ## Drift with one more row and one more col
+
+```{r}
+Drift.break <-  matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+
+ggPhiPlot(Drift = Drift.break) %>% try()
+```
 
 
 # Stand
 
 ## Stand = 1, nothing specified
 
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1) %>% try()
+```
+
 ## Stand = 2
 
-## Stand = "text
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 2, SigmaVAR = SigmaVAR) %>% try()
+```
+
+## Stand = "text"
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = "text", SigmaVAR = SigmaVAR) %>% try()
+```
 
 ## Stand = TRUE
 
+```{r}
+ggPhiPlot(Phi = Phi*10, Stand = TRUE, SigmaVAR = SigmaVAR) %>% try()
+```
+
+Also multiplied phi by 10 to see if standardisation makes a difference (compared to the plot below)
+
 ## Stand = FALSE
 
-## Stand = 1 and no SigmaVAR, Sigma, Gamma
+```{r}
+ggPhiPlot(Phi = Phi*10, Stand = FALSE, SigmaVAR = SigmaVAR) %>% try()
+```
 
 
 # SigmaVAR
 
 ## Stand = 0
 
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, Stand = FALSE, SigmaVAR = SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR with NA
+
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break) %>% try()
+```
 
 ## SigmaVAR with text
 
+```{r}
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[1,1] <- "text"
+
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR with one more col
+
+```{r}
+SigmaVAR.break <- cbind(SigmaVAR, c(1,1))
+
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break) %>% try()
+```
 
 ## SigmaVAR with one more row
 
+```{r}
+SigmaVAR.break <- rbind(SigmaVAR, c(1,1))
+
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break) %>% try()
+```
+
 ## SigmaVAR with one more row and one more col
+
+```{r}
+SigmaVAR.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break) %>% try()
+```
 
 
 # Sigma
 
 ## Theoretically working
 
-## Stand = 0
+```{r}
+Sigma <- diag(2)
+
+ggPhiPlot(Phi = Phi, Stand = 1, Sigma = Sigma) %>% try()
+```
 
 ## Sigma with NA
 
+```{r}
+Sigma.break <- Sigma
+Sigma.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, Stand = 1, Sigma = Sigma.break) %>% try()
+```
+
+## Stand = 0
+
+```{r}
+Sigma.break <- Sigma
+Sigma.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, Stand = 0, Sigma = Sigma.break) %>% try()
+```
+
 ## Sigma with text
+
+```{r}
+Sigma.break <- Sigma
+Sigma.break[1,1] <- "text"
+
+ggPhiPlot(Phi = Phi, Stand = 1, Sigma = Sigma.break) %>% try()
+```
 
 ## Sigma with one more col
 
+```{r}
+Sigma.break <- cbind(Sigma, c(11,1))
+
+ggPhiPlot(Drift = Drift, Stand = 1, Sigma = Sigma.break) %>% try()
+```
+
 ## Sigma with one more row
 
+```{r}
+Sigma.break <- rbind(Sigma, c(11,1))
+
+ggPhiPlot(Phi = Phi, Stand = 1, Sigma = Sigma.break) %>% try()
+```
+
 ## Sigma with one more row and one more col
+
+```{r}
+Sigma.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+Drift.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+Phi.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+
+ggPhiPlot(Drift = Drift.break, Stand = 1, Sigma = Sigma.break) %>% try()
+ggPhiPlot(Phi = Phi.break, Stand = 1, Sigma = Sigma.break) %>% try() # a problem in the error messages here
+```
 
 
 # Gamma
 
 ## Theoretically working
 
-## Stand = 0
+```{r}
+Gamma <- myGamma[1:2, 1:2]
+
+ggPhiPlot(Phi = Phi, Stand = 1, Gamma = Gamma) %>% try()
+```
 
 ## Gamma with NA
 
+```{r}
+Gamma.break <- Gamma
+Gamma.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, Stand = 1, Gamma = Gamma.break) %>% try()
+```
+
+## Stand = 0
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, Stand = 0, Gamma = Gamma.break) %>% try()
+```
+
 ## Gamma with text
+
+```{r}
+Gamma.break <- Gamma
+Gamma.break[1,1] <- "text"
+
+ggPhiPlot(Phi = Phi, Stand = 1, Gamma = Gamma.break) %>% try()
+```
 
 ## Gamma with one more col
 
+```{r}
+Gamma.break <- cbind(Gamma, c(1,1))
+
+ggPhiPlot(Phi = Phi, Stand = 1, Gamma = Gamma.break) %>% try()
+```
+
 ## Gamma with one more row
 
+```{r}
+Gamma.break <- rbind(Gamma, c(1,1))
+
+ggPhiPlot(Phi = Phi, Stand = 1, Gamma = Gamma.break) %>% try()
+```
+
 ## Gamma with one more row and one more col
+
+```{r}
+Gamma.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+Drift.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+Phi.break <- matrix(c(2, -1, 0, -1, 2, -1, 0, -1, 2), nrow = 3, byrow = TRUE)
+
+ggPhiPlot(Drift = Drift.break, Stand = 1, Gamma = Gamma.break) %>% try()
+ggPhiPlot(Phi = Phi.break, Stand = 1, Gamma = Gamma.break) %>% try()
+```
 
 
 # Combinations of SigmaVAR, Sigma, Gamma
 
+```{r}
+Sigma.break <- Sigma
+Sigma.break[1,1] <- NA
+Gamma.break <- Gamma
+Gamma.break[1,1] <- NA
+SigmaVAR.break <- SigmaVAR
+SigmaVAR.break[1,1] <- NA
+```
+
 ## SigmaVAR (working) and Sigma (broken)
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR, Sigma = Sigma.break) %>% try()
+```
+
+Runs -> SigmaVAR > Sigma
 
 ## SigmaVAR (working) and Gamma (broken)
 
-## SigmaVAR (working) and Sigma (broken) and Gamma (broken)
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR, Gamma = Gamma.break) %>% try()
+```
 
-## SigmaVAR (broken) and Sigma (working)
+Breaks -> Gamma > SigmaVAR
 
 ## SigmaVAR (broken) and Gamma (working)
 
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break, Gamma = Gamma) %>% try()
+```
+
+Runs -> Gamma > SigmaVAR
+
+## SigmaVAR (working) and Sigma (broken) and Gamma (broken)
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR, Gamma = Gamma.break, Sigma = Sigma.break) %>% try()
+```
+
+## SigmaVAR (broken) and Sigma (working)
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break, Sigma = Sigma) %>% try()
+```
+
+Breaks -> SigmaVAR > Sigma
+
 ## SigmaVAR (broken) and Sigma (working) and Gamma (broken)
+
+Expect: break
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break, Gamma = Gamma.break, Sigma = Sigma) %>% try()
+```
 
 ## Gamma (working) and Sigma (broken)
 
+Expect: work
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, Gamma = Gamma, Sigma = Sigma.break) %>% try()
+```
+
 ## Gamma (broken) and Sigma (working)
 
+Expect: break
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, Gamma = Gamma.break, Sigma = Sigma) %>% try()
+```
+
 ## SigmaVAR (broken) and Sigma (broken) and Gamma (working)
+
+Expect: work
+
+```{r}
+ggPhiPlot(Phi = Phi, Stand = 1, SigmaVAR = SigmaVAR.break, Gamma = Gamma, Sigma = Sigma.break) %>% try()
+```
+
+Conclusion: Gamma > SigmaVAR > Sigma. Changed the documentation accordingly.
 
 
 # Min
 
 ## Min = c(1, 2)
 
+```{r}
+ggPhiPlot(Phi = Phi, Min = c(0, 1)) %>% try()
+```
+
 ## Min = "text"
 
+```{r}
+ggPhiPlot(Phi = Phi, Min = "text") %>% try()
+```
+
 ## Min = -3
+
+```{r}
+ggPhiPlot(Phi = Phi, Min = -3)
+```
 
 
 # Max
 
 ## Max = c(1, 2)
 
+```{r}
+ggPhiPlot(Phi = Phi, Max = c(0, 1)) %>% try()
+```
+
 ## Max = "text"
+
+```{r}
+ggPhiPlot(Phi = Phi, Max = "text") %>% try()
+```
+
+## Max < Min
+
+```{r}
+ggPhiPlot(Phi = Phi, Max = 3, Min = 4) %>% try()
+```
+
+## Max = Min
+
+```{r}
+ggPhiPlot(Phi = Phi, Max = 3, Min = 3) %>% try()
+```
 
 ## Max = -3
 
-## Max < Min
+```{r}
+ggPhiPlot(Phi = Phi, Max = -3, Min = -4)
+```
 
 
 # Step
