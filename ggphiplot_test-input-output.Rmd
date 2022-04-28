@@ -678,17 +678,63 @@ ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
 
 ## WhichElements with text
 
+```{r}
+WhichElements.broken <- WhichElements
+WhichElements.broken[1, 1] <- "text"
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
+
 ## WhichElements with an extra row
+
+```{r}
+WhichElements.broken <- rbind(WhichElements, c(1,1))
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
 
 ## WhichElements with an extra col
 
+```{r}
+WhichElements.broken <- cbind(WhichElements, c(1,1))
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
+
 ## WhichElements with an extra row and an extra col
+
+```{r}
+WhichElements.broken <- cbind(rbind(WhichElements, c(1,1)), c(1,1,1))
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
 
 ## WhichElements + Drift
 
+```{r}
+ggPhiPlot(Drift = Drift, WhichElements = WhichElements) %>% try()
+
+WhichElements.broken <- WhichElements
+WhichElements.broken[1, 1] <- TRUE
+WhichElements.broken[2, 2] <- FALSE
+
+ggPhiPlot(Drift = Drift, WhichElements = WhichElements.broken) %>% try()
+```
+
 ## WhichElements + Phi
 
+```{r}
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements) %>% try()
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
+
 ## WhichElements + Stand = 1 + Sigma
+
+```{r}
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken, Stand = 1, Sigma = Sigma) %>% try()
+```
+
 
 
 # Labels
