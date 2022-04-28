@@ -739,33 +739,107 @@ ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken, Stand = 1, Sigma = Si
 
 # Labels
 
+## Specify labels
+
+```{r}
+Labels <- c("A", "B", "C", "D")
+
+ggPhiPlot(Phi = Phi, Labels = Labels) %>% try()
+```
+
+```{r}
+Labels <- c("A", "B", "C", "D")
+WhichElements.broken <- WhichElements
+WhichElements.broken[2, 1] <- 0
+
+ggPhiPlot(Phi = Phi, Labels = Labels, WhichElements = WhichElements.broken) %>% try()
+```
+
 ## Labels too long
+
+```{r}
+Labels <- c("A", "B", "C", "D", "E")
+
+ggPhiPlot(Phi = Phi, Labels = Labels) %>% try()
+```
 
 ## Labels too short
 
-## Specify labels
+```{r}
+Labels <- c("A", "B", "C")
+
+ggPhiPlot(Phi = Phi, Labels = Labels) %>% try()
+```
 
 
 # Col
 
+## Specify colours
+
+```{r}
+Col <- c(1:3, 2)
+
+ggPhiPlot(Phi = Phi, Col = Col) %>% try()
+```
+
+## Choose colours
+
+```{r}
+Col <- c("red", "pink", "yellow", "brown")
+
+ggPhiPlot(Phi = Phi, Col = Col) %>% try()
+```
+
 ## Col too long
+
+```{r}
+Col <- c(1:3, 2, 5)
+
+ggPhiPlot(Phi = Phi, Col = Col) %>% try()
+```
 
 ## Col too short
 
-## Specify colours
+```{r}
+Col <- c(1:3)
 
-## Choose colours
+ggPhiPlot(Phi = Phi, Col = Col) %>% try()
+```
 
 
 # Lty
 
+## Specify Lty
+
+```{r}
+Lty <- c(1:3, 2)
+
+ggPhiPlot(Phi = Phi, Lty = Lty) %>% try()
+```
+
+## Choose Ltyours
+
+```{r}
+Lty <- c("red", "pink", "yellow", "brown")
+
+ggPhiPlot(Phi = Phi, Lty = Lty) %>% try()
+```
+
 ## Lty too long
+
+```{r}
+Lty <- c(1:3, 2, 5)
+
+ggPhiPlot(Phi = Phi, Lty = Lty) %>% try()
+```
 
 ## Lty too short
 
-## Specify Lty
+```{r}
+Lty <- c(1:3)
 
-## Choose Lty
+ggPhiPlot(Phi = Phi, Lty = Lty) %>% try()
+```
 
 
 # Title
