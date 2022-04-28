@@ -846,29 +846,82 @@ ggPhiPlot(Phi = Phi, Lty = Lty) %>% try()
 
 ## Title = TRUE
 
+```{r}
+ggPhiPlot(Phi = Phi, Title = TRUE) %>% try()
+```
+
+
 ## Title = "test"
+
+```{r}
+ggPhiPlot(Phi = Phi, Title = "test") %>% try()
+```
 
 ## Title = c()
 
+```{r}
+ggPhiPlot(Phi = Phi, Title = c("hello", "test")) %>% try()
+```
+
 ## Title = matrix()
+
+```{r}
+ggPhiPlot(Phi = Phi, Title = matrix(c("hello", "test"))) %>% try()
+```
 
 ## Title = list()
 
+```{r}
+ggPhiPlot(Phi = Phi, Title = list("hello", "test")) %>% try()
+```
+
 ## Title = list() too long
+
+```{r}
+ggPhiPlot(Phi = Phi, Title = list("hello", "test", "goodbye")) %>% try()
+```
 
 
 # MaxMinPhi
 
 ## MaxMinPhi = TRUE
 
+```{r}
+ggPhiPlot(Phi = Phi, MaxMinPhi = TRUE) %>% try()
+```
+
 ## MaxMinPhi = 0
+
+```{r}
+ggPhiPlot(Phi = Phi, MaxMinPhi = 0) %>% try()
+```
 
 ## MaxMinPhi = 1
 
+```{r}
+ggPhiPlot(Phi = Phi, MaxMinPhi = 1) %>% try()
+```
+
 ## MaxMinPhi = c(0, 1)
+
+```{r}
+ggPhiPlot(Phi = Phi, MaxMinPhi = c(0, 1)) %>% try()
+```
 
 ## MaxMinPhi = c(1, 2, 3)
 
+```{r}
+ggPhiPlot(Phi = Phi, MaxMinPhi = c(2, 3, 4)) %>% try()
+```
+
 ## MaxMinPhi = 2
 
+```{r}
+ggPhiPlot(Phi = Phi, MaxMinPhi = 2) %>% try()
+```
+
 ## MaxMinPhi = "text"
+
+```{r}
+ggPhiPlot(Phi = Phi, MaxMinPhi = "text") %>% try()
+```
