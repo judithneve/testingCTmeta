@@ -597,22 +597,84 @@ ggPhiPlot(Phi = Phi, Max = -3, Min = -4)
 
 ## Step = 0.01
 
+```{r}
+ggPhiPlot(Phi = Phi, Step = 0.01) %>% try()
+```
+
+It runs but looks the same
+
 ## Step = 0
+
+```{r}
+ggPhiPlot(Phi = Phi, Step = 0) %>% try()
+```
+
+This makes sense
 
 ## Step = 1
 
+```{r}
+ggPhiPlot(Phi = Phi, Step = 1) %>% try()
+```
+
+Works!
+
+## Step = 10
+
+```{r}
+ggPhiPlot(Phi = Phi, Step = 10) %>% try()
+```
+
 ## Step = c(1, 2, 3)
 
+```{r}
+ggPhiPlot(Phi = Phi, Step = c(1,2,3)) %>% try()
+```
+
 ## Step = "text"
+
+```{r}
+ggPhiPlot(Phi = Phi, Step = "text") %>% try()
+```
 
 
 # WhichElements
 
+```{r}
+WhichElements <- matrix(c(1,1,1,1), nrow = 2)
+```
+
 ## WhichElements with NA
+
+```{r}
+WhichElements.broken <- WhichElements
+WhichElements.broken[1,1] <- NA
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
+
+Makes sense
 
 ## WhichElements with 2
 
+```{r}
+WhichElements.broken <- WhichElements
+WhichElements.broken[1,1] <- 2
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
+
+Proper error
+
 ## WhichElements with TRUE/FALSE
+
+```{r}
+WhichElements.broken <- WhichElements
+WhichElements.broken[1, 1] <- TRUE
+WhichElements.broken[2, 2] <- FALSE
+
+ggPhiPlot(Phi = Phi, WhichElements = WhichElements.broken) %>% try()
+```
 
 ## WhichElements with text
 
