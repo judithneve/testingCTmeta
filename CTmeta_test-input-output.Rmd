@@ -8,10 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(CTmeta)
-source("CTmeta.R")
-source("HelpFile_Check_SigmaVAR.R")
-source("HelpFile_Check_B_or_Phi.R")
-source("Phi-ggplot.R")
+# source("CTmeta.R")
+# source("HelpFile_Check_SigmaVAR.R")
+# source("HelpFile_Check_B_or_Phi.R")
+# source("Phi-ggplot.R")
 ```
 
 This document tests what can be used as input and output for the function CTmeta. Each argument is examined in turn, and at the end some additional checks are done to verify plots can be made for different configurations of the model.
